@@ -418,7 +418,7 @@ function Library.Load(o)
 	ads_1.Size = UDim2.new(1, 0,1, 0)
 	ads_1.Font = Enum.Font.GothamBold
 	ads_1.RichText = true
-	ads_1.Text = "WELCOME TO THE,\n<font color='"..string.format("rgb(%d, %d, %d)", Color.r * 255, Color.g * 255, Color.b * 255).."'>"..HubName.." Key System</font>"
+	ads_1.Text = "WELCOME TO ,\n<font color='"..string.format("rgb(%d, %d, %d)", Color.r * 255, Color.g * 255, Color.b * 255).."'>"..HubName.." Key System</font>"
 	ads_1.TextColor3 = Color3.fromRGB(255,255,255)
 	ads_1.TextSize = 22
 	ads_1.TextWrapped = true
@@ -849,6 +849,7 @@ function Library.Load(o)
 		Shadow.AutomaticSize = Enum.AutomaticSize.XY
 		Shadow.BackgroundColor3 = Color3.fromRGB(163,162,165)
 		Shadow.BackgroundTransparency = 1
+		Shadow.Position = UDim2.new(0.5, 0,1, 50)
 		Shadow.Size = UDim2.new(0, 0,0, 0)
 		Shadow.Image = "rbxassetid://1316045217"
 		Shadow.ImageColor3 = ColorN
@@ -929,21 +930,21 @@ function Library.Load(o)
 		UIPadding_2.PaddingRight = UDim.new(0,8)
 		UIPadding_2.PaddingTop = UDim.new(0,8)
 		
-		tw({v = Shadow, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {ImageTransparency = 0.9}}):Play()
-		tw({v = Notifytemple_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {BackgroundTransparency = 0.4}}):Play()
-		tw({v = TextLabel_1, t = 0.15, s = Enum.EasingStyle.Exponential, d = "Out", g = {TextSize = 18, TextTransparency = 0}}):Play()
-		tw({v = UIStroke_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {Transparency = 0}}):Play()
-		tw({v = ImageLabel_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {ImageTransparency = 0}}):Play()
+		tw({v = Shadow, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0.9, Position = UDim2.new(0.5, 0,1, 0)}}):Play()
+		tw({v = Notifytemple_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.4}}):Play()
+		tw({v = TextLabel_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {TextSize = 18, TextTransparency = 0}}):Play()
+		tw({v = UIStroke_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {Transparency = 0}}):Play()
+		tw({v = ImageLabel_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0}}):Play()
 		
 		task.spawn(function()
 			for i = Time, 1, -1 do
 				task.wait(1)
 			end
-			tw({v = Shadow, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {ImageTransparency = 1}}):Play()
-			tw({v = Notifytemple_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {BackgroundTransparency = 1}}):Play()
-			tw({v = TextLabel_1, t = 0.15, s = Enum.EasingStyle.Exponential, d = "Out", g = {TextSize = 0, TextTransparency = 1}}):Play()
-			tw({v = UIStroke_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {Transparency = 1}}):Play()
-			tw({v = ImageLabel_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {ImageTransparency = 1}}):Play()
+			tw({v = Shadow, t = 0.25, s = Enum.EasingStyle.Quad, d = "In", g = {ImageTransparency = 1, Position = UDim2.new(0.5, 0,1, 50)}}):Play()
+			tw({v = Notifytemple_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "In", g = {BackgroundTransparency = 1}}):Play()
+			tw({v = TextLabel_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "In", g = {TextSize = 0, TextTransparency = 1}}):Play()
+			tw({v = UIStroke_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "In", g = {Transparency = 1}}):Play()
+			tw({v = ImageLabel_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "In", g = {ImageTransparency = 1}}):Play()
 			task.delay(0.15, function()
 				Shadow:Destroy()
 			end)
@@ -1100,10 +1101,6 @@ local Window = Library.Load({
 	Color = Color3.fromRGB(220, 20, 60),
 	Key = {'key'}
 })
-
-
-
-
 
 
 
