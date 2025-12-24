@@ -217,7 +217,26 @@ function Library.Load(o)
 	end
 	
 	local function tw(info)
-		return Tw:Create(info.v,TweenInfo.new(info.t, info.s, Enum.EasingDirection[info.d]),info.g)
+    if not info or not info.v then
+        warn("Tween error: missing object")
+        return { Play = function() end } -- return dummy tween
+    end
+    
+    local direction
+    if type(info.d) == "string" then
+        direction = Enum.EasingDirection[info.d] or Enum.EasingDirection.Out
+    else
+        direction = info.d or Enum.EasingDirection.Out
+    end
+    
+    local style = info.s or Enum.EasingStyle.Quad
+    local time = info.t or 0.3
+    
+    return Tw:Create(
+        info.v,
+        TweenInfo.new(time, style, direction),
+        info.g or {}
+    )
 	end
 	
 	local function lak(t, o)
@@ -1491,3 +1510,4 @@ local Window = Library.Load({
 		print("Key verified! Loading main script...")
 	end
 })
+
