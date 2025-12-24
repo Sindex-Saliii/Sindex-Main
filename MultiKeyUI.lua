@@ -308,6 +308,9 @@ function Library.Load(o)
 	ScreenGui.Parent = not game:GetService("RunService"):IsStudio() and game:GetService("CoreGui") or game:GetService("Players").LocalPlayer.PlayerGui
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+	local screenSize = workspace.CurrentCamera.ViewportSize
+	local uiScale = screenSize.X < 800 and 0.7 or 0.4
+
 	Background_1.Name = "Background"
 	Background_1.Parent = ScreenGui
 	Background_1.AutomaticSize = Enum.AutomaticSize.Y
@@ -316,7 +319,7 @@ function Library.Load(o)
 	Background_1.BorderColor3 = Color3.fromRGB(0,0,0)
 	Background_1.BorderSizePixel = 0
 	Background_1.Position = UDim2.new(0.5, 0,0.5, 0)
-	Background_1.Size = UDim2.new(0.8, 0,0, 0)
+	Background_1.Size = UDim2.new(uiScale, 0,0, 0)
 	Background_1.ClipsDescendants = true
 	Background_1.BackgroundTransparency = 1
 	
@@ -681,6 +684,10 @@ function Library.Load(o)
 	Click_2.Text = ""
 	Click_2.TextSize = 14
 	Click_2.MouseButton1Click:Connect(function()
+		tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Linear, d = "InOut", g = {Size = UDim2.new(1, 0,0, 25), BackgroundColor3 = Color3.fromRGB(180,0,40)}}):Play()
+		task.delay(0.1, function()
+			tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Linear, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
+		end)
 		Window.Notify({
 			Title = 'Getting Key...',
 			Icon = 14938884688,
@@ -720,44 +727,6 @@ function Library.Load(o)
 			TabList_1.Visible = true
 		else
 			TabList_1.Visible = false
-		end
-	end)
-
-	local Explain = Instance.new("Frame")
-	local UIListLayout_1 = Instance.new("UIListLayout")
-	local Line_1 = Instance.new("Frame")
-
-	Explain.Name = "Explain"
-	Explain.Parent = Left_1
-	Explain.AutomaticSize = Enum.AutomaticSize.Y
-	Explain.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Explain.BackgroundTransparency = 1
-	Explain.BorderColor3 = Color3.fromRGB(0,0,0)
-	Explain.BorderSizePixel = 0
-	Explain.LayoutOrder = 4
-	Explain.Size = UDim2.new(1, 0,0, 0)
-	Explain.Visible = false
-
-	UIListLayout_1.Parent = Explain
-	UIListLayout_1.Padding = UDim.new(0,8)
-	UIListLayout_1.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_1.VerticalAlignment = Enum.VerticalAlignment.Center
-
-	Line_1.Name = "Line"
-	Line_1.Parent = Explain
-	Line_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Line_1.BackgroundTransparency = 0.8999999761581421
-	Line_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Line_1.BorderSizePixel = 0
-	Line_1.LayoutOrder = -1
-	Line_1.Size = UDim2.new(1, 0,0, 1)
-
-	UIListLayout_1:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-		if #Explain:GetChildren() > 2 then
-			Explain.Visible = true
-		else
-			Explain.Visible = false
 		end
 	end)
 
@@ -837,77 +806,7 @@ function Library.Load(o)
 		Click.MouseButton1Click:Connect(Callback)
 	end
 
-	function tab.Explain(t)
-		local function getnum()
-			local count = 0
-			for i, v in pairs(Explain:GetChildren()) do
-				if v:IsA('Frame') and v.Name == 'Exp' then
-					count = count + 1
-				end
-			end
-			return count
-		end
-		local Exp = Instance.new("Frame")
-		local UIListLayout_1 = Instance.new("UIListLayout")
-		local Frame_1 = Instance.new("Frame")
-		local UICorner_1 = Instance.new("UICorner")
-		local TextLabel_1 = Instance.new("TextLabel")
-		local TextLabel_2 = Instance.new("TextLabel")
 
-		Exp.Name = "Exp"
-		Exp.Parent = Explain
-		Exp.AutomaticSize = Enum.AutomaticSize.Y
-		Exp.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		Exp.BackgroundTransparency = 1
-		Exp.BorderColor3 = Color3.fromRGB(0,0,0)
-		Exp.BorderSizePixel = 0
-		Exp.Size = UDim2.new(1, 0,0, 0)
-
-		UIListLayout_1.Parent = Exp
-		UIListLayout_1.Padding = UDim.new(0,10)
-		UIListLayout_1.FillDirection = Enum.FillDirection.Horizontal
-		UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_1.VerticalAlignment = Enum.VerticalAlignment.Center
-
-		Frame_1.Parent = Exp
-		Frame_1.BackgroundColor3 = Color
-		Frame_1.BackgroundTransparency = 0.701531171798706
-		Frame_1.BorderColor3 = Color3.fromRGB(0,0,0)
-		Frame_1.BorderSizePixel = 0
-		Frame_1.Size = UDim2.new(0, 18,0, 18)
-
-		UICorner_1.Parent = Frame_1
-		UICorner_1.CornerRadius = UDim.new(1,0)
-
-		TextLabel_1.Parent = Frame_1
-		TextLabel_1.AutomaticSize = Enum.AutomaticSize.X
-		TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_1.BackgroundTransparency = 1
-		TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-		TextLabel_1.BorderSizePixel = 0
-		TextLabel_1.Size = UDim2.new(1, 0,1, 0)
-		TextLabel_1.FontFace = Font.new('rbxassetid://12187370747', Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-		TextLabel_1.Text = tostring(getnum())
-		TextLabel_1.TextColor3 = Color
-		TextLabel_1.TextSize = 13
-
-		TextLabel_2.Parent = Exp
-		TextLabel_2.AutomaticSize = Enum.AutomaticSize.Y
-		TextLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_2.BackgroundTransparency = 1
-		TextLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
-		TextLabel_2.BorderSizePixel = 0
-		TextLabel_2.LayoutOrder = 1
-		TextLabel_2.Position = UDim2.new(0.0874999985, 0,0.194444448, 0)
-		TextLabel_2.Size = UDim2.new(0, 292,0, 11)
-		TextLabel_2.Font = Enum.Font.Gotham
-		TextLabel_2.Text = t
-		TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_2.TextSize = 11
-		TextLabel_2.TextTransparency = 0.30000001192092896
-		TextLabel_2.TextWrapped = true
-		TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
-	end
 
 	local Notify = Instance.new("Frame")
 	local UIListLayout_1 = Instance.new("UIListLayout")
@@ -920,7 +819,7 @@ function Library.Load(o)
 	Notify.BorderColor3 = Color3.fromRGB(0,0,0)
 	Notify.BorderSizePixel = 0
 	Notify.Position = UDim2.new(0.5, 0,1, 0)
-	Notify.Size = UDim2.new(0, 100,0, 30)
+	Notify.Size = UDim2.new(0, 130,0, 40)
 
 	UIListLayout_1.Parent = Notify
 	UIListLayout_1.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -966,7 +865,7 @@ function Library.Load(o)
 		Notifytemple_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		Notifytemple_1.BorderSizePixel = 0
 		Notifytemple_1.Position = UDim2.new(0.5, 0,0.5, 0)
-		Notifytemple_1.Size = UDim2.new(0, 0,0, 20)
+		Notifytemple_1.Size = UDim2.new(0, 0,0, 35)
 
 		UIPadding_1.Parent = Notifytemple_1
 		UIPadding_1.PaddingLeft = UDim.new(0,10)
@@ -992,7 +891,7 @@ function Library.Load(o)
 		ImageLabel_1.BackgroundTransparency = 1
 		ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
 		ImageLabel_1.BorderSizePixel = 0
-		ImageLabel_1.Size = UDim2.new(0, 15,0, 15)
+		ImageLabel_1.Size = UDim2.new(0, 20,0, 20)
 		ImageLabel_1.Image = gl(Icon).Image
 		ImageLabel_1.ImageRectSize = gl(Icon).ImageRectSize
 		ImageLabel_1.ImageRectOffset = gl(Icon).ImageRectPosition
@@ -1032,7 +931,7 @@ function Library.Load(o)
 		
 		tw({v = Shadow, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {ImageTransparency = 0.9}}):Play()
 		tw({v = Notifytemple_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {BackgroundTransparency = 0.4}}):Play()
-		tw({v = TextLabel_1, t = 0.15, s = Enum.EasingStyle.Exponential, d = "Out", g = {TextSize = 13, TextTransparency = 0}}):Play()
+		tw({v = TextLabel_1, t = 0.15, s = Enum.EasingStyle.Exponential, d = "Out", g = {TextSize = 18, TextTransparency = 0}}):Play()
 		tw({v = UIStroke_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {Transparency = 0}}):Play()
 		tw({v = ImageLabel_1, t = 0.15, s = Enum.EasingStyle.Linear, d = "InOut", g = {ImageTransparency = 0}}):Play()
 		
@@ -1140,6 +1039,10 @@ function Library.Load(o)
 			end)
 			
 			Click_1.MouseButton1Click:Connect(function()
+				tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Linear, d = "InOut", g = {Size = UDim2.new(1, 0,0, 25), BackgroundColor3 = Color3.fromRGB(180,0,40)}}):Play()
+				task.delay(0.1, function()
+					tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Linear, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
+				end)
 				local input = realText
 				local found = false
 
@@ -1194,7 +1097,7 @@ local Window = Library.Load({
 	Name = 'MultiHub',
 	Icon = nil,
 	DiscordLink = 'discord.gg',
-	Color = Color3.fromRGB(138, 43, 226),
+	Color = Color3.fromRGB(220, 20, 60),
 	Key = {'key'}
 })
 
@@ -1204,6 +1107,3 @@ local Window = Library.Load({
 
 
 
-Window.Explain('Stealth prioritizes performance and stability, ensuring smooth operation at all times.')
-Window.Explain('Every feature is designed with precision, keeping user experience clean and distraction-free.')
-Window.Explain('Continuous updates guarantee that you stay ahead without ever compromising reliability.')
