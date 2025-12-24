@@ -254,15 +254,15 @@ function Library.Load(o)
 		return Click
 	end
 
-	local HubName = o.Name or 'MultiHub'
+	local HubName = o.Name or 'SindexHub'
 	local Color = o.Color or Color3.fromRGB(138, 43, 226)
 	local Icon = o.Icon or 14930953469
 	local Key = o.Key or {}
 
-	if KeyGUI then makefolder("MultiHub") end
+	if KeyGUI then makefolder("SindexHub") end
 	local savedKey = ""
 	if KeyGUI then
-		local success, key = pcall(readfile, "MultiHub/key.txt")
+		local success, key = pcall(readfile, "SindexHub/key.txt")
 		savedKey = success and key or ""
 	end
 
@@ -315,7 +315,7 @@ function Library.Load(o)
 	Background_1.Parent = ScreenGui
 	Background_1.AutomaticSize = Enum.AutomaticSize.Y
 	Background_1.AnchorPoint = Vector2.new(0.5, 0.5)
-	Background_1.BackgroundColor3 = Color3.fromRGB(30,30,34)
+	Background_1.BackgroundColor3 = Color3.fromRGB(50, 30, 70)
 	Background_1.BorderColor3 = Color3.fromRGB(0,0,0)
 	Background_1.BorderSizePixel = 0
 	Background_1.Position = UDim2.new(0.5, 0,0.5, 0)
@@ -331,7 +331,7 @@ function Library.Load(o)
 	UICorner_1.CornerRadius = UDim.new(0,15)
 
 	UIGradient_1.Parent = Background_1
-	UIGradient_1.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(10, 12, 20)), ColorSequenceKeypoint.new(0.5, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 12, 20))}
+	UIGradient_1.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 15, 50)), ColorSequenceKeypoint.new(0.5, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 15, 50))}
 	UIGradient_1.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0,0), NumberSequenceKeypoint.new(0.5,0.04375), NumberSequenceKeypoint.new(1,0)}
 
 	local UIStroke_3 = Instance.new("UIStroke")
@@ -339,6 +339,20 @@ function Library.Load(o)
 	UIStroke_3.Color = Color
 	UIStroke_3.Thickness = 1
 	UIStroke_3.Transparency = 0.7
+
+	local Shadow_BG = Instance.new("ImageLabel")
+	Shadow_BG.Name = "Shadow_BG"
+	Shadow_BG.Parent = ScreenGui
+	Shadow_BG.AnchorPoint = Vector2.new(0.5, 0.5)
+	Shadow_BG.BackgroundTransparency = 1
+	Shadow_BG.Position = Background_1.Position
+	Shadow_BG.Size = UDim2.new(1.1, 0,1.1, 0)
+	Shadow_BG.Image = "rbxassetid://1316045217"
+	Shadow_BG.ImageColor3 = Color3.fromRGB(0,0,0)
+	Shadow_BG.ImageTransparency = 0.7
+	Shadow_BG.ScaleType = Enum.ScaleType.Slice
+	Shadow_BG.SliceCenter = Rect.new(10, 10, 118, 118)
+	Shadow_BG.ZIndex = 0
 
 	UIPadding_1.Parent = Left_1
 	UIPadding_1.PaddingBottom = UDim.new(0,10)
@@ -393,7 +407,7 @@ function Library.Load(o)
 	TextLabel_1.BorderSizePixel = 0
 	TextLabel_1.Size = UDim2.new(0, 0,0, 20)
 	TextLabel_1.Font = Enum.Font.Gotham
-	TextLabel_1.Text = "MULTIHUB KEY SYSTEM"
+	TextLabel_1.Text = "Sindex KEY SYSTEM"
 	TextLabel_1.TextColor3 = Color
 	TextLabel_1.TextSize = 11
 	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
@@ -491,6 +505,20 @@ function Library.Load(o)
 	UIStroke_1.Color = Color
 	UIStroke_1.Thickness = 1.2
 	UIStroke_1.Transparency = 0.64
+
+	local Shadow_Keybox = Instance.new("ImageLabel")
+	Shadow_Keybox.Name = "Shadow_Keybox"
+	Shadow_Keybox.Parent = Keybox_1
+	Shadow_Keybox.AnchorPoint = Vector2.new(0.5, 0.5)
+	Shadow_Keybox.BackgroundTransparency = 1
+	Shadow_Keybox.Position = UDim2.new(0.5, 0,0.5, 0)
+	Shadow_Keybox.Size = UDim2.new(1.05, 0,1.05, 0)
+	Shadow_Keybox.Image = "rbxassetid://1316045217"
+	Shadow_Keybox.ImageColor3 = Color
+	Shadow_Keybox.ImageTransparency = 0.8
+	Shadow_Keybox.ScaleType = Enum.ScaleType.Slice
+	Shadow_Keybox.SliceCenter = Rect.new(10, 10, 118, 118)
+	Shadow_Keybox.ZIndex = 0
 
 	UIPadding_2.Parent = Keybox_1
 	UIPadding_2.PaddingLeft = UDim.new(0,10)
@@ -688,7 +716,7 @@ function Library.Load(o)
 		task.delay(0.1, function()
 			tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Linear, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
 		end)
-		tab.Notify({
+		tab.TopNotify({
 				Title = 'Copied Link Key to Clipboard!',
 				Icon = 14938884688,
 				Time = 5,
@@ -827,10 +855,28 @@ function Library.Load(o)
 	UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_1.VerticalAlignment = Enum.VerticalAlignment.Bottom
 
+	local TopNotify = Instance.new("Frame")
+	local UIListLayout_Top = Instance.new("UIListLayout")
+
+	TopNotify.Name = "TopNotify"
+	TopNotify.Parent = Background_1
+	TopNotify.AnchorPoint = Vector2.new(0.5, 0)
+	TopNotify.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	TopNotify.BackgroundTransparency = 1
+	TopNotify.BorderColor3 = Color3.fromRGB(0,0,0)
+	TopNotify.BorderSizePixel = 0
+	TopNotify.Position = UDim2.new(0.5, 0,0, 0)
+	TopNotify.Size = UDim2.new(0, 130,0, 40)
+
+	UIListLayout_Top.Parent = TopNotify
+	UIListLayout_Top.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	UIListLayout_Top.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_Top.VerticalAlignment = Enum.VerticalAlignment.Top
+
 	function tab.Notify(p)
 		local Title = p.Title or 'null'
 		local Icon = p.Icon or 14924054039
-		local ColorN = p.Color or Color3.fromRGB(0, 255, 81)
+		local ColorN = p.Color or Color3.fromRGB(138, 43, 226)
 		local Time = p.Time or 5
 		
 		local Shadow = Instance.new("ImageLabel")
@@ -880,6 +926,25 @@ function Library.Load(o)
 		UIStroke_1.Color = ColorN
 		UIStroke_1.Thickness = 1
 		UIStroke_1.Transparency = 1
+
+		local UIGradient_Notify = Instance.new("UIGradient")
+		UIGradient_Notify.Parent = Notifytemple_1
+		UIGradient_Notify.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, ColorN), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,255,255)), ColorSequenceKeypoint.new(1, ColorN)}
+		UIGradient_Notify.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0,0.4), NumberSequenceKeypoint.new(1,0.4)}
+
+		local Glow = Instance.new("ImageLabel")
+		Glow.Name = "Glow"
+		Glow.Parent = Shadow
+		Glow.BackgroundTransparency = 1
+		Glow.Position = UDim2.new(0.5, 0,0.5, 0)
+		Glow.AnchorPoint = Vector2.new(0.5, 0.5)
+		Glow.Size = UDim2.new(1.2, 0,1.2, 0)
+		Glow.Image = "rbxassetid://1316045217"
+		Glow.ImageColor3 = ColorN
+		Glow.ImageTransparency = 0.8
+		Glow.ScaleType = Enum.ScaleType.Slice
+		Glow.SliceCenter = Rect.new(10, 10, 118, 118)
+		Glow.ZIndex = -1
 
 		Frame_1.Parent = Notifytemple_1
 		Frame_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
@@ -936,6 +1001,7 @@ function Library.Load(o)
 		tw({v = TextLabel_1, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 18, TextTransparency = 0}}):Play()
 		tw({v = UIStroke_1, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {Transparency = 0}}):Play()
 		tw({v = ImageLabel_1, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0}}):Play()
+		tw({v = Glow, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0.6}}):Play()
 		
 		task.spawn(function()
 			for i = Time, 1, -1 do
@@ -946,6 +1012,161 @@ function Library.Load(o)
 			tw({v = TextLabel_1, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {TextSize = 0, TextTransparency = 1}}):Play()
 			tw({v = UIStroke_1, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {Transparency = 1}}):Play()
 			tw({v = ImageLabel_1, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1}}):Play()
+			tw({v = Glow, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 0.8}}):Play()
+			task.delay(0.15, function()
+				Shadow:Destroy()
+			end)
+		end)
+		
+		local n = {}
+		
+		function n:Set(n)
+			TextLabel_1.Text = n
+		end
+		
+		return n
+	end
+
+	function tab.TopNotify(p)
+		local Title = p.Title or 'null'
+		local Icon = p.Icon or 14924054039
+		local ColorN = p.Color or Color3.fromRGB(138, 43, 226)
+		local Time = p.Time or 5
+		
+		local Shadow = Instance.new("ImageLabel")
+		local Notifytemple_1 = Instance.new("Frame")
+		local UIPadding_1 = Instance.new("UIPadding")
+		local UICorner_1 = Instance.new("UICorner")
+		local UIStroke_1 = Instance.new("UIStroke")
+		local Frame_1 = Instance.new("Frame")
+		local ImageLabel_1 = Instance.new("ImageLabel")
+		local TextLabel_1 = Instance.new("TextLabel")
+		local UIListLayout_1 = Instance.new("UIListLayout")
+		local UIListLayout_2 = Instance.new("UIListLayout")
+		local UIPadding_2 = Instance.new("UIPadding")
+		local UIGradient_Notify = Instance.new("UIGradient")
+		local Glow = Instance.new("ImageLabel")
+
+		Shadow.Name = "Shadow"
+		Shadow.Parent = TopNotify
+		Shadow.AutomaticSize = Enum.AutomaticSize.XY
+		Shadow.BackgroundColor3 = Color3.fromRGB(163,162,165)
+		Shadow.BackgroundTransparency = 1
+		Shadow.Position = UDim2.new(0.5, 0,0, -50)
+		Shadow.Size = UDim2.new(0, 0,0, 0)
+		Shadow.Image = "rbxassetid://1316045217"
+		Shadow.ImageColor3 = ColorN
+		Shadow.ImageTransparency = 1
+		Shadow.ScaleType = Enum.ScaleType.Slice
+		Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
+
+		Notifytemple_1.Name = "Notifytemple"
+		Notifytemple_1.Parent = Shadow
+		Notifytemple_1.AnchorPoint = Vector2.new(0.5, 0.5)
+		Notifytemple_1.AutomaticSize = Enum.AutomaticSize.X
+		Notifytemple_1.BackgroundColor3 = ColorN
+		Notifytemple_1.BackgroundTransparency = 1
+		Notifytemple_1.BorderColor3 = Color3.fromRGB(0,0,0)
+		Notifytemple_1.BorderSizePixel = 0
+		Notifytemple_1.Position = UDim2.new(0.5, 0,0.5, 0)
+		Notifytemple_1.Size = UDim2.new(0, 0,0, 35)
+
+		UIPadding_1.Parent = Notifytemple_1
+		UIPadding_1.PaddingLeft = UDim.new(0,10)
+		UIPadding_1.PaddingRight = UDim.new(0,10)
+
+		UICorner_1.Parent = Notifytemple_1
+		UICorner_1.CornerRadius = UDim.new(1,0)
+
+		UIStroke_1.Parent = Notifytemple_1
+		UIStroke_1.Color = ColorN
+		UIStroke_1.Thickness = 1
+		UIStroke_1.Transparency = 1
+
+		UIGradient_Notify.Parent = Notifytemple_1
+		UIGradient_Notify.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, ColorN), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,255,255)), ColorSequenceKeypoint.new(1, ColorN)}
+		UIGradient_Notify.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0,0.4), NumberSequenceKeypoint.new(1,0.4)}
+
+		Frame_1.Parent = Notifytemple_1
+		Frame_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+		Frame_1.BackgroundTransparency = 1
+		Frame_1.BorderColor3 = Color3.fromRGB(0,0,0)
+		Frame_1.BorderSizePixel = 0
+		Frame_1.Size = UDim2.new(1, 0,1, 0)
+
+		ImageLabel_1.Parent = Frame_1
+		ImageLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+		ImageLabel_1.BackgroundTransparency = 1
+		ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
+		ImageLabel_1.BorderSizePixel = 0
+		ImageLabel_1.Size = UDim2.new(0, 20,0, 20)
+		ImageLabel_1.Image = gl(Icon).Image
+		ImageLabel_1.ImageRectSize = gl(Icon).ImageRectSize
+		ImageLabel_1.ImageRectOffset = gl(Icon).ImageRectPosition
+		ImageLabel_1.ImageTransparency = 1
+
+		TextLabel_1.Parent = Frame_1
+		TextLabel_1.AutomaticSize = Enum.AutomaticSize.X
+		TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
+		TextLabel_1.BackgroundTransparency = 1
+		TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
+		TextLabel_1.BorderSizePixel = 0
+		TextLabel_1.LayoutOrder = 1
+		TextLabel_1.Size = UDim2.new(0, 0,1, 0)
+		TextLabel_1.Font = Enum.Font.Gotham
+		TextLabel_1.Text = Title
+		TextLabel_1.TextColor3 = Color3.fromRGB(255,255,255)
+		TextLabel_1.TextSize = 0
+		TextLabel_1.TextTransparency = 1
+
+		UIListLayout_1.Parent = Frame_1
+		UIListLayout_1.Padding = UDim.new(0,6)
+		UIListLayout_1.FillDirection = Enum.FillDirection.Horizontal
+		UIListLayout_1.HorizontalAlignment = Enum.HorizontalAlignment.Center
+		UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
+		UIListLayout_1.VerticalAlignment = Enum.VerticalAlignment.Center
+
+		UIListLayout_2.Parent = Shadow
+		UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
+		UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+		UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+
+		UIPadding_2.Parent = Shadow
+		UIPadding_2.PaddingBottom = UDim.new(0,8)
+		UIPadding_2.PaddingLeft = UDim.new(0,8)
+		UIPadding_2.PaddingRight = UDim.new(0,8)
+		UIPadding_2.PaddingTop = UDim.new(0,8)
+
+		Glow.Name = "Glow"
+		Glow.Parent = Shadow
+		Glow.BackgroundTransparency = 1
+		Glow.Position = UDim2.new(0.5, 0,0.5, 0)
+		Glow.AnchorPoint = Vector2.new(0.5, 0.5)
+		Glow.Size = UDim2.new(1.2, 0,1.2, 0)
+		Glow.Image = "rbxassetid://1316045217"
+		Glow.ImageColor3 = ColorN
+		Glow.ImageTransparency = 0.8
+		Glow.ScaleType = Enum.ScaleType.Slice
+		Glow.SliceCenter = Rect.new(10, 10, 118, 118)
+		Glow.ZIndex = -1
+		
+		tw({v = Shadow, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0.9, Position = UDim2.new(0.5, 0,0, 0)}}):Play()
+		tw({v = Notifytemple_1, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {BackgroundTransparency = 0.4}}):Play()
+		tw({v = TextLabel_1, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 18, TextTransparency = 0}}):Play()
+		tw({v = UIStroke_1, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {Transparency = 0}}):Play()
+		tw({v = ImageLabel_1, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0}}):Play()
+		tw({v = Glow, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0.6}}):Play()
+		
+		task.spawn(function()
+			for i = Time, 1, -1 do
+				task.wait(1)
+			end
+			tw({v = Shadow, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1, Position = UDim2.new(0.5, 0,0, -50)}}):Play()
+			tw({v = Notifytemple_1, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {BackgroundTransparency = 1}}):Play()
+			tw({v = TextLabel_1, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {TextSize = 0, TextTransparency = 1}}):Play()
+			tw({v = UIStroke_1, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {Transparency = 1}}):Play()
+			tw({v = ImageLabel_1, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1}}):Play()
+			tw({v = Glow, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 0.8}}):Play()
 			task.delay(0.15, function()
 				Shadow:Destroy()
 			end)
@@ -1056,7 +1277,7 @@ function Library.Load(o)
 				end
 
 				if found then
-					if KeyGUI then pcall(writefile, "MultiHub/key.txt", input) end
+					if KeyGUI then pcall(writefile, "SindexHub/key.txt", input) end
 					tab.Notify({
 						Title = 'Correct',
 						Icon = 14939475472,
@@ -1096,11 +1317,11 @@ function Library.Load(o)
 end
 
 local Window = Library.Load({
-	Name = 'MultiHub',
+	Name = 'SindexHub',
 	Icon = nil,
 	DiscordLink = 'discord.gg',
 	Color = Color3.fromRGB(220, 20, 60),
-	Key = {'key'}
+	Key = {'alchemy'}
 })
 
 
