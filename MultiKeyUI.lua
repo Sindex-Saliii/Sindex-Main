@@ -688,11 +688,12 @@ function Library.Load(o)
 		task.delay(0.1, function()
 			tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Linear, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
 		end)
-		Window.Notify({
-			Title = 'Getting Key...',
-			Icon = 14938884688,
-			Time = 5
-		})
+		tab.Notify({
+				Title = 'Copied Link Key to Clipboard!',
+				Icon = 14938884688,
+				Time = 5,
+				Color = Color3.fromRGB(0, 255, 81)
+			})
 	end)
 
 	local ClickJoinDis = click(TextLabel_4)
@@ -1101,6 +1102,10 @@ local Window = Library.Load({
 	Color = Color3.fromRGB(220, 20, 60),
 	Key = {'key'}
 })
+
+
+
+
 
 
 
