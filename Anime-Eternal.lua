@@ -1,4 +1,4 @@
-local Library = loadstring(game:HttpGet("your_script_url"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sindex-Saliii/Sindex-Main/refs/heads/main/MultiKeyUI.lua"))()
 local Window = Library.Load({
     Name = 'SindexHub',
     Icon = 14930953469,
