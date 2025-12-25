@@ -4,6 +4,8 @@ local KeyGUI = pcall(function() return makefolder and readfile and writefile and
 
 function Library.Load(o)
 	local function init(getFrame)
+		if not getFrame then return {nil, nil} end
+		
 		local MTREL = "Glass"
 		local binds = {}
 		local root = Instance.new('Folder', workspace.CurrentCamera)
@@ -195,7 +197,13 @@ function Library.Load(o)
 	end
 	
 	local function gl(i)
-		if type(i) == 'number' then
+		if not i then
+			return {
+				Image = "",
+				ImageRectSize = Vector2.new(0, 0),
+				ImageRectOffset = Vector2.new(0, 0),
+			}
+		elseif type(i) == 'number' then
 			return {
 				Image = "rbxassetid://".. tostring(i),
 				ImageRectSize = Vector2.new(0, 0),
@@ -217,12 +225,18 @@ function Library.Load(o)
 	end
 	
 	local function tw(info)
-		if not info then return { Play = function() end } end
-		if not info.v then return { Play = function() end } end
+		if not info then 
+			return { Play = function() end } 
+		end
+		if not info.v or not info.v:IsA("Instance") then 
+			return { Play = function() end } 
+		end
 		
 		local direction = Enum.EasingDirection.Out
 		if type(info.d) == "string" then
-			direction = Enum.EasingDirection[info.d] or Enum.EasingDirection.Out
+			if Enum.EasingDirection[info.d] then
+				direction = Enum.EasingDirection[info.d]
+			end
 		elseif info.d then
 			direction = info.d
 		end
@@ -230,16 +244,27 @@ function Library.Load(o)
 		local style = info.s or Enum.EasingStyle.Quad
 		local time = info.t or 0.3
 		
-		return Tw:Create(
-			info.v,
-			TweenInfo.new(time, style, direction),
-			info.g or {}
-		)
+		local success, tween = pcall(function()
+			return Tw:Create(
+				info.v,
+				TweenInfo.new(time, style, direction),
+				info.g or {}
+			)
+		end)
+		
+		if success and tween then
+			return tween
+		else
+			return { Play = function() end }
+		end
 	end
 	
 	local function lak(t, o)
+		if not t or not o then return end
+		
 		local a, b, c, d
 		local function u(i)
+			if not i or not d then return end
 			local dt = i.Position - c
 			tw({v = o, t = 0.05, s = Enum.EasingStyle.Linear, d = "InOut", g = {Position = UDim2.new(d.X.Scale, d.X.Offset + dt.X, d.Y.Scale, d.Y.Offset + dt.Y)}}):Play()
 		end
@@ -268,6 +293,8 @@ function Library.Load(o)
 	end
 	
 	local function click(p)
+		if not p then return end
+		
 		local Click = Instance.new("TextButton")
 		Click.Name = "Click"
 		Click.Parent = p
@@ -289,7 +316,7 @@ function Library.Load(o)
 	local Key = o.Key or {}
 
 	if KeyGUI then 
-		local success, err = pcall(function()
+		pcall(function()
 			makefolder("SindexHub")
 		end)
 	end
@@ -331,541 +358,6 @@ function Library.Load(o)
 	local UICorner_4 = Instance.new("UICorner")
 	local Shadow_1 = Instance.new("ImageLabel")
 	local Text_1 = Instance.new("Frame")
-	local UIListLayout_5 = Instance.new("UIListLayout")
-	local TextLabel_3 = Instance.new("TextLabel")
-	local ImageLabel_3 = Instance.new("ImageLabel")
-	local Click_1 = Instance.new("TextButton")
-	local TextLabel_4 = Instance.new("TextLabel")
-	local Line_1 = Instance.new("Frame")
-	local TabList_1 = Instance.new("Frame")
-	local UIListLayout_7 = Instance.new("UIListLayout")
-
-	ScreenGui.Parent = (not game:GetService("RunService"):IsStudio() and game:GetService("CoreGui") or game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"))
-	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	ScreenGui.Name = "SindexKeySystem"
-
-	Background_1.Name = "Background"
-	Background_1.Parent = ScreenGui
-	Background_1.AutomaticSize = Enum.AutomaticSize.Y
-	Background_1.AnchorPoint = Vector2.new(0.5, 0.5)
-	Background_1.BackgroundColor3 = Color3.fromRGB(50, 30, 70)
-	Background_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Background_1.BorderSizePixel = 0
-	Background_1.Position = UDim2.new(0.5, 0,0.5, 0)
-	Background_1.Size = UDim2.new(0.4, 0,0, 0)
-	Background_1.ClipsDescendants = true
-	Background_1.BackgroundTransparency = 1
-	
-	lak(Background_1, Background_1)
-
-	init(Background_1)
-
-	UICorner_1.Parent = Background_1
-	UICorner_1.CornerRadius = UDim.new(0,15)
-
-	UIGradient_1.Parent = Background_1
-	UIGradient_1.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 15, 50)), ColorSequenceKeypoint.new(0.5, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 15, 50))}
-	UIGradient_1.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0,0), NumberSequenceKeypoint.new(0.5,0.04375), NumberSequenceKeypoint.new(1,0)}
-	UIGradient_1.Rotation = 45
-
-	local UIStroke_3 = Instance.new("UIStroke")
-	UIStroke_3.Parent = Background_1
-	UIStroke_3.Color = Color
-	UIStroke_3.Thickness = 1
-	UIStroke_3.Transparency = 0.7
-
-	local Shadow_BG = Instance.new("ImageLabel")
-	Shadow_BG.Name = "Shadow_BG"
-	Shadow_BG.Parent = ScreenGui
-	Shadow_BG.AnchorPoint = Vector2.new(0.5, 0.5)
-	Shadow_BG.BackgroundTransparency = 1
-	Shadow_BG.Position = Background_1.Position
-	Shadow_BG.Size = UDim2.new(1.1, 0,1.1, 0)
-	Shadow_BG.Image = "rbxassetid://1316045217"
-	Shadow_BG.ImageColor3 = Color3.fromRGB(0,0,0)
-	Shadow_BG.ImageTransparency = 0.7
-	Shadow_BG.ScaleType = Enum.ScaleType.Slice
-	Shadow_BG.SliceCenter = Rect.new(10, 10, 118, 118)
-	Shadow_BG.ZIndex = 0
-
-	UIPadding_1.Parent = Background_1
-	UIPadding_1.PaddingBottom = UDim.new(0,10)
-	UIPadding_1.PaddingLeft = UDim.new(0,10)
-	UIPadding_1.PaddingRight = UDim.new(0,10)
-	UIPadding_1.PaddingTop = UDim.new(0,10)
-
-	Left_1.Name = "Left"
-	Left_1.Parent = Background_1
-	Left_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Left_1.BackgroundTransparency = 1
-	Left_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Left_1.BorderSizePixel = 0
-	Left_1.Size = UDim2.new(1, 0,1, 0)
-	Left_1.GroupTransparency = 1
-	Left_1.ClipsDescendants = false
-
-	UIListLayout_1.Parent = Left_1
-	UIListLayout_1.Padding = UDim.new(0,8)
-	UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
-
-	TItleIcon_1.Name = "TItleIcon"
-	TItleIcon_1.Parent = Left_1
-	TItleIcon_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TItleIcon_1.BackgroundTransparency = 1
-	TItleIcon_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TItleIcon_1.BorderSizePixel = 0
-	TItleIcon_1.Size = UDim2.new(0, 100,0, 20)
-
-	UIListLayout_2.Parent = TItleIcon_1
-	UIListLayout_2.Padding = UDim.new(0,8)
-	UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
-	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
-
-	ImageLabel_1.Parent = TItleIcon_1
-	ImageLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ImageLabel_1.BackgroundTransparency = 1
-	ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	ImageLabel_1.BorderSizePixel = 0
-	ImageLabel_1.Size = UDim2.new(0, 17,0, 17)
-	ImageLabel_1.Image = gl(Icon).Image
-	ImageLabel_1.ImageTransparency = 1
-
-	local UIGradient_Icon = Instance.new("UIGradient")
-	UIGradient_Icon.Parent = ImageLabel_1
-	UIGradient_Icon.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))}
-	UIGradient_Icon.Transparency = NumberSequence.new(1)
-	UIGradient_Icon.Rotation = 90
-
-	TextLabel_1.Parent = TItleIcon_1
-	TextLabel_1.AutomaticSize = Enum.AutomaticSize.X
-	TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_1.BackgroundTransparency = 1
-	TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_1.BorderSizePixel = 0
-	TextLabel_1.Size = UDim2.new(0, 0,0, 20)
-	TextLabel_1.Font = Enum.Font.Gotham
-	TextLabel_1.Text = "Sindex KEY SYSTEM"
-	TextLabel_1.TextColor3 = Color
-	TextLabel_1.TextSize = 11
-	TextLabel_1.TextTransparency = 1
-	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
-
-	adsframe_1.Name = "adsframe"
-	adsframe_1.Parent = Left_1
-	adsframe_1.AutomaticSize = Enum.AutomaticSize.Y
-	adsframe_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	adsframe_1.BackgroundTransparency = 1
-	adsframe_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	adsframe_1.BorderSizePixel = 0
-	adsframe_1.LayoutOrder = 1
-	adsframe_1.Size = UDim2.new(1, 0,0, 0)
-
-	ads_1.Name = "ads"
-	ads_1.Parent = adsframe_1
-	ads_1.AutomaticSize = Enum.AutomaticSize.Y
-	ads_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ads_1.BackgroundTransparency = 1
-	ads_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	ads_1.BorderSizePixel = 0
-	ads_1.Size = UDim2.new(1, 0,1, 0)
-	ads_1.Font = Enum.Font.GothamBold
-	ads_1.RichText = true
-	ads_1.Text = "WELCOME TO ,\n<font color='"..string.format("rgb(%d, %d, %d)", Color.r * 255, Color.g * 255, Color.b * 255).."'>"..HubName.." Key System</font>"
-	ads_1.TextColor3 = Color3.fromRGB(255,255,255)
-	ads_1.TextSize = 22
-	ads_1.TextTransparency = 1
-	ads_1.TextWrapped = true
-	ads_1.TextXAlignment = Enum.TextXAlignment.Left
-
-	KeyFrame_1.Name = "KeyFrame"
-	KeyFrame_1.Parent = Left_1
-	KeyFrame_1.AutomaticSize = Enum.AutomaticSize.Y
-	KeyFrame_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	KeyFrame_1.BackgroundTransparency = 1
-	KeyFrame_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	KeyFrame_1.BorderSizePixel = 0
-	KeyFrame_1.LayoutOrder = 2
-	KeyFrame_1.Size = UDim2.new(1, 0,0, 0)
-
-	UIListLayout_3.Parent = KeyFrame_1
-	UIListLayout_3.Padding = UDim.new(0,5)
-	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-
-	TextLabel_2.Parent = KeyFrame_1
-	TextLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_2.BackgroundTransparency = 1
-	TextLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_2.BorderSizePixel = 0
-	TextLabel_2.Size = UDim2.new(1, 0,0, 20)
-	TextLabel_2.Font = Enum.Font.Gotham
-	TextLabel_2.Text = "License Key"
-	TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_2.TextSize = 12
-	TextLabel_2.TextTransparency = 1
-	TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
-
-	Frame_1.Parent = TextLabel_2
-	Frame_1.AnchorPoint = Vector2.new(1, 0.5)
-	Frame_1.BackgroundColor3 = Color
-	Frame_1.BackgroundTransparency = 1
-	Frame_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Frame_1.BorderSizePixel = 0
-	Frame_1.Position = UDim2.new(1, 0,0.5, 0)
-	Frame_1.Size = UDim2.new(0, 18,0, 18)
-
-	UICorner_2.Parent = Frame_1
-	UICorner_2.CornerRadius = UDim.new(1,0)
-
-	local UIStroke_Eye = Instance.new("UIStroke")
-	UIStroke_Eye.Parent = Frame_1
-	UIStroke_Eye.Color = Color
-	UIStroke_Eye.Thickness = 1
-	UIStroke_Eye.Transparency = 1
-
-	ImageLabel_2.Parent = Frame_1
-	ImageLabel_2.AnchorPoint = Vector2.new(0.5, 0.5)
-	ImageLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ImageLabel_2.BackgroundTransparency = 1
-	ImageLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	ImageLabel_2.BorderSizePixel = 0
-	ImageLabel_2.Position = UDim2.new(0.5, 0,0.5, 0)
-	ImageLabel_2.Size = UDim2.new(0, 12,0, 12)
-	ImageLabel_2.Image = "rbxassetid://13868333926"
-	ImageLabel_2.ImageTransparency = 1
-	
-	local HideShowKey = click(Frame_1)
-
-	Keybox_1.Name = "Keybox"
-	Keybox_1.Parent = KeyFrame_1
-	Keybox_1.BackgroundColor3 = Color
-	Keybox_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Keybox_1.BorderSizePixel = 0
-	Keybox_1.LayoutOrder = 1
-	Keybox_1.Size = UDim2.new(1, 0,0, 30)
-	Keybox_1.Transparency = 1
-
-	UICorner_3.Parent = Keybox_1
-	UICorner_3.CornerRadius = UDim.new(0,4)
-
-	UIStroke_1.Parent = Keybox_1
-	UIStroke_1.Color = Color
-	UIStroke_1.Thickness = 1.2
-	UIStroke_1.Transparency = 1
-
-	local UIGradient_Keybox = Instance.new("UIGradient")
-	UIGradient_Keybox.Parent = Keybox_1
-	UIGradient_Keybox.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))}
-	UIGradient_Keybox.Transparency = NumberSequence.new(1)
-	UIGradient_Keybox.Rotation = 90
-
-	local Shadow_Keybox = Instance.new("ImageLabel")
-	Shadow_Keybox.Name = "Shadow_Keybox"
-	Shadow_Keybox.Parent = Keybox_1
-	Shadow_Keybox.AnchorPoint = Vector2.new(0.5, 0.5)
-	Shadow_Keybox.BackgroundTransparency = 1
-	Shadow_Keybox.Position = UDim2.new(0.5, 0,0.5, 0)
-	Shadow_Keybox.Size = UDim2.new(1.05, 0,1.05, 0)
-	Shadow_Keybox.Image = "rbxassetid://1316045217"
-	Shadow_Keybox.ImageColor3 = Color
-	Shadow_Keybox.ImageTransparency = 1
-	Shadow_Keybox.ScaleType = Enum.ScaleType.Slice
-	Shadow_Keybox.SliceCenter = Rect.new(10, 10, 118, 118)
-	Shadow_Keybox.ZIndex = 0
-
-	UIPadding_2.Parent = Keybox_1
-	UIPadding_2.PaddingLeft = UDim.new(0,10)
-	UIPadding_2.PaddingRight = UDim.new(0,10)
-
-	TextBox_1.Parent = Keybox_1
-	TextBox_1.Active = true
-	TextBox_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextBox_1.BackgroundTransparency = 1
-	TextBox_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextBox_1.BorderSizePixel = 0
-	TextBox_1.CursorPosition = -1
-	TextBox_1.Size = UDim2.new(1, 0,1, 0)
-	TextBox_1.Font = Enum.Font.Gotham
-	TextBox_1.PlaceholderColor3 = Color3.fromRGB(134,134,134)
-	TextBox_1.PlaceholderText = "XXXX-XXXX-XXXX-XXXX"
-	TextBox_1.Text = ""
-	TextBox_1.TextColor3 = Color3.fromRGB(255,255,255)
-	TextBox_1.TextSize = 12
-	TextBox_1.TextTransparency = 1
-	TextBox_1.TextXAlignment = Enum.TextXAlignment.Left
-	TextBox_1.ClearTextOnFocus = false
-
-	RedeemFrame_1.Name = "RedeemFrame"
-	RedeemFrame_1.Parent = Left_1
-	RedeemFrame_1.AutomaticSize = Enum.AutomaticSize.Y
-	RedeemFrame_1.BackgroundColor")
-	local TextLabel_3 = Instance.new("TextLabel")
-	local ImageLabel_3 = Instance.new("ImageLabel")
-	local Click_1 = Instance.new("TextButton")
-	local TextLabel_4 = Instance.new("TextLabel")
-	local Line_1 = Instance.new("Frame")
-	local TabList_1 = Instance.new("Frame")
-	local UIListLayout_7 = Instance.new("UIListLayout")
-
-	ScreenGui.Parent = (not game:GetService("RunService"):IsStudio() and game:GetService("CoreGui") or game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"))
-	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	ScreenGui.Name = "SindexKeySystem"
-
-	Background_1.Name = "Background"
-	Background_1.Parent = ScreenGui
-	Background_1.AutomaticSize = Enum.AutomaticSize.Y
-	Background_1.AnchorPoint = Vector2.new(0.5, 0.5)
-	Background_1.BackgroundColor3 = Color3.fromRGB(50, 30, 70)
-	Background_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Background_1.BorderSizePixel = 0
-	Background_1.Position = UDim2.new(0.5, 0,0.5, 0)
-	Background_1.Size = UDim2.new(0.4, 0,0, 0)
-	Background_1.ClipsDescendants = true
-	Background_1.BackgroundTransparency = 1
-	
-	lak(Background_1, Background_1)
-
-	init(Background_1)
-
-	UICorner_1.Parent = Background_1
-	UICorner_1.CornerRadius = UDim.new(0,15)
-
-	UIGradient_1.Parent = Background_1
-	UIGradient_1.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 15, 50)), ColorSequenceKeypoint.new(0.5, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 15, 50))}
-	UIGradient_1.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0,0), NumberSequenceKeypoint.new(0.5,0.04375), NumberSequenceKeypoint.new(1,0)}
-	UIGradient_1.Rotation = 45
-
-	local UIStroke_3 = Instance.new("UIStroke")
-	UIStroke_3.Parent = Background_1
-	UIStroke_3.Color = Color
-	UIStroke_3.Thickness = 1
-	UIStroke_3.Transparency = 0.7
-
-	local Shadow_BG = Instance.new("ImageLabel")
-	Shadow_BG.Name = "Shadow_BG"
-	Shadow_BG.Parent = ScreenGui
-	Shadow_BG.AnchorPoint = Vector2.new(0.5, 0.5)
-	Shadow_BG.BackgroundTransparency = 1
-	Shadow_BG.Position = Background_1.Position
-	Shadow_BG.Size = UDim2.new(1.1, 0,1.1, 0)
-	Shadow_BG.Image = "rbxassetid://1316045217"
-	Shadow_BG.ImageColor3 = Color3.fromRGB(0,0,0)
-	Shadow_BG.ImageTransparency = 0.7
-	Shadow_BG.ScaleType = Enum.ScaleType.Slice
-	Shadow_BG.SliceCenter = Rect.new(10, 10, 118, 118)
-	Shadow_BG.ZIndex = 0
-
-	UIPadding_1.Parent = Background_1
-	UIPadding_1.PaddingBottom = UDim.new(0,10)
-	UIPadding_1.PaddingLeft = UDim.new(0,10)
-	UIPadding_1.PaddingRight = UDim.new(0,10)
-	UIPadding_1.PaddingTop = UDim.new(0,10)
-
-	Left_1.Name = "Left"
-	Left_1.Parent = Background_1
-	Left_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Left_1.BackgroundTransparency = 1
-	Left_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Left_1.BorderSizePixel = 0
-	Left_1.Size = UDim2.new(1, 0,1, 0)
-	Left_1.GroupTransparency = 1
-	Left_1.ClipsDescendants = false
-
-	UIListLayout_1.Parent = Left_1
-	UIListLayout_1.Padding = UDim.new(0,8)
-	UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
-
-	TItleIcon_1.Name = "TItleIcon"
-	TItleIcon_1.Parent = Left_1
-	TItleIcon_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TItleIcon_1.BackgroundTransparency = 1
-	TItleIcon_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TItleIcon_1.BorderSizePixel = 0
-	TItleIcon_1.Size = UDim2.new(0, 100,0, 20)
-
-	UIListLayout_2.Parent = TItleIcon_1
-	UIListLayout_2.Padding = UDim.new(0,8)
-	UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
-	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
-
-	ImageLabel_1.Parent = TItleIcon_1
-	ImageLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ImageLabel_1.BackgroundTransparency = 1
-	ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	ImageLabel_1.BorderSizePixel = 0
-	ImageLabel_1.Size = UDim2.new(0, 17,0, 17)
-	ImageLabel_1.Image = gl(Icon).Image
-	ImageLabel_1.ImageTransparency = 1
-
-	local UIGradient_Icon = Instance.new("UIGradient")
-	UIGradient_Icon.Parent = ImageLabel_1
-	UIGradient_Icon.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))}
-	UIGradient_Icon.Transparency = NumberSequence.new(1)
-	UIGradient_Icon.Rotation = 90
-
-	TextLabel_1.Parent = TItleIcon_1
-	TextLabel_1.AutomaticSize = Enum.AutomaticSize.X
-	TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_1.BackgroundTransparency = 1
-	TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_1.BorderSizePixel = 0
-	TextLabel_1.Size = UDim2.new(0, 0,0, 20)
-	TextLabel_1.Font = Enum.Font.Gotham
-	TextLabel_1.Text = "Sindex KEY SYSTEM"
-	TextLabel_1.TextColor3 = Color
-	TextLabel_1.TextSize = 11
-	TextLabel_1.TextTransparency = 1
-	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
-
-	adsframe_1.Name = "adsframe"
-	adsframe_1.Parent = Left_1
-	adsframe_1.AutomaticSize = Enum.AutomaticSize.Y
-	adsframe_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	adsframe_1.BackgroundTransparency = 1
-	adsframe_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	adsframe_1.BorderSizePixel = 0
-	adsframe_1.LayoutOrder = 1
-	adsframe_1.Size = UDim2.new(1, 0,0, 0)
-
-	ads_1.Name = "ads"
-	ads_1.Parent = adsframe_1
-	ads_1.AutomaticSize = Enum.AutomaticSize.Y
-	ads_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ads_1.BackgroundTransparency = 1
-	ads_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	ads_1.BorderSizePixel = 0
-	ads_1.Size = UDim2.new(1, 0,1, 0)
-	ads_1.Font = Enum.Font.GothamBold
-	ads_1.RichText = true
-	ads_1.Text = "WELCOME TO ,\n<font color='"..string.format("rgb(%d, %d, %d)", Color.r * 255, Color.g * 255, Color.b * 255).."'>"..HubName.." Key System</font>"
-	ads_1.TextColor3 = Color3.fromRGB(255,255,255)
-	ads_1.TextSize = 22
-	ads_1.TextTransparency = 1
-	ads_1.TextWrapped = true
-	ads_1.TextXAlignment = Enum.TextXAlignment.Left
-
-	KeyFrame_1.Name = "KeyFrame"
-	KeyFrame_1.Parent = Left_1
-	KeyFrame_1.AutomaticSize = Enum.AutomaticSize.Y
-	KeyFrame_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	KeyFrame_1.BackgroundTransparency = 1
-	KeyFrame_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	KeyFrame_1.BorderSizePixel = 0
-	KeyFrame_1.LayoutOrder = 2
-	KeyFrame_1.Size = UDim2.new(1, 0,0, 0)
-
-	UIListLayout_3.Parent = KeyFrame_1
-	UIListLayout_3.Padding = UDim.new(0,5)
-	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-
-	TextLabel_2.Parent = KeyFrame_1
-	TextLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_2.BackgroundTransparency = 1
-	TextLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_2.BorderSizePixel = 0
-	TextLabel_2.Size = UDim2.new(1, 0,0, 20)
-	TextLabel_2.Font = Enum.Font.Gotham
-	TextLabel_2.Text = "License Key"
-	TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_2.TextSize = 12
-	TextLabel_2.TextTransparency = 1
-	TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
-
-	Frame_1.Parent = TextLabel_2
-	Frame_1.AnchorPoint = Vector2.new(1, 0.5)
-	Frame_1.BackgroundColor3 = Color
-	Frame_1.BackgroundTransparency = 1
-	Frame_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Frame_1.BorderSizePixel = 0
-	Frame_1.Position = UDim2.new(1, 0,0.5, 0)
-	Frame_1.Size = UDim2.new(0, 18,0, 18)
-
-	UICorner_2.Parent = Frame_1
-	UICorner_2.CornerRadius = UDim.new(1,0)
-
-	local UIStroke_Eye = Instance.new("UIStroke")
-	UIStroke_Eye.Parent = Frame_1
-	UIStroke_Eye.Color = Color
-	UIStroke_Eye.Thickness = 1
-	UIStroke_Eye.Transparency = 1
-
-	ImageLabel_2.Parent = Frame_1
-	ImageLabel_2.AnchorPoint = Vector2.new(0.5, 0.5)
-	ImageLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ImageLabel_2.BackgroundTransparency = 1
-	ImageLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	ImageLabel_2.BorderSizePixel = 0
-	ImageLabel_2.Position = UDim2.new(0.5, 0,0.5, 0)
-	ImageLabel_2.Size = UDim2.new(0, 12,0, 12)
-	ImageLabel_2.Image = "rbxassetid://13868333926"
-	ImageLabel_2.ImageTransparency = 1
-	
-	local HideShowKey = click(Frame_1)
-
-	Keybox_1.Name = "Keybox"
-	Keybox_1.Parent = KeyFrame_1
-	Keybox_1.BackgroundColor3 = Color
-	Keybox_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Keybox_1.BorderSizePixel = 0
-	Keybox_1.LayoutOrder = 1
-	Keybox_1.Size = UDim2.new(1, 0,0, 30)
-	Keybox_1.Transparency = 1
-
-	UICorner_3.Parent = Keybox_1
-	UICorner_3.CornerRadius = UDim.new(0,4)
-
-	UIStroke_1.Parent = Keybox_1
-	UIStroke_1.Color = Color
-	UIStroke_1.Thickness = 1.2
-	UIStroke_1.Transparency = 1
-
-	local UIGradient_Keybox = Instance.new("UIGradient")
-	UIGradient_Keybox.Parent = Keybox_1
-	UIGradient_Keybox.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))}
-	UIGradient_Keybox.Transparency = NumberSequence.new(1)
-	UIGradient_Keybox.Rotation = 90
-
-	local Shadow_Keybox = Instance.new("ImageLabel")
-	Shadow_Keybox.Name = "Shadow_Keybox"
-	Shadow_Keybox.Parent = Keybox_1
-	Shadow_Keybox.AnchorPoint = Vector2.new(0.5, 0.5)
-	Shadow_Keybox.BackgroundTransparency = 1
-	Shadow_Keybox.Position = UDim2.new(0.5, 0,0.5, 0)
-	Shadow_Keybox.Size = UDim2.new(1.05, 0,1.05, 0)
-	Shadow_Keybox.Image = "rbxassetid://1316045217"
-	Shadow_Keybox.ImageColor3 = Color
-	Shadow_Keybox.ImageTransparency = 1
-	Shadow_Keybox.ScaleType = Enum.ScaleType.Slice
-	Shadow_Keybox.SliceCenter = Rect.new(10, 10, 118, 118)
-	Shadow_Keybox.ZIndex = 0
-
-	UIPadding_2.Parent = Keybox_1
-	UIPadding_2.PaddingLeft = UDim.new(0,10)
-	UIPadding_2.PaddingRight = UDim.new(0,10)
-
-	TextBox_1.Parent = Keybox_1
-	TextBox_1.Active = true
-	TextBox_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextBox_1.BackgroundTransparency = 1
-	TextBox_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextBox_1.BorderSizePixel = 0
-	TextBox_1.CursorPosition = -1
-	TextBox_1.Size = UDim2.new(1, 0,1, 0)
-	TextBox_1.Font = Enum.Font.Gotham
-	TextBox_1.PlaceholderColor3 = Color3.fromRGB(134,134,134)
-	TextBox_1.PlaceholderText = "XXXX-XXXX-XXXX-XXXX"
-	TextBox_1.Text = ""
-	TextBox_1.TextColor3 = Color3.fromRGB(255,255,255)
-	TextBox_1.TextSize = 12
-	TextBox_1.TextTransparency = 1
-	TextBox_1.TextXAlignment = Enum.TextXAlignment.Left
-	TextBox_1.ClearTextOnFocus = false
-
-	RedeemFrame_1.Name = "RedeemFrame"
-	RedeemFrame_1.Parent = Left_1
-	RedeemFrame_1.AutomaticSize = Enum.AutomaticSize.Y
-	RedeemFrame_1.Backgroutance.new("Frame")
 	local UIListLayout_5 = Instance.new("UIListLayout")
 	local TextLabel_3 = Instance.new("TextLabel")
 	local ImageLabel_3 = Instance.new("ImageLabel")
@@ -1233,15 +725,17 @@ function Library.Load(o)
 	HoverButton1.Size = UDim2.new(1,0,1,0)
 	HoverButton1.Visible = false
 
-	Button_1.MouseEnter:Connect(function()
-		HoverButton1.Visible = true
-		tw({v = HoverButton1, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.7}}):Play()
-	end)
+	if Button_1 then
+		Button_1.MouseEnter:Connect(function()
+			HoverButton1.Visible = true
+			tw({v = HoverButton1, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.7}}):Play()
+		end)
 
-	Button_1.MouseLeave:Connect(function()
-		tw({v = HoverButton1, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
-		task.delay(0.15, function() HoverButton1.Visible = false end)
-	end)
+		Button_1.MouseLeave:Connect(function()
+			tw({v = HoverButton1, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
+			task.delay(0.15, function() HoverButton1.Visible = false end)
+		end)
+	end
 
 	local Button_2 = Instance.new("Frame")
 	Button_2.Name = "Button"
@@ -1332,15 +826,17 @@ function Library.Load(o)
 	HoverButton2.Size = UDim2.new(1,0,1,0)
 	HoverButton2.Visible = false
 
-	Button_2.MouseEnter:Connect(function()
-		HoverButton2.Visible = true
-		tw({v = HoverButton2, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.7}}):Play()
-	end)
+	if Button_2 then
+		Button_2.MouseEnter:Connect(function()
+			HoverButton2.Visible = true
+			tw({v = HoverButton2, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.7}}):Play()
+		end)
 
-	Button_2.MouseLeave:Connect(function()
-		tw({v = HoverButton2, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
-		task.delay(0.15, function() HoverButton2.Visible = false end)
-	end)
+		Button_2.MouseLeave:Connect(function()
+			tw({v = HoverButton2, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
+			task.delay(0.15, function() HoverButton2.Visible = false end)
+		end)
+	end
 
 	TextLabel_4.Parent = RedeemFrame_1
 	TextLabel_4.AutomaticSize = Enum.AutomaticSize.XY
@@ -1455,6 +951,8 @@ function Library.Load(o)
 	local tab = {}
 
 	function tab.New(p)
+		if not p then return end
+		
 		local Title = p.Title or 'null'
 		local Icon = p.Icon or 14924054039
 		local Callback = p.Callback or function() end
@@ -1523,7 +1021,9 @@ function Library.Load(o)
 		end)
 
 		local Click = click(Tab_1)
-		Click.MouseButton1Click:Connect(Callback)
+		if Click then
+			Click.MouseButton1Click:Connect(Callback)
+		end
 	end
 
 	local Notify = Instance.new("Frame")
@@ -1563,6 +1063,8 @@ function Library.Load(o)
 	UIListLayout_Top.VerticalAlignment = Enum.VerticalAlignment.Top
 
 	function tab.Notify(p)
+		if not p then return {Set = function() end} end
+		
 		local Title = p.Title or 'null'
 		local Icon = p.Icon or 14924054039
 		local ColorN = p.Color or Color3.fromRGB(138, 43, 226)
@@ -1709,13 +1211,17 @@ function Library.Load(o)
 		local n = {}
 		
 		function n:Set(n)
-			TextLabel_Notify.Text = n
+			if TextLabel_Notify then
+				TextLabel_Notify.Text = n
+			end
 		end
 		
 		return n
 	end
 
 	function tab.TopNotify(p)
+		if not p then return {Set = function() end} end
+		
 		local Title = p.Title or 'null'
 		local Icon = p.Icon or 14924054039
 		local ColorN = p.Color or Color3.fromRGB(138, 43, 226)
@@ -1862,7 +1368,9 @@ function Library.Load(o)
 		local n = {}
 		
 		function n:Set(n)
-			TextLabel_Notify.Text = n
+			if TextLabel_Notify then
+				TextLabel_Notify.Text = n
+			end
 		end
 		
 		return n
@@ -1918,130 +1426,126 @@ function Library.Load(o)
 		TextLabel_Overlay.Text = realText
 	end)
 
-	HideShowKey.MouseButton1Click:Connect(function()
-		hidden = not hidden
+	if HideShowKey then
+		HideShowKey.MouseButton1Click:Connect(function()
+			hidden = not hidden
 
-		if hidden then
-			TextBox_1.Text = string.rep(te, #realText)
-			ImageLabel_2.Image = "rbxassetid://13868333926"
-		else
-			TextBox_1.Text = realText
-			ImageLabel_2.Image = "rbxassetid://13868333927"
-		end
+			if hidden then
+				TextBox_1.Text = string.rep(te, #realText)
+				ImageLabel_2.Image = "rbxassetid://13868333926"
+			else
+				TextBox_1.Text = realText
+				ImageLabel_2.Image = "rbxassetid://13868333927"
+			end
 
-		lastLength = #realText
-	end)
-
-	ClickJoinDis.MouseButton1Click:Connect(function()
-		if KeyGUI then 
-			pcall(setclipboard, o.DiscordLink or "discord.gg") 
-		end
-		tab.TopNotify({
-			Title = 'Discord link copied!',
-			Icon = 14939475472,
-			Time = 5,
-			Color = Color3.fromRGB(100, 220, 100)
-		})
-	end)
-	
-	Click_2.MouseButton1Click:Connect(function()
-		tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 28), BackgroundColor3 = Color3.fromRGB(100, 220, 100)}}):Play()
-		task.delay(0.1, function()
-			tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
+			lastLength = #realText
 		end)
-		if o.KeyLink then
-			if KeyGUI then 
-				pcall(setclipboard, o.KeyLink) 
-			end
-			tab.TopNotify({
-				Title = 'Key link copied!',
-				Icon = 14938884688,
-				Time = 5,
-				Color = Color3.fromRGB(100, 220, 100)
-			})
-		else
-			tab.TopNotify({
-				Title = 'No key link provided',
-				Icon = 14943813832,
-				Time = 5,
-				Color = Color3.fromRGB(255, 120, 120)
-			})
-		end
-	end)
-	
-	Click_1.MouseButton1Click:Connect(function()
-		tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 28), BackgroundColor3 = Color3.fromRGB(100, 220, 100)}}):Play()
-		task.delay(0.1, function()
-			tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
-		end)
-		local input = realText
-		local found = false
+	end
 
-		for _, v in ipairs(Key) do
-			if input == v then
-				found = true
-				break
-			end
-		end
-
-		if found then
+	if ClickJoinDis then
+		ClickJoinDis.MouseButton1Click:Connect(function()
 			if KeyGUI then 
-				pcall(writefile, "SindexHub/key.txt", input) 
+				pcall(setclipboard, o.DiscordLink or "discord.gg") 
 			end
 			tab.TopNotify({
-				Title = 'Key verified successfully!',
+				Title = 'Discord link copied!',
 				Icon = 14939475472,
 				Time = 5,
 				Color = Color3.fromRGB(100, 220, 100)
 			})
-			task.delay(0.5, function()
+		end)
+	end
+	
+	if Click_2 then
+		Click_2.MouseButton1Click:Connect(function()
+			tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 28), BackgroundColor3 = Color3.fromRGB(100, 220, 100)}}):Play()
+			task.delay(0.1, function()
+				tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
+			end)
+			if o.KeyLink then
+				if KeyGUI then 
+					pcall(setclipboard, o.KeyLink) 
+				end
 				tab.TopNotify({
-					Title = 'Loading script...',
-					Icon = 14939512891,
+					Title = 'Key link copied!',
+					Icon = 14938884688,
 					Time = 5,
 					Color = Color3.fromRGB(100, 220, 100)
 				})
-			end)
-			task.delay(1.5, function()
-				tw({v = Left_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {GroupTransparency = 1}}):Play()
-				task.delay(0.25, function()
-					tw({v = Background_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
-					tw({v = Shadow_BG, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 1}}):Play()
-					task.delay(0.3, function()
-						ScreenGui:Destroy()
-						if o.Callback then
-							o.Callback()
-						end
-					end)	
-				end)
-			end)
-		else
-			tw({v = Keybox_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(220, 80, 80)}}):Play()
+			else
+				tab.TopNotify({
+					Title = 'No key link provided',
+					Icon = 14943813832,
+					Time = 5,
+					Color = Color3.fromRGB(255, 120, 120)
+				})
+			end
+		end)
+	end
+	
+	if Click_1 then
+		Click_1.MouseButton1Click:Connect(function()
+			tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 28), BackgroundColor3 = Color3.fromRGB(100, 220, 100)}}):Play()
 			task.delay(0.1, function()
-				tw({v = Keybox_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color}}):Play()
+				tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
 			end)
-			tab.TopNotify({
-				Title = 'Invalid key!',
-				Icon = 14943813832,
-				Time = 5,
-				Color = Color3.fromRGB(255, 120, 120)
-			})
-		end
-	end)
+			local input = realText
+			local found = false
+
+			for _, v in ipairs(Key) do
+				if input == v then
+					found = true
+					break
+				end
+			end
+
+			if found then
+				if KeyGUI then 
+					pcall(writefile, "SindexHub/key.txt", input) 
+				end
+				tab.TopNotify({
+					Title = 'Key verified successfully!',
+					Icon = 14939475472,
+					Time = 5,
+					Color = Color3.fromRGB(100, 220, 100)
+				})
+				task.delay(0.5, function()
+					tab.TopNotify({
+						Title = 'Loading script...',
+						Icon = 14939512891,
+						Time = 5,
+						Color = Color3.fromRGB(100, 220, 100)
+					})
+				end)
+				task.delay(1.5, function()
+					tw({v = Left_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {GroupTransparency = 1}}):Play()
+					task.delay(0.25, function()
+						tw({v = Background_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
+						tw({v = Shadow_BG, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 1}}):Play()
+						task.delay(0.3, function()
+							ScreenGui:Destroy()
+							if o.Callback then
+								o.Callback()
+							end
+						end)	
+					end)
+				end)
+			else
+				tw({v = Keybox_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(220, 80, 80)}}):Play()
+				task.delay(0.1, function()
+					tw({v = Keybox_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color}}):Play()
+				end)
+				tab.TopNotify({
+					Title = 'Invalid key!',
+					Icon = 14943813832,
+					Time = 5,
+					Color = Color3.fromRGB(255, 120, 120)
+				})
+			end
+		end)
+	end
 
 	return tab
 end
 
-local Window = Library.Load({
-	Name = 'SindexHub',
-	Icon = nil,
-	DiscordLink = 'discord.gg',
-	Color = Color3.fromRGB(138, 43, 226),
-	Key = {'alchemy'},
-	KeyLink = 'https://example.com/get-key',
-	Callback = function()
-		print("Key verified! Loading main script...")
-	end
-})
-
-
+return Library
