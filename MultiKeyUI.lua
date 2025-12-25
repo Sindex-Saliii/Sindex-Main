@@ -888,6 +888,21 @@ function Library.Load(o)
 		end
 	end)
 
+	local NotifyContainer = Instance.new("Frame")
+	NotifyContainer.Name = "NotifyContainer"
+	NotifyContainer.Parent = ScreenGui
+	NotifyContainer.AnchorPoint = Vector2.new(1, 0.5)
+	NotifyContainer.BackgroundTransparency = 1
+	NotifyContainer.Position = UDim2.new(1, -20, 0.5, 0)
+	NotifyContainer.Size = UDim2.new(0, 300, 0, 500)
+	
+	local UIListLayout_NotifyContainer = Instance.new("UIListLayout")
+	UIListLayout_NotifyContainer.Parent = NotifyContainer
+	UIListLayout_NotifyContainer.Padding = UDim.new(0, 10)
+	UIListLayout_NotifyContainer.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_NotifyContainer.HorizontalAlignment = Enum.HorizontalAlignment.Right
+	UIListLayout_NotifyContainer.VerticalAlignment = Enum.VerticalAlignment.Bottom
+
 	task.spawn(function()
 		Background_1.Position = UDim2.new(0.5, 0,0.5, -100)
 		Background_1.BackgroundTransparency = 1
@@ -1026,350 +1041,141 @@ function Library.Load(o)
 		end
 	end
 
-	local Notify = Instance.new("Frame")
-	local UIListLayout_Notify = Instance.new("UIListLayout")
-
-	Notify.Name = "Notify"
-	Notify.Parent = Background_1
-	Notify.AnchorPoint = Vector2.new(0.5, 1)
-	Notify.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Notify.BackgroundTransparency = 1
-	Notify.BorderColor3 = Color3.fromRGB(0,0,0)
-	Notify.BorderSizePixel = 0
-	Notify.Position = UDim2.new(0.5, 0,1, 0)
-	Notify.Size = UDim2.new(0, 130,0, 40)
-
-	UIListLayout_Notify.Parent = Notify
-	UIListLayout_Notify.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	UIListLayout_Notify.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_Notify.VerticalAlignment = Enum.VerticalAlignment.Bottom
-
-	local TopNotify = Instance.new("Frame")
-	local UIListLayout_Top = Instance.new("UIListLayout")
-
-	TopNotify.Name = "TopNotify"
-	TopNotify.Parent = Background_1
-	TopNotify.AnchorPoint = Vector2.new(0.5, 0)
-	TopNotify.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TopNotify.BackgroundTransparency = 1
-	TopNotify.BorderColor3 = Color3.fromRGB(0,0,0)
-	TopNotify.BorderSizePixel = 0
-	TopNotify.Position = UDim2.new(0.5, 0,0, 0)
-	TopNotify.Size = UDim2.new(0, 130,0, 40)
-
-	UIListLayout_Top.Parent = TopNotify
-	UIListLayout_Top.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	UIListLayout_Top.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_Top.VerticalAlignment = Enum.VerticalAlignment.Top
-
 	function tab.Notify(p)
 		if not p then return {Set = function() end} end
 		
-		local Title = p.Title or 'null'
+		local Title = p.Title or 'Notification'
 		local Icon = p.Icon or 14924054039
-		local ColorN = p.Color or Color3.fromRGB(138, 43, 226)
+		local ColorN = p.Color or Color3.fromRGB(50, 50, 50)
 		local Time = p.Time or 5
 		
-		local Shadow = Instance.new("ImageLabel")
-		local Notifytemple = Instance.new("Frame")
-		local UIPadding_Notify = Instance.new("UIPadding")
+		local NotifyFrame = Instance.new("Frame")
 		local UICorner_Notify = Instance.new("UICorner")
 		local UIStroke_Notify = Instance.new("UIStroke")
-		local Frame_Notify = Instance.new("Frame")
-		local ImageLabel_Notify = Instance.new("ImageLabel")
+		local Shadow_Notify = Instance.new("ImageLabel")
+		local Content = Instance.new("Frame")
+		local UIListLayout_Content = Instance.new("UIListLayout")
+		local IconFrame = Instance.new("Frame")
+		local IconImage = Instance.new("ImageLabel")
+		local TextFrame = Instance.new("Frame")
 		local TextLabel_Notify = Instance.new("TextLabel")
-		local UIListLayout_NotifyInner = Instance.new("UIListLayout")
-		local UIListLayout_NotifyOuter = Instance.new("UIListLayout")
-		local UIPadding_NotifyOuter = Instance.new("UIPadding")
-
-		Shadow.Name = "Shadow"
-		Shadow.Parent = Notify
-		Shadow.AutomaticSize = Enum.AutomaticSize.XY
-		Shadow.BackgroundColor3 = Color3.fromRGB(163,162,165)
-		Shadow.BackgroundTransparency = 1
-		Shadow.Position = UDim2.new(0.5, 0,1, 50)
-		Shadow.Size = UDim2.new(0, 0,0, 0)
-		Shadow.Image = "rbxassetid://1316045217"
-		Shadow.ImageColor3 = ColorN
-		Shadow.ImageTransparency = 1
-		Shadow.ScaleType = Enum.ScaleType.Slice
-		Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
-
-		Notifytemple.Name = "Notifytemple"
-		Notifytemple.Parent = Shadow
-		Notifytemple.AnchorPoint = Vector2.new(0.5, 0.5)
-		Notifytemple.AutomaticSize = Enum.AutomaticSize.X
-		Notifytemple.BackgroundColor3 = ColorN
-		Notifytemple.BackgroundTransparency = 1
-		Notifytemple.BorderColor3 = Color3.fromRGB(0,0,0)
-		Notifytemple.BorderSizePixel = 0
-		Notifytemple.Position = UDim2.new(0.5, 0,0.5, 0)
-		Notifytemple.Size = UDim2.new(0, 0,0, 35)
-
-		UIPadding_Notify.Parent = Notifytemple
-		UIPadding_Notify.PaddingLeft = UDim.new(0,10)
-		UIPadding_Notify.PaddingRight = UDim.new(0,10)
-
-		UICorner_Notify.Parent = Notifytemple
-		UICorner_Notify.CornerRadius = UDim.new(1,0)
-
-		UIStroke_Notify.Parent = Notifytemple
+		
+		NotifyFrame.Name = "Notify"
+		NotifyFrame.Parent = NotifyContainer
+		NotifyFrame.BackgroundColor3 = ColorN
+		NotifyFrame.BackgroundTransparency = 1
+		NotifyFrame.Size = UDim2.new(1, 0, 0, 0)
+		NotifyFrame.Position = UDim2.new(1, 0, 1, 0)
+		NotifyFrame.ClipsDescendants = true
+		
+		UICorner_Notify.Parent = NotifyFrame
+		UICorner_Notify.CornerRadius = UDim.new(0, 8)
+		
+		UIStroke_Notify.Parent = NotifyFrame
 		UIStroke_Notify.Color = ColorN
 		UIStroke_Notify.Thickness = 1
 		UIStroke_Notify.Transparency = 1
-
-		local UIGradient_Notify = Instance.new("UIGradient")
-		UIGradient_Notify.Parent = Notifytemple
-		UIGradient_Notify.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, ColorN), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,255,255)), ColorSequenceKeypoint.new(1, ColorN)}
-		UIGradient_Notify.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0,0.4), NumberSequenceKeypoint.new(1,0.4)}
-		UIGradient_Notify.Rotation = 90
-
-		local Glow = Instance.new("ImageLabel")
-		Glow.Name = "Glow"
-		Glow.Parent = Shadow
-		Glow.BackgroundTransparency = 1
-		Glow.Position = UDim2.new(0.5, 0,0.5, 0)
-		Glow.AnchorPoint = Vector2.new(0.5, 0.5)
-		Glow.Size = UDim2.new(1.2, 0,1.2, 0)
-		Glow.Image = "rbxassetid://1316045217"
-		Glow.ImageColor3 = ColorN
-		Glow.ImageTransparency = 0.8
-		Glow.ScaleType = Enum.ScaleType.Slice
-		Glow.SliceCenter = Rect.new(10, 10, 118, 118)
-		Glow.ZIndex = -1
-
-		Frame_Notify.Parent = Notifytemple
-		Frame_Notify.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		Frame_Notify.BackgroundTransparency = 1
-		Frame_Notify.BorderColor3 = Color3.fromRGB(0,0,0)
-		Frame_Notify.BorderSizePixel = 0
-		Frame_Notify.Size = UDim2.new(1, 0,1, 0)
-
-		ImageLabel_Notify.Parent = Frame_Notify
-		ImageLabel_Notify.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		ImageLabel_Notify.BackgroundTransparency = 1
-		ImageLabel_Notify.BorderColor3 = Color3.fromRGB(0,0,0)
-		ImageLabel_Notify.BorderSizePixel = 0
-		ImageLabel_Notify.Size = UDim2.new(0, 20,0, 20)
-		ImageLabel_Notify.Image = gl(Icon).Image
-		ImageLabel_Notify.ImageTransparency = 1
-
-		TextLabel_Notify.Parent = Frame_Notify
-		TextLabel_Notify.AutomaticSize = Enum.AutomaticSize.X
-		TextLabel_Notify.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_Notify.BackgroundTransparency = 1
-		TextLabel_Notify.BorderColor3 = Color3.fromRGB(0,0,0)
-		TextLabel_Notify.BorderSizePixel = 0
-		TextLabel_Notify.LayoutOrder = 1
-		TextLabel_Notify.Size = UDim2.new(0, 0,1, 0)
-		TextLabel_Notify.Font = Enum.Font.Gotham
-		TextLabel_Notify.Text = Title
-		TextLabel_Notify.TextColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_Notify.TextSize = 0
-		TextLabel_Notify.TextTransparency = 1
-
-		UIListLayout_NotifyInner.Parent = Frame_Notify
-		UIListLayout_NotifyInner.Padding = UDim.new(0,6)
-		UIListLayout_NotifyInner.FillDirection = Enum.FillDirection.Horizontal
-		UIListLayout_NotifyInner.HorizontalAlignment = Enum.HorizontalAlignment.Center
-		UIListLayout_NotifyInner.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_NotifyInner.VerticalAlignment = Enum.VerticalAlignment.Center
-
-		UIListLayout_NotifyOuter.Parent = Shadow
-		UIListLayout_NotifyOuter.HorizontalAlignment = Enum.HorizontalAlignment.Center
-		UIListLayout_NotifyOuter.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_NotifyOuter.VerticalAlignment = Enum.VerticalAlignment.Center
-
-		UIPadding_NotifyOuter.Parent = Shadow
-		UIPadding_NotifyOuter.PaddingBottom = UDim.new(0,8)
-		UIPadding_NotifyOuter.PaddingLeft = UDim.new(0,8)
-		UIPadding_NotifyOuter.PaddingRight = UDim.new(0,8)
-		UIPadding_NotifyOuter.PaddingTop = UDim.new(0,8)
 		
-		tw({v = Shadow, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0.9, Position = UDim2.new(0.5, 0,1, 0)}}):Play()
-		tw({v = Notifytemple, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {BackgroundTransparency = 0.4}}):Play()
-		tw({v = TextLabel_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 18, TextTransparency = 0}}):Play()
-		tw({v = UIStroke_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {Transparency = 0}}):Play()
-		tw({v = ImageLabel_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0}}):Play()
-		tw({v = Glow, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0.6}}):Play()
+		Shadow_Notify.Name = "Shadow"
+		Shadow_Notify.Parent = NotifyFrame
+		Shadow_Notify.AnchorPoint = Vector2.new(0.5, 0.5)
+		Shadow_Notify.BackgroundTransparency = 1
+		Shadow_Notify.Position = UDim2.new(0.5, 0, 0.5, 0)
+		Shadow_Notify.Size = UDim2.new(1.1, 0, 1.1, 0)
+		Shadow_Notify.Image = "rbxassetid://1316045217"
+		Shadow_Notify.ImageColor3 = Color3.fromRGB(0, 0, 0)
+		Shadow_Notify.ImageTransparency = 1
+		Shadow_Notify.ScaleType = Enum.ScaleType.Slice
+		Shadow_Notify.SliceCenter = Rect.new(10, 10, 118, 118)
+		Shadow_Notify.ZIndex = -1
+		
+		Content.Name = "Content"
+		Content.Parent = NotifyFrame
+		Content.BackgroundTransparency = 1
+		Content.Size = UDim2.new(1, 0, 1, 0)
+		
+		UIListLayout_Content.Parent = Content
+		UIListLayout_Content.Padding = UDim.new(0, 10)
+		UIListLayout_Content.FillDirection = Enum.FillDirection.Horizontal
+		UIListLayout_Content.HorizontalAlignment = Enum.HorizontalAlignment.Center
+		UIListLayout_Content.SortOrder = Enum.SortOrder.LayoutOrder
+		UIListLayout_Content.VerticalAlignment = Enum.VerticalAlignment.Center
+		
+		IconFrame.Name = "IconFrame"
+		IconFrame.Parent = Content
+		IconFrame.BackgroundTransparency = 1
+		IconFrame.Size = UDim2.new(0, 30, 0, 30)
+		
+		IconImage.Name = "Icon"
+		IconImage.Parent = IconFrame
+		IconImage.AnchorPoint = Vector2.new(0.5, 0.5)
+		IconImage.BackgroundTransparency = 1
+		IconImage.Position = UDim2.new(0.5, 0, 0.5, 0)
+		IconImage.Size = UDim2.new(1, 0, 1, 0)
+		IconImage.Image = gl(Icon).Image
+		IconImage.ImageTransparency = 1
+		
+		TextFrame.Name = "TextFrame"
+		TextFrame.Parent = Content
+		TextFrame.BackgroundTransparency = 1
+		TextFrame.Size = UDim2.new(1, -50, 1, 0)
+		
+		TextLabel_Notify.Name = "Text"
+		TextLabel_Notify.Parent = TextFrame
+		TextLabel_Notify.BackgroundTransparency = 1
+		TextLabel_Notify.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel_Notify.Font = Enum.Font.GothamBold
+		TextLabel_Notify.Text = Title
+		TextLabel_Notify.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel_Notify.TextSize = 14
+		TextLabel_Notify.TextTransparency = 1
+		TextLabel_Notify.TextWrapped = true
+		TextLabel_Notify.TextXAlignment = Enum.TextXAlignment.Left
+		
+		local textSize = game:GetService("TextService"):GetTextSize(Title, 14, Enum.Font.GothamBold, Vector2.new(240, math.huge))
+		local height = math.max(60, textSize.Y + 30)
+		
+		NotifyFrame.Size = UDim2.new(1, 0, 0, height)
+		
+		tw({v = NotifyFrame, t = 0.3, s = Enum.EasingStyle.Back, d = "Out", g = {Position = UDim2.new(0, 0, 1, 0), BackgroundTransparency = 0.2}}):Play()
+		tw({v = UIStroke_Notify, t = 0.3, s = Enum.EasingStyle.Back, d = "Out", g = {Transparency = 0}}):Play()
+		tw({v = Shadow_Notify, t = 0.3, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0.5}}):Play()
+		tw({v = IconImage, t = 0.3, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0}}):Play()
+		tw({v = TextLabel_Notify, t = 0.3, s = Enum.EasingStyle.Back, d = "Out", g = {TextTransparency = 0}}):Play()
+		
+		local connection
+		connection = game:GetService("RunService").Heartbeat:Connect(function()
+			if NotifyFrame.Parent then
+				UIListLayout_NotifyContainer:ApplyLayout()
+			else
+				connection:Disconnect()
+			end
+		end)
 		
 		task.spawn(function()
-			for i = Time, 1, -1 do
-				task.wait(1)
-			end
-			tw({v = Shadow, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1, Position = UDim2.new(0.5, 0,1, 50)}}):Play()
-			tw({v = Notifytemple, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {BackgroundTransparency = 1}}):Play()
-			tw({v = TextLabel_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {TextSize = 0, TextTransparency = 1}}):Play()
-			tw({v = UIStroke_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {Transparency = 1}}):Play()
-			tw({v = ImageLabel_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1}}):Play()
-			tw({v = Glow, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 0.8}}):Play()
-			task.delay(0.15, function()
-				Shadow:Destroy()
+			task.wait(Time)
+			
+			tw({v = NotifyFrame, t = 0.3, s = Enum.EasingStyle.Back, d = "In", g = {Position = UDim2.new(1, 0, 1, 0), BackgroundTransparency = 1}}):Play()
+			tw({v = UIStroke_Notify, t = 0.3, s = Enum.EasingStyle.Back, d = "In", g = {Transparency = 1}}):Play()
+			tw({v = Shadow_Notify, t = 0.3, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1}}):Play()
+			tw({v = IconImage, t = 0.3, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1}}):Play()
+			tw({v = TextLabel_Notify, t = 0.3, s = Enum.EasingStyle.Back, d = "In", g = {TextTransparency = 1}}):Play()
+			
+			task.delay(0.3, function()
+				if NotifyFrame.Parent then
+					NotifyFrame:Destroy()
+				end
 			end)
 		end)
 		
 		local n = {}
 		
-		function n:Set(n)
+		function n:Set(newText)
 			if TextLabel_Notify then
-				TextLabel_Notify.Text = n
-			end
-		end
-		
-		return n
-	end
-
-	function tab.TopNotify(p)
-		if not p then return {Set = function() end} end
-		
-		local Title = p.Title or 'null'
-		local Icon = p.Icon or 14924054039
-		local ColorN = p.Color or Color3.fromRGB(138, 43, 226)
-		local Time = p.Time or 5
-		
-		local Shadow = Instance.new("ImageLabel")
-		local Notifytemple = Instance.new("Frame")
-		local UIPadding_Notify = Instance.new("UIPadding")
-		local UICorner_Notify = Instance.new("UICorner")
-		local UIStroke_Notify = Instance.new("UIStroke")
-		local Frame_Notify = Instance.new("Frame")
-		local ImageLabel_Notify = Instance.new("ImageLabel")
-		local TextLabel_Notify = Instance.new("TextLabel")
-		local UIListLayout_NotifyInner = Instance.new("UIListLayout")
-		local UIListLayout_NotifyOuter = Instance.new("UIListLayout")
-		local UIPadding_NotifyOuter = Instance.new("UIPadding")
-		local UIGradient_Notify = Instance.new("UIGradient")
-		local Glow = Instance.new("ImageLabel")
-
-		Shadow.Name = "Shadow"
-		Shadow.Parent = TopNotify
-		Shadow.AutomaticSize = Enum.AutomaticSize.XY
-		Shadow.BackgroundColor3 = Color3.fromRGB(163,162,165)
-		Shadow.BackgroundTransparency = 1
-		Shadow.Position = UDim2.new(0.5, 0,0, -50)
-		Shadow.Size = UDim2.new(0, 0,0, 0)
-		Shadow.Image = "rbxassetid://1316045217"
-		Shadow.ImageColor3 = ColorN
-		Shadow.ImageTransparency = 1
-		Shadow.ScaleType = Enum.ScaleType.Slice
-		Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
-
-		Notifytemple.Name = "Notifytemple"
-		Notifytemple.Parent = Shadow
-		Notifytemple.AnchorPoint = Vector2.new(0.5, 0.5)
-		Notifytemple.AutomaticSize = Enum.AutomaticSize.X
-		Notifytemple.BackgroundColor3 = ColorN
-		Notifytemple.BackgroundTransparency = 1
-		Notifytemple.BorderColor3 = Color3.fromRGB(0,0,0)
-		Notifytemple.BorderSizePixel = 0
-		Notifytemple.Position = UDim2.new(0.5, 0,0.5, 0)
-		Notifytemple.Size = UDim2.new(0, 0,0, 35)
-
-		UIPadding_Notify.Parent = Notifytemple
-		UIPadding_Notify.PaddingLeft = UDim.new(0,10)
-		UIPadding_Notify.PaddingRight = UDim.new(0,10)
-
-		UICorner_Notify.Parent = Notifytemple
-		UICorner_Notify.CornerRadius = UDim.new(1,0)
-
-		UIStroke_Notify.Parent = Notifytemple
-		UIStroke_Notify.Color = ColorN
-		UIStroke_Notify.Thickness = 1
-		UIStroke_Notify.Transparency = 1
-
-		UIGradient_Notify.Parent = Notifytemple
-		UIGradient_Notify.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, ColorN), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,255,255)), ColorSequenceKeypoint.new(1, ColorN)}
-		UIGradient_Notify.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0,0.4), NumberSequenceKeypoint.new(1,0.4)}
-		UIGradient_Notify.Rotation = 90
-
-		Frame_Notify.Parent = Notifytemple
-		Frame_Notify.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		Frame_Notify.BackgroundTransparency = 1
-		Frame_Notify.BorderColor3 = Color3.fromRGB(0,0,0)
-		Frame_Notify.BorderSizePixel = 0
-		Frame_Notify.Size = UDim2.new(1, 0,1, 0)
-
-		ImageLabel_Notify.Parent = Frame_Notify
-		ImageLabel_Notify.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		ImageLabel_Notify.BackgroundTransparency = 1
-		ImageLabel_Notify.BorderColor3 = Color3.fromRGB(0,0,0)
-		ImageLabel_Notify.BorderSizePixel = 0
-		ImageLabel_Notify.Size = UDim2.new(0, 20,0, 20)
-		ImageLabel_Notify.Image = gl(Icon).Image
-		ImageLabel_Notify.ImageTransparency = 1
-
-		TextLabel_Notify.Parent = Frame_Notify
-		TextLabel_Notify.AutomaticSize = Enum.AutomaticSize.X
-		TextLabel_Notify.BackgroundColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_Notify.BackgroundTransparency = 1
-		TextLabel_Notify.BorderColor3 = Color3.fromRGB(0,0,0)
-		TextLabel_Notify.BorderSizePixel = 0
-		TextLabel_Notify.LayoutOrder = 1
-		TextLabel_Notify.Size = UDim2.new(0, 0,1, 0)
-		TextLabel_Notify.Font = Enum.Font.Gotham
-		TextLabel_Notify.Text = Title
-		TextLabel_Notify.TextColor3 = Color3.fromRGB(255,255,255)
-		TextLabel_Notify.TextSize = 0
-		TextLabel_Notify.TextTransparency = 1
-
-		UIListLayout_NotifyInner.Parent = Frame_Notify
-		UIListLayout_NotifyInner.Padding = UDim.new(0,6)
-		UIListLayout_NotifyInner.FillDirection = Enum.FillDirection.Horizontal
-		UIListLayout_NotifyInner.HorizontalAlignment = Enum.HorizontalAlignment.Center
-		UIListLayout_NotifyInner.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_NotifyInner.VerticalAlignment = Enum.VerticalAlignment.Center
-
-		UIListLayout_NotifyOuter.Parent = Shadow
-		UIListLayout_NotifyOuter.HorizontalAlignment = Enum.HorizontalAlignment.Center
-		UIListLayout_NotifyOuter.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_NotifyOuter.VerticalAlignment = Enum.VerticalAlignment.Center
-
-		UIPadding_NotifyOuter.Parent = Shadow
-		UIPadding_NotifyOuter.PaddingBottom = UDim.new(0,8)
-		UIPadding_NotifyOuter.PaddingLeft = UDim.new(0,8)
-		UIPadding_NotifyOuter.PaddingRight = UDim.new(0,8)
-		UIPadding_NotifyOuter.PaddingTop = UDim.new(0,8)
-
-		Glow.Name = "Glow"
-		Glow.Parent = Shadow
-		Glow.BackgroundTransparency = 1
-		Glow.Position = UDim2.new(0.5, 0,0.5, 0)
-		Glow.AnchorPoint = Vector2.new(0.5, 0.5)
-		Glow.Size = UDim2.new(1.2, 0,1.2, 0)
-		Glow.Image = "rbxassetid://1316045217"
-		Glow.ImageColor3 = ColorN
-		Glow.ImageTransparency = 0.8
-		Glow.ScaleType = Enum.ScaleType.Slice
-		Glow.SliceCenter = Rect.new(10, 10, 118, 118)
-		Glow.ZIndex = -1
-		
-		tw({v = Shadow, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0.9, Position = UDim2.new(0.5, 0,0, 0)}}):Play()
-		tw({v = Notifytemple, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {BackgroundTransparency = 0.4}}):Play()
-		tw({v = TextLabel_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 18, TextTransparency = 0}}):Play()
-		tw({v = UIStroke_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {Transparency = 0}}):Play()
-		tw({v = ImageLabel_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0}}):Play()
-		tw({v = Glow, t = 0.4, s = Enum.EasingStyle.Back, d = "Out", g = {ImageTransparency = 0.6}}):Play()
-		
-		task.spawn(function()
-			for i = Time, 1, -1 do
-				task.wait(1)
-			end
-			tw({v = Shadow, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1, Position = UDim2.new(0.5, 0,0, -50)}}):Play()
-			tw({v = Notifytemple, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {BackgroundTransparency = 1}}):Play()
-			tw({v = TextLabel_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {TextSize = 0, TextTransparency = 1}}):Play()
-			tw({v = UIStroke_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {Transparency = 1}}):Play()
-			tw({v = ImageLabel_Notify, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 1}}):Play()
-			tw({v = Glow, t = 0.4, s = Enum.EasingStyle.Back, d = "In", g = {ImageTransparency = 0.8}}):Play()
-			task.delay(0.15, function()
-				Shadow:Destroy()
-			end)
-		end)
-		
-		local n = {}
-		
-		function n:Set(n)
-			if TextLabel_Notify then
-				TextLabel_Notify.Text = n
+				TextLabel_Notify.Text = newText
+				local newTextSize = game:GetService("TextService"):GetTextSize(newText, 14, Enum.Font.GothamBold, Vector2.new(240, math.huge))
+				local newHeight = math.max(60, newTextSize.Y + 30)
+				tw({v = NotifyFrame, t = 0.2, g = {Size = UDim2.new(1, 0, 0, newHeight)}}):Play()
 			end
 		end
 		
@@ -1447,14 +1253,16 @@ function Library.Load(o)
 			if KeyGUI then 
 				pcall(setclipboard, o.DiscordLink or "discord.gg") 
 			end
-			tab.TopNotify({
+			tab.Notify({
 				Title = 'Discord link copied!',
 				Icon = 14939475472,
-				Time = 5,
-				Color = Color3.fromRGB(100, 220, 100)
+				Time = 3,
+				Color = Color3.fromRGB(88, 101, 242)
 			})
 		end)
 	end
+	
+	local checkingKey = false
 	
 	if Click_2 then
 		Click_2.MouseButton1Click:Connect(function()
@@ -1466,18 +1274,18 @@ function Library.Load(o)
 				if KeyGUI then 
 					pcall(setclipboard, o.KeyLink) 
 				end
-				tab.TopNotify({
-					Title = 'Key link copied!',
+				tab.Notify({
+					Title = 'Key link copied to clipboard!',
 					Icon = 14938884688,
-					Time = 5,
-					Color = Color3.fromRGB(100, 220, 100)
+					Time = 3,
+					Color = Color3.fromRGB(76, 175, 80)
 				})
 			else
-				tab.TopNotify({
+				tab.Notify({
 					Title = 'No key link provided',
 					Icon = 14943813832,
-					Time = 5,
-					Color = Color3.fromRGB(255, 120, 120)
+					Time = 3,
+					Color = Color3.fromRGB(244, 67, 54)
 				})
 			end
 		end)
@@ -1485,63 +1293,82 @@ function Library.Load(o)
 	
 	if Click_1 then
 		Click_1.MouseButton1Click:Connect(function()
-			tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 28), BackgroundColor3 = Color3.fromRGB(100, 220, 100)}}):Play()
-			task.delay(0.1, function()
-				tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
-			end)
-			local input = realText
-			local found = false
+			if checkingKey then return end
+			checkingKey = true
+			
+			tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 28), BackgroundColor3 = Color3.fromRGB(255, 193, 7)}}):Play()
+			
+			local checkNotify = tab.Notify({
+				Title = 'Checking Key...',
+				Icon = 14939512891,
+				Time = 10,
+				Color = Color3.fromRGB(255, 193, 7)
+			})
+			
+			task.delay(0.5, function()
+				local input = realText
+				local found = false
 
-			for _, v in ipairs(Key) do
-				if input == v then
-					found = true
-					break
+				for _, v in ipairs(Key) do
+					if input == v then
+						found = true
+						break
+					end
 				end
-			end
 
-			if found then
-				if KeyGUI then 
-					pcall(writefile, "SindexHub/key.txt", input) 
-				end
-				tab.TopNotify({
-					Title = 'Key verified successfully!',
-					Icon = 14939475472,
-					Time = 5,
-					Color = Color3.fromRGB(100, 220, 100)
-				})
-				task.delay(0.5, function()
-					tab.TopNotify({
-						Title = 'Loading script...',
-						Icon = 14939512891,
-						Time = 5,
-						Color = Color3.fromRGB(100, 220, 100)
-					})
-				end)
-				task.delay(1.5, function()
-					tw({v = Left_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {GroupTransparency = 1}}):Play()
-					task.delay(0.25, function()
-						tw({v = Background_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
-						tw({v = Shadow_BG, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 1}}):Play()
-						task.delay(0.3, function()
-							ScreenGui:Destroy()
-							if o.Callback then
-								o.Callback()
-							end
-						end)	
+				if found then
+					if KeyGUI then 
+						pcall(writefile, "SindexHub/key.txt", input) 
+					end
+					
+					task.delay(0.3, function()
+						checkNotify:Set('Key Verified Successfully!')
+						tab.Notify({
+							Title = 'Loading script...',
+							Icon = 14939512891,
+							Time = 2,
+							Color = Color3.fromRGB(76, 175, 80)
+						})
 					end)
-				end)
-			else
-				tw({v = Keybox_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(220, 80, 80)}}):Play()
-				task.delay(0.1, function()
-					tw({v = Keybox_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color}}):Play()
-				end)
-				tab.TopNotify({
-					Title = 'Invalid key!',
-					Icon = 14943813832,
-					Time = 5,
-					Color = Color3.fromRGB(255, 120, 120)
-				})
-			end
+					
+					tw({v = Button_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(76, 175, 80)}}):Play()
+					
+					task.delay(1.5, function()
+						tw({v = Left_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {GroupTransparency = 1}}):Play()
+						task.delay(0.25, function()
+							tw({v = Background_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
+							tw({v = Shadow_BG, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 1}}):Play()
+							task.delay(0.3, function()
+								ScreenGui:Destroy()
+								if o.Callback then
+									o.Callback()
+								end
+							end)	
+						end)
+					end)
+				else
+					tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(244, 67, 54)}}):Play()
+					task.delay(0.2, function()
+						tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color}}):Play()
+					end)
+					
+					checkNotify:Set('Invalid Key!')
+					
+					tab.Notify({
+						Title = 'Invalid key! Please check and try again.',
+						Icon = 14943813832,
+						Time = 3,
+						Color = Color3.fromRGB(244, 67, 54)
+					})
+					
+					tw({v = Button_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(244, 67, 54)}}):Play()
+					
+					task.delay(0.5, function()
+						tw({v = Button_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color, Size = UDim2.new(1, 0,0, 30)}}):Play()
+						checkingKey = false
+					end)
+				end
+			end)
 		end)
 	end
 
