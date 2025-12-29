@@ -1003,7 +1003,7 @@ function Library.Load(o)
             
             tab.Notify({
                 Title = 'Copied Key Link',
-                Icon = getLucideIcon("external-link"),
+                Icon = getLucideIcon("copy-check"),
                 Time = 3,
                 Color = Color3.fromRGB(98, 37, 209)
             })
@@ -1061,7 +1061,7 @@ function Library.Load(o)
                     
                     tab.Notify({
                         Title = 'Key Verified Successfully!',
-                        Icon = getLucideIcon("check-circle"),
+                        Icon = getLucideIcon("circle-check"),
                         Time = 2,
                         Color = Color3.fromRGB(0, 200, 83)
                     })
@@ -1069,7 +1069,7 @@ function Library.Load(o)
                     task.delay(1, function()
                         tab.Notify({
                             Title = 'Loading Script...',
-                            Icon = getLucideIcon("loader"),
+                            Icon = getLucideIcon("loader-circle"),
                             Time = 2,
                             Color = Color
                         })
@@ -1091,7 +1091,7 @@ function Library.Load(o)
                 else
                     tab.Notify({
                         Title = 'Invalid Key!',
-                        Icon = getLucideIcon("x-circle"),
+                        Icon = getLucideIcon("x"),
                         Time = 3,
                         Color = Color3.fromRGB(255, 87, 87)
                     })
