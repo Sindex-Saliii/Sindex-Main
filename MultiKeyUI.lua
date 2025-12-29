@@ -252,11 +252,11 @@ function Library.Load(o)
     local Callback = o.Callback or function() end
 
     if KeyGUI then 
-        makefolder("MultiHub") 
+        makefolder("SindexHub") 
     end
     local savedKey = ""
     if KeyGUI then
-        local success, key = pcall(readfile, "MultiHub/key.txt")
+        local success, key = pcall(readfile, "SindexHub/key.txt")
         savedKey = success and key or ""
     end
 
@@ -368,13 +368,28 @@ function Library.Load(o)
     UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
 
+    local success, icons = pcall(game.HttpGet, game, "https://raw.githubusercontent.com/Sindex-Saliii/Sindex-Main/refs/heads/main/Icon.txt")
+    local LucideIcons = {}
+    if success then
+        for line in icons:gmatch("[^\r\n]+") do
+            local name, id = line:match("(.+):(%d+)")
+            if name and id then
+                LucideIcons[name:lower()] = tonumber(id)
+            end
+        end
+    end
+
+    local function getLucideIcon(name)
+        return LucideIcons[name:lower()] or 6031075938
+    end
+
     ImageLabel_1.Parent = TItleIcon_1
     ImageLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
     ImageLabel_1.BackgroundTransparency = 1
     ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
     ImageLabel_1.BorderSizePixel = 0
     ImageLabel_1.Size = UDim2.new(0, 18,0, 18)
-    ImageLabel_1.Image = gl(Icon).Image
+    ImageLabel_1.Image = gl(getLucideIcon("key")).Image
     ImageLabel_1.ImageColor3 = Color
 
     TextLabel_1.Parent = TItleIcon_1
@@ -463,10 +478,8 @@ function Library.Load(o)
     ImageLabel_2.BorderSizePixel = 0
     ImageLabel_2.Position = UDim2.new(0.5, 0,0.5, 0)
     ImageLabel_2.Size = UDim2.new(0, 14,0, 14)
-    ImageLabel_2.Image = "rbxassetid://6034818360"
+    ImageLabel_2.Image = gl(getLucideIcon("check-circle")).Image
     ImageLabel_2.ImageColor3 = Color3.fromRGB(255,255,255)
-    
-    local HideShowKey = click(Frame_1)
 
     Keybox_1.Name = "Keybox"
     Keybox_1.Parent = KeyFrame_1
@@ -577,7 +590,7 @@ function Library.Load(o)
     ImageLabel_3.BorderSizePixel = 0
     ImageLabel_3.LayoutOrder = 2
     ImageLabel_3.Size = UDim2.new(0, 20,0, 20)
-    ImageLabel_3.Image = "rbxassetid://6034818397"
+    ImageLabel_3.Image = gl(getLucideIcon("shield-check")).Image
     ImageLabel_3.ImageColor3 = Color3.fromRGB(255,255,255)
 
     Click_1.Name = "Click"
@@ -671,7 +684,7 @@ function Library.Load(o)
     ImageLabel_4.BorderSizePixel = 0
     ImageLabel_4.LayoutOrder = 2
     ImageLabel_4.Size = UDim2.new(0, 18,0, 18)
-    ImageLabel_4.Image = "rbxassetid://6034818340"
+    ImageLabel_4.Image = gl(getLucideIcon("external-link")).Image
     ImageLabel_4.ImageColor3 = Color3.fromRGB(255,255,255)
     
     local Click_2 = Instance.new("TextButton")
@@ -726,7 +739,7 @@ function Library.Load(o)
 
     function tab.New(p)
         local Title = p.Title or 'null'
-        local Icon = p.Icon or 6034818397
+        local Icon = p.Icon or getLucideIcon("settings")
         local Callback = p.Callback or function() end
         local Tab_1 = Instance.new("Frame")
         local UICorner_5 = Instance.new("UICorner")
@@ -813,7 +826,7 @@ function Library.Load(o)
 
     function tab.Notify(p)
         local Title = p.Title or 'Notification'
-        local Icon = p.Icon or 6034818397
+        local Icon = p.Icon or getLucideIcon("bell")
         local ColorN = p.Color or Color
         local Time = p.Time or 3
         
@@ -828,6 +841,7 @@ function Library.Load(o)
         local UIListLayout_1 = Instance.new("UIListLayout")
         local UIListLayout_2 = Instance.new("UIListLayout")
         local UIPadding_2 = Instance.new("UIPadding")
+        local Glow = Instance.new("ImageLabel")
 
         Shadow.Name = "Shadow"
         Shadow.Parent = Notify
@@ -841,20 +855,32 @@ function Library.Load(o)
         Shadow.ScaleType = Enum.ScaleType.Slice
         Shadow.SliceCenter = Rect.new(10, 10, 118, 118)
 
+        Glow.Name = "Glow"
+        Glow.Parent = Shadow
+        Glow.AnchorPoint = Vector2.new(0.5, 0.5)
+        Glow.BackgroundTransparency = 1
+        Glow.Position = UDim2.new(0.5, 0, 0.5, 0)
+        Glow.Size = UDim2.new(1.2, 0, 1.2, 0)
+        Glow.Image = "rbxassetid://1316045217"
+        Glow.ImageColor3 = ColorN
+        Glow.ImageTransparency = 1
+        Glow.ScaleType = Enum.ScaleType.Slice
+        Glow.SliceCenter = Rect.new(10, 10, 118, 118)
+
         Notifytemple_1.Name = "Notifytemple"
         Notifytemple_1.Parent = Shadow
         Notifytemple_1.AnchorPoint = Vector2.new(0.5, 0.5)
         Notifytemple_1.AutomaticSize = Enum.AutomaticSize.X
-        Notifytemple_1.BackgroundColor3 = ColorN
+        Notifytemple_1.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
         Notifytemple_1.BackgroundTransparency = 1
         Notifytemple_1.BorderColor3 = Color3.fromRGB(0,0,0)
         Notifytemple_1.BorderSizePixel = 0
         Notifytemple_1.Position = UDim2.new(0.5, 0,0.5, 0)
-        Notifytemple_1.Size = UDim2.new(0, 0,0, 40)
+        Notifytemple_1.Size = UDim2.new(0, 0,0, 45)
 
         UIPadding_1.Parent = Notifytemple_1
-        UIPadding_1.PaddingLeft = UDim.new(0,12)
-        UIPadding_1.PaddingRight = UDim.new(0,12)
+        UIPadding_1.PaddingLeft = UDim.new(0,15)
+        UIPadding_1.PaddingRight = UDim.new(0,15)
 
         UICorner_1.Parent = Notifytemple_1
         UICorner_1.CornerRadius = UDim.new(1,0)
@@ -878,7 +904,7 @@ function Library.Load(o)
         ImageLabel_1.BorderSizePixel = 0
         ImageLabel_1.Size = UDim2.new(0, 22,0, 22)
         ImageLabel_1.Image = gl(Icon).Image
-        ImageLabel_1.ImageColor3 = Color3.fromRGB(255,255,255)
+        ImageLabel_1.ImageColor3 = ColorN
         ImageLabel_1.ImageTransparency = 1
 
         TextLabel_1.Parent = Frame_1
@@ -896,7 +922,7 @@ function Library.Load(o)
         TextLabel_1.TextTransparency = 1
 
         UIListLayout_1.Parent = Frame_1
-        UIListLayout_1.Padding = UDim.new(0,8)
+        UIListLayout_1.Padding = UDim.new(0,10)
         UIListLayout_1.FillDirection = Enum.FillDirection.Horizontal
         UIListLayout_1.HorizontalAlignment = Enum.HorizontalAlignment.Center
         UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
@@ -913,13 +939,15 @@ function Library.Load(o)
         UIPadding_2.PaddingRight = UDim.new(0,8)
         UIPadding_2.PaddingTop = UDim.new(0,8)
         
-        local tweenIn = tw({v = Shadow, t = 0.25, s = Enum.EasingStyle.Quart, d = "Out", g = {ImageTransparency = 0.85}})
-        local tweenIn2 = tw({v = Notifytemple_1, t = 0.25, s = Enum.EasingStyle.Quart, d = "Out", g = {BackgroundTransparency = 0.2}})
-        local tweenIn3 = tw({v = TextLabel_1, t = 0.25, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 14, TextTransparency = 0}})
-        local tweenIn4 = tw({v = UIStroke_1, t = 0.25, s = Enum.EasingStyle.Quart, d = "Out", g = {Transparency = 0}})
-        local tweenIn5 = tw({v = ImageLabel_1, t = 0.25, s = Enum.EasingStyle.Quart, d = "Out", g = {ImageTransparency = 0}})
+        local tweenIn = tw({v = Shadow, t = 0.3, s = Enum.EasingStyle.Quart, d = "Out", g = {ImageTransparency = 0.7}})
+        local tweenInGlow = tw({v = Glow, t = 0.3, s = Enum.EasingStyle.Quart, d = "Out", g = {ImageTransparency = 0.4}})
+        local tweenIn2 = tw({v = Notifytemple_1, t = 0.3, s = Enum.EasingStyle.Quart, d = "Out", g = {BackgroundTransparency = 0}})
+        local tweenIn3 = tw({v = TextLabel_1, t = 0.3, s = Enum.EasingStyle.Back, d = "Out", g = {TextSize = 14, TextTransparency = 0}})
+        local tweenIn4 = tw({v = UIStroke_1, t = 0.3, s = Enum.EasingStyle.Quart, d = "Out", g = {Transparency = 0}})
+        local tweenIn5 = tw({v = ImageLabel_1, t = 0.3, s = Enum.EasingStyle.Quart, d = "Out", g = {ImageTransparency = 0, Rotation = 360}})
         
         tweenIn:Play()
+        tweenInGlow:Play()
         tweenIn2:Play()
         tweenIn3:Play()
         tweenIn4:Play()
@@ -928,19 +956,21 @@ function Library.Load(o)
         task.spawn(function()
             task.wait(Time)
             
-            local tweenOut = tw({v = Shadow, t = 0.25, s = Enum.EasingStyle.Quart, d = "In", g = {ImageTransparency = 1}})
-            local tweenOut2 = tw({v = Notifytemple_1, t = 0.25, s = Enum.EasingStyle.Quart, d = "In", g = {BackgroundTransparency = 1}})
-            local tweenOut3 = tw({v = TextLabel_1, t = 0.25, s = Enum.EasingStyle.Back, d = "In", g = {TextSize = 0, TextTransparency = 1}})
-            local tweenOut4 = tw({v = UIStroke_1, t = 0.25, s = Enum.EasingStyle.Quart, d = "In", g = {Transparency = 1}})
-            local tweenOut5 = tw({v = ImageLabel_1, t = 0.25, s = Enum.EasingStyle.Quart, d = "In", g = {ImageTransparency = 1}})
+            local tweenOut = tw({v = Shadow, t = 0.3, s = Enum.EasingStyle.Quart, d = "In", g = {ImageTransparency = 1}})
+            local tweenOutGlow = tw({v = Glow, t = 0.3, s = Enum.EasingStyle.Quart, d = "In", g = {ImageTransparency = 1}})
+            local tweenOut2 = tw({v = Notifytemple_1, t = 0.3, s = Enum.EasingStyle.Quart, d = "In", g = {BackgroundTransparency = 1}})
+            local tweenOut3 = tw({v = TextLabel_1, t = 0.3, s = Enum.EasingStyle.Back, d = "In", g = {TextSize = 0, TextTransparency = 1}})
+            local tweenOut4 = tw({v = UIStroke_1, t = 0.3, s = Enum.EasingStyle.Quart, d = "In", g = {Transparency = 1}})
+            local tweenOut5 = tw({v = ImageLabel_1, t = 0.3, s = Enum.EasingStyle.Quart, d = "In", g = {ImageTransparency = 1, Rotation = 0}})
             
             tweenOut:Play()
+            tweenOutGlow:Play()
             tweenOut2:Play()
             tweenOut3:Play()
             tweenOut4:Play()
             tweenOut5:Play()
             
-            task.delay(0.25, function()
+            task.delay(0.3, function()
                 Shadow:Destroy()
             end)
         end)
@@ -972,8 +1002,8 @@ function Library.Load(o)
             end)
             
             tab.Notify({
-                Title = 'Redirecting to Discord...',
-                Icon = 6034818340,
+                Title = 'Copied Key Link...',
+                Icon = getLucideIcon("external-link"),
                 Time = 3,
                 Color = Color3.fromRGB(98, 37, 209)
             })
@@ -986,7 +1016,7 @@ function Library.Load(o)
         DiscordBtn.MouseButton1Click:Connect(function()
             tab.Notify({
                 Title = 'Copied Discord Link',
-                Icon = 6034818350,
+                Icon = getLucideIcon("copy"),
                 Time = 3,
                 Color = Color3.fromRGB(98, 37, 209)
             })
@@ -997,69 +1027,18 @@ function Library.Load(o)
         end)
         
         do
-            local realText = ""
-            local hidden = true
-            local lastLength = 0
-            local te = "•"
-            
-            local TextLabel_Overlay = Instance.new('TextLabel')
-            TextLabel_Overlay.Text = realText
-            TextLabel_Overlay.TextTransparency = 1
-            TextLabel_Overlay.BackgroundTransparency = 1
-            TextLabel_Overlay.Size = TextBox_1.Size
-            TextLabel_Overlay.Font = TextBox_1.Font
-            TextLabel_Overlay.TextSize = TextBox_1.TextSize
-            TextLabel_Overlay.TextColor3 = TextBox_1.TextColor3
-            TextLabel_Overlay.TextXAlignment = Enum.TextXAlignment.Left
-            TextLabel_Overlay.TextYAlignment = Enum.TextYAlignment.Center
-            TextLabel_Overlay.Parent = TextBox_1
-            
-            TextBox_1.TextTransparency = 0
-            TextBox_1.Text = ""
-            TextLabel_Overlay.Text = ""
-            TextLabel_Overlay.TextTransparency = 1
-
             if savedKey ~= "" then
-                realText = savedKey
-                TextBox_1.Text = string.rep(te, #realText)
-                TextLabel_Overlay.Text = realText
-                lastLength = #realText
+                TextBox_1.Text = savedKey
             end
 
-            TextBox_1:GetPropertyChangedSignal("Text"):Connect(function()
-                if hidden then
-                    if TextBox_1.Text == "" then
-                        realText = ""
-                    else
-                        local newLen = #TextBox_1.Text
-                        if newLen < lastLength then
-                            realText = realText:sub(1, -2)
-                        elseif newLen > lastLength then
-                            realText = realText .. TextBox_1.Text:sub(-1)
-                        end
+            local function validateKey(key)
+                for _, v in ipairs(Key) do
+                    if key == v then
+                        return true
                     end
-                    TextBox_1.Text = string.rep(te, #realText)
-                else
-                    realText = TextBox_1.Text
                 end
-
-                lastLength = #realText
-                TextLabel_Overlay.Text = realText
-            end)
-
-            HideShowKey.MouseButton1Click:Connect(function()
-                hidden = not hidden
-                
-                if hidden then
-                    ImageLabel_2.Image = "rbxassetid://6034818360"
-                    TextBox_1.Text = string.rep(te, #realText)
-                else
-                    ImageLabel_2.Image = "rbxassetid://6034818359"
-                    TextBox_1.Text = realText
-                end
-
-                lastLength = #realText
-            end)
+                return false
+            end
             
             tw({v = Background_1, t = 0.2, s = Enum.EasingStyle.Quart, d = "Out", g = {BackgroundTransparency = 0.1}}):Play()
             task.delay(0.15, function()
@@ -1072,32 +1051,25 @@ function Library.Load(o)
                     tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Linear, d = "InOut", g = {Size = UDim2.new(1, 0,0, 38), BackgroundColor3 = Color}}):Play()
                 end)
                 
-                local input = realText
-                local found = false
+                local input = TextBox_1.Text
+                local isValid = validateKey(input)
 
-                for _, v in ipairs(Key) do
-                    if input == v then
-                        found = true
-                        break
-                    end
-                end
-
-                if found then
+                if isValid then
                     if KeyGUI then 
-                        pcall(writefile, "MultiHub/key.txt", input) 
+                        pcall(writefile, "SindexHub/key.txt", input) 
                     end
                     
                     tab.Notify({
                         Title = 'Key Verified Successfully!',
-                        Icon = 6034818397,
+                        Icon = getLucideIcon("check-circle"),
                         Time = 2,
                         Color = Color3.fromRGB(0, 200, 83)
                     })
                     
                     task.delay(1, function()
                         tab.Notify({
-                            Title = 'Loading Premium Features...',
-                            Icon = 6034818398,
+                            Title = 'Loading Script...',
+                            Icon = getLucideIcon("loader"),
                             Time = 2,
                             Color = Color
                         })
@@ -1119,7 +1091,7 @@ function Library.Load(o)
                 else
                     tab.Notify({
                         Title = 'Invalid Key!',
-                        Icon = 6034818372,
+                        Icon = getLucideIcon("x-circle"),
                         Time = 3,
                         Color = Color3.fromRGB(255, 87, 87)
                     })
