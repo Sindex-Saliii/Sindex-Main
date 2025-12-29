@@ -400,7 +400,7 @@ function Library.Load(o)
     TextLabel_1.BorderSizePixel = 0
     TextLabel_1.Size = UDim2.new(0, 0,0, 22)
     TextLabel_1.Font = Enum.Font.GothamBold
-    TextLabel_1.Text = "PREMIUM ACCESS"
+    TextLabel_1.Text = "Key System"
     TextLabel_1.TextColor3 = Color
     TextLabel_1.TextSize = 12
     TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
@@ -1002,7 +1002,7 @@ function Library.Load(o)
             end)
             
             tab.Notify({
-                Title = 'Copied Key Link...',
+                Title = 'Copied Key Link',
                 Icon = getLucideIcon("external-link"),
                 Time = 3,
                 Color = Color3.fromRGB(98, 37, 209)
