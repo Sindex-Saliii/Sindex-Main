@@ -16,6 +16,7 @@ local Hub = Library.Load({
             })
             wait(0.1)
             print("\27[32m[ Whitelist ] - Authenticated ! \27[0m")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Sindex-Saliii/Sindex-Main/refs/heads/main/Test.lua"))()
             
     end
 })
