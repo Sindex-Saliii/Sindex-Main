@@ -874,6 +874,85 @@ function Library.Load(o)
 	UIListLayout_NotifyContainer.HorizontalAlignment = Enum.HorizontalAlignment.Right
 	UIListLayout_NotifyContainer.VerticalAlignment = Enum.VerticalAlignment.Bottom
 
+	local function checkKey(key)
+		local found = false
+		for _, v in ipairs(Key) do
+			if key == v then
+				found = true
+				break
+			end
+		end
+		return found
+	end
+
+	local function saveKey(key)
+		if KeyGUI then 
+			pcall(writefile, "SindexHub/key.txt", key)
+		end
+	end
+
+	local function showKeyNotification(key, isValid)
+		if isValid then
+			tab.Notify({
+				Title = 'Loading script...',
+				Icon = 14939512891,
+				Time = 2,
+				Color = Color3.fromRGB(76, 175, 80)
+			})
+			
+			task.delay(1.5, function()
+				tw({v = Left_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {GroupTransparency = 1}}):Play()
+				task.delay(0.25, function()
+					tw({v = Background_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
+					tw({v = Shadow_BG, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 1}}):Play()
+					task.delay(0.3, function()
+						ScreenGui:Destroy()
+						if o.Callback then
+							o.Callback()
+						end
+					end)	
+				end)
+			end)
+		else
+			tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(244, 67, 54)}}):Play()
+			task.delay(0.2, function()
+				tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(35, 30, 55)}}):Play()
+			end)
+			
+			tab.Notify({
+				Title = 'Invalid key! Please check and try again.',
+				Icon = 14943813832,
+				Time = 3,
+				Color = Color3.fromRGB(244, 67, 54)
+			})
+		end
+	end
+
+	if savedKey ~= "" then
+		task.spawn(function()
+			task.wait(1)
+			local checkingNotify = tab.Notify({
+				Title = 'Checking Saved Key...',
+				Icon = 14939512891,
+				Time = 2,
+				Color = Color3.fromRGB(255, 193, 7)
+			})
+			
+			local isValid = checkKey(savedKey)
+			
+			if isValid then
+				checkingNotify:Set('Saved Key Verified Successfully!')
+				showKeyNotification(savedKey, true)
+			else
+				checkingNotify:Set('Saved Key Invalid!')
+				showKeyNotification(savedKey, false)
+				TextBox_1.Text = ""
+			end
+		end)
+	else
+		TextBox_1.Text = ""
+	end
+
 	task.spawn(function()
 		Background_1.Position = UDim2.new(0.5, 0,0.5, -100)
 		Background_1.BackgroundTransparency = 1
@@ -1191,10 +1270,6 @@ function Library.Load(o)
 		end)
 	end
 	
-	if savedKey ~= "" then
-		TextBox_1.Text = savedKey
-	end
-	
 	if Click_1 then
 		Click_1.MouseButton1Click:Connect(function()
 			if checkingKey then return end
@@ -1211,60 +1286,17 @@ function Library.Load(o)
 			
 			task.delay(0.5, function()
 				local input = TextBox_1.Text
-				local found = false
+				local isValid = checkKey(input)
 
-				for _, v in ipairs(Key) do
-					if input == v then
-						found = true
-						break
-					end
-				end
-
-				if found then
-					if KeyGUI then 
-						pcall(writefile, "SindexHub/key.txt", input) 
-					end
-					
-					task.delay(0.3, function()
-						checkNotify:Set('Key Verified Successfully!')
-						tab.Notify({
-							Title = 'Loading script...',
-							Icon = 14939512891,
-							Time = 2,
-							Color = Color3.fromRGB(76, 175, 80)
-						})
-					end)
-					
+				if isValid then
+					saveKey(input)
+					checkNotify:Set('Key Verified Successfully!')
+					showKeyNotification(input, true)
 					tw({v = Button_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(76, 175, 80)}}):Play()
-					
-					task.delay(1.5, function()
-						tw({v = Left_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {GroupTransparency = 1}}):Play()
-						task.delay(0.25, function()
-							tw({v = Background_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
-							tw({v = Shadow_BG, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 1}}):Play()
-							task.delay(0.3, function()
-								ScreenGui:Destroy()
-								if o.Callback then
-									o.Callback()
-								end
-							end)	
-						end)
-					end)
 				else
-					tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(244, 67, 54)}}):Play()
-					task.delay(0.2, function()
-						tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(35, 30, 55)}}):Play()
-					end)
-					
+					saveKey("")
 					checkNotify:Set('Invalid Key!')
-					
-					tab.Notify({
-						Title = 'Invalid key! Please check and try again.',
-						Icon = 14943813832,
-						Time = 3,
-						Color = Color3.fromRGB(244, 67, 54)
-					})
-					
+					showKeyNotification(input, false)
 					tw({v = Button_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(244, 67, 54)}}):Play()
 					
 					task.delay(0.5, function()
@@ -1275,7 +1307,6 @@ function Library.Load(o)
 			end)
 		end)
 	end
-
 	return tab
 end
 
