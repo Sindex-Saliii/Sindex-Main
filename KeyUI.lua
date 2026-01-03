@@ -1,3 +1,5 @@
+[file name]: KeyUI (2).lua
+[file content begin]
 local Library = {}
 local U, Tw = game:GetService("UserInputService"), game:GetService("TweenService")
 local KeyGUI = pcall(function() return makefolder and readfile and writefile and setclipboard end)
@@ -314,6 +316,7 @@ function Library.Load(o)
 	local Color = o.Color or Color3.fromRGB(138, 43, 226)
 	local Icon = o.Icon or 14930953469
 	local Key = o.Key or {}
+	local DiscordLink = o.Discord or o.DiscordLink or 'discord.gg'
 
 	if KeyGUI then 
 		pcall(function()
@@ -329,57 +332,90 @@ function Library.Load(o)
 	end
 
 	local ScreenGui = Instance.new("ScreenGui")
-	local Background_1 = Instance.new("Frame")
-	local UICorner_1 = Instance.new("UICorner")
-	local UIGradient_1 = Instance.new("UIGradient")
-	local UIPadding_1 = Instance.new("UIPadding")
-	local Left_1 = Instance.new("CanvasGroup")
-	local UIListLayout_1 = Instance.new("UIListLayout")
-	local TItleIcon_1 = Instance.new("Frame")
-	local UIListLayout_2 = Instance.new("UIListLayout")
-	local ImageLabel_1 = Instance.new("ImageLabel")
-	local TextLabel_1 = Instance.new("TextLabel")
-	local adsframe_1 = Instance.new("Frame")
-	local ads_1 = Instance.new("TextLabel")
-	local KeyFrame_1 = Instance.new("Frame")
-	local UIListLayout_3 = Instance.new("UIListLayout")
-	local TextLabel_2 = Instance.new("TextLabel")
-	local Frame_1 = Instance.new("Frame")
-	local UICorner_2 = Instance.new("UICorner")
-	local ImageLabel_2 = Instance.new("ImageLabel")
-	local Keybox_1 = Instance.new("Frame")
-	local UICorner_3 = Instance.new("UICorner")
-	local UIStroke_1 = Instance.new("UIStroke")
-	local UIPadding_2 = Instance.new("UIPadding")
-	local TextBox_1 = Instance.new("TextBox")
-	local RedeemFrame_1 = Instance.new("Frame")
-	local UIListLayout_4 = Instance.new("UIListLayout")
-	local Button_1 = Instance.new("Frame")
-	local UICorner_4 = Instance.new("UICorner")
-	local Shadow_1 = Instance.new("ImageLabel")
-	local Text_1 = Instance.new("Frame")
-	local UIListLayout_5 = Instance.new("UIListLayout")
-	local TextLabel_3 = Instance.new("TextLabel")
-	local ImageLabel_3 = Instance.new("ImageLabel")
-	local Click_1 = Instance.new("TextButton")
-	local TextLabel_4 = Instance.new("TextLabel")
-	local Line_1 = Instance.new("Frame")
-	local TabList_1 = Instance.new("Frame")
-	local UIListLayout_7 = Instance.new("UIListLayout")
+	local MainContainer = Instance.new("Frame")
+	local BackgroundBlur = Instance.new("BlurEffect", game:GetService("Lighting"))
+	BackgroundBlur.Size = 0
 
 	ScreenGui.Parent = (not game:GetService("RunService"):IsStudio() and game:GetService("CoreGui") or game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"))
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	ScreenGui.Name = "SindexKeySystem"
 
+	MainContainer.Name = "MainContainer"
+	MainContainer.Parent = ScreenGui
+	MainContainer.AnchorPoint = Vector2.new(0.5, 0.5)
+	MainContainer.BackgroundTransparency = 1
+	MainContainer.Position = UDim2.new(0.5, 0, 0.5, 0)
+	MainContainer.Size = UDim2.new(0, 400, 0, 500)
+
+	local Background_1 = Instance.new("Frame")
+	local UICorner_1 = Instance.new("UICorner")
+	local MainGradient = Instance.new("UIGradient")
+	local UIPadding_1 = Instance.new("UIPadding")
+	local Left_1 = Instance.new("CanvasGroup")
+	local UIListLayout_1 = Instance.new("UIListLayout")
+	local Header = Instance.new("Frame")
+	local HeaderGradient = Instance.new("UIGradient")
+	local HeaderContent = Instance.new("Frame")
+	local IconContainer = Instance.new("Frame")
+	local IconGradient = Instance.new("UIGradient")
+	local ImageLabel_1 = Instance.new("ImageLabel")
+	local TitleContainer = Instance.new("Frame")
+	local TitleLabel = Instance.new("TextLabel")
+	local SubtitleLabel = Instance.new("TextLabel")
+	local adsframe_1 = Instance.new("Frame")
+	local ads_1 = Instance.new("TextLabel")
+	local KeyFrame_1 = Instance.new("Frame")
+	local UIListLayout_3 = Instance.new("UIListLayout")
+	local TextLabel_2 = Instance.new("TextLabel")
+	local EyeButton = Instance.new("Frame")
+	local UICorner_Eye = Instance.new("UICorner")
+	local EyeStroke = Instance.new("UIStroke")
+	local EyeIcon = Instance.new("ImageLabel")
+	local Keybox_1 = Instance.new("Frame")
+	local UICorner_3 = Instance.new("UICorner")
+	local KeyboxStroke = Instance.new("UIStroke")
+	local KeyboxGradient = Instance.new("UIGradient")
+	local KeyboxGlow = Instance.new("ImageLabel")
+	local UIPadding_2 = Instance.new("UIPadding")
+	local TextBox_1 = Instance.new("TextBox")
+	local ButtonContainer = Instance.new("Frame")
+	local UIListLayout_4 = Instance.new("UIListLayout")
+	local RedeemButton = Instance.new("Frame")
+	local UICorner_4 = Instance.new("UICorner")
+	local ButtonGradient = Instance.new("UIGradient")
+	local ButtonGlow = Instance.new("ImageLabel")
+	local ButtonContent = Instance.new("Frame")
+	local UIListLayout_5 = Instance.new("UIListLayout")
+	local ButtonLabel = Instance.new("TextLabel")
+	local ButtonIcon = Instance.new("ImageLabel")
+	local ButtonClick = Instance.new("TextButton")
+	local HoverButton1 = Instance.new("Frame")
+	local GetKeyButton = Instance.new("Frame")
+	local UICorner_5 = Instance.new("UICorner")
+	local ButtonGradient2 = Instance.new("UIGradient")
+	local ButtonGlow2 = Instance.new("ImageLabel")
+	local ButtonContent2 = Instance.new("Frame")
+	local UIListLayout_6 = Instance.new("UIListLayout")
+	local ButtonLabel2 = Instance.new("TextLabel")
+	local ButtonIcon2 = Instance.new("ImageLabel")
+	local ButtonClick2 = Instance.new("TextButton")
+	local HoverButton2 = Instance.new("Frame")
+	local Footer = Instance.new("Frame")
+	local FooterText = Instance.new("TextLabel")
+	local DiscordButton = Instance.new("TextButton")
+	local Divider = Instance.new("Frame")
+	local TabList_1 = Instance.new("Frame")
+	local UIListLayout_7 = Instance.new("UIListLayout")
+
 	Background_1.Name = "Background"
-	Background_1.Parent = ScreenGui
+	Background_1.Parent = MainContainer
 	Background_1.AutomaticSize = Enum.AutomaticSize.Y
 	Background_1.AnchorPoint = Vector2.new(0.5, 0.5)
-	Background_1.BackgroundColor3 = Color3.fromRGB(50, 30, 70)
+	Background_1.BackgroundColor3 = Color3.fromRGB(25, 20, 35)
 	Background_1.BorderColor3 = Color3.fromRGB(0,0,0)
 	Background_1.BorderSizePixel = 0
 	Background_1.Position = UDim2.new(0.5, 0,0.5, 0)
-	Background_1.Size = UDim2.new(0.4, 0,0, 0)
+	Background_1.Size = UDim2.new(0.9, 0,0, 0)
 	Background_1.ClipsDescendants = true
 	Background_1.BackgroundTransparency = 1
 	
@@ -388,38 +424,42 @@ function Library.Load(o)
 	init(Background_1)
 
 	UICorner_1.Parent = Background_1
-	UICorner_1.CornerRadius = UDim.new(0,15)
+	UICorner_1.CornerRadius = UDim.new(0, 20)
 
-	UIGradient_1.Parent = Background_1
-	UIGradient_1.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 15, 50)), ColorSequenceKeypoint.new(0.5, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 15, 50))}
-	UIGradient_1.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0,0), NumberSequenceKeypoint.new(0.5,0.04375), NumberSequenceKeypoint.new(1,0)}
-	UIGradient_1.Rotation = 45
+	MainGradient.Parent = Background_1
+	MainGradient.Color = ColorSequence.new{
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 15, 30)),
+		ColorSequenceKeypoint.new(0.3, Color3.fromRGB(40, 30, 60)),
+		ColorSequenceKeypoint.new(0.7, Color3.fromRGB(40, 30, 60)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 30))
+	}
+	MainGradient.Rotation = 90
 
-	local UIStroke_3 = Instance.new("UIStroke")
-	UIStroke_3.Parent = Background_1
-	UIStroke_3.Color = Color
-	UIStroke_3.Thickness = 1
-	UIStroke_3.Transparency = 0.7
+	local BorderGlow = Instance.new("UIStroke")
+	BorderGlow.Parent = Background_1
+	BorderGlow.Color = Color
+	BorderGlow.Thickness = 2
+	BorderGlow.Transparency = 1
 
-	local Shadow_BG = Instance.new("ImageLabel")
-	Shadow_BG.Name = "Shadow_BG"
-	Shadow_BG.Parent = ScreenGui
-	Shadow_BG.AnchorPoint = Vector2.new(0.5, 0.5)
-	Shadow_BG.BackgroundTransparency = 1
-	Shadow_BG.Position = Background_1.Position
-	Shadow_BG.Size = UDim2.new(1.1, 0,1.1, 0)
-	Shadow_BG.Image = "rbxassetid://1316045217"
-	Shadow_BG.ImageColor3 = Color3.fromRGB(0,0,0)
-	Shadow_BG.ImageTransparency = 0.7
-	Shadow_BG.ScaleType = Enum.ScaleType.Slice
-	Shadow_BG.SliceCenter = Rect.new(10, 10, 118, 118)
-	Shadow_BG.ZIndex = 0
+	local OuterGlow = Instance.new("ImageLabel")
+	OuterGlow.Name = "OuterGlow"
+	OuterGlow.Parent = Background_1
+	OuterGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+	OuterGlow.BackgroundTransparency = 1
+	OuterGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+	OuterGlow.Size = UDim2.new(1.1, 0, 1.1, 0)
+	OuterGlow.Image = "rbxassetid://8992230671"
+	OuterGlow.ImageColor3 = Color
+	OuterGlow.ImageTransparency = 1
+	OuterGlow.ScaleType = Enum.ScaleType.Slice
+	OuterGlow.SliceCenter = Rect.new(100, 100, 100, 100)
+	OuterGlow.ZIndex = 0
 
 	UIPadding_1.Parent = Background_1
-	UIPadding_1.PaddingBottom = UDim.new(0,10)
-	UIPadding_1.PaddingLeft = UDim.new(0,10)
-	UIPadding_1.PaddingRight = UDim.new(0,10)
-	UIPadding_1.PaddingTop = UDim.new(0,10)
+	UIPadding_1.PaddingBottom = UDim.new(0, 20)
+	UIPadding_1.PaddingLeft = UDim.new(0, 25)
+	UIPadding_1.PaddingRight = UDim.new(0, 25)
+	UIPadding_1.PaddingTop = UDim.new(0, 20)
 
 	Left_1.Name = "Left"
 	Left_1.Parent = Background_1
@@ -429,78 +469,115 @@ function Library.Load(o)
 	Left_1.BorderSizePixel = 0
 	Left_1.Size = UDim2.new(1, 0,1, 0)
 	Left_1.GroupTransparency = 1
-	Left_1.ClipsDescendants = false
 
 	UIListLayout_1.Parent = Left_1
-	UIListLayout_1.Padding = UDim.new(0,8)
+	UIListLayout_1.Padding = UDim.new(0, 20)
 	UIListLayout_1.SortOrder = Enum.SortOrder.LayoutOrder
 
-	TItleIcon_1.Name = "TItleIcon"
-	TItleIcon_1.Parent = Left_1
-	TItleIcon_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TItleIcon_1.BackgroundTransparency = 1
-	TItleIcon_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TItleIcon_1.BorderSizePixel = 0
-	TItleIcon_1.Size = UDim2.new(0, 100,0, 20)
+	Header.Name = "Header"
+	Header.Parent = Left_1
+	Header.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	Header.BackgroundTransparency = 1
+	Header.Size = UDim2.new(1, 0, 0, 70)
 
-	UIListLayout_2.Parent = TItleIcon_1
-	UIListLayout_2.Padding = UDim.new(0,8)
-	UIListLayout_2.FillDirection = Enum.FillDirection.Horizontal
-	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_2.VerticalAlignment = Enum.VerticalAlignment.Center
+	HeaderGradient.Parent = Header
+	HeaderGradient.Color = ColorSequence.new{
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 25, 45)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 35))
+	}
+	HeaderGradient.Rotation = 90
 
-	ImageLabel_1.Parent = TItleIcon_1
+	HeaderContent = Instance.new("Frame")
+	HeaderContent.Name = "HeaderContent"
+	HeaderContent.Parent = Header
+	HeaderContent.BackgroundTransparency = 1
+	HeaderContent.Size = UDim2.new(1, 0, 1, 0)
+
+	local HeaderList = Instance.new("UIListLayout")
+	HeaderList.Parent = HeaderContent
+	HeaderList.FillDirection = Enum.FillDirection.Horizontal
+	HeaderList.Padding = UDim.new(0, 15)
+	HeaderList.VerticalAlignment = Enum.VerticalAlignment.Center
+
+	IconContainer = Instance.new("Frame")
+	IconContainer.Name = "IconContainer"
+	IconContainer.Parent = HeaderContent
+	IconContainer.BackgroundColor3 = Color3.fromRGB(40, 35, 60)
+	IconContainer.Size = UDim2.new(0, 50, 0, 50)
+	IconContainer.BackgroundTransparency = 1
+
+	local IconCorner = Instance.new("UICorner")
+	IconCorner.Parent = IconContainer
+	IconCorner.CornerRadius = UDim.new(0, 12)
+
+	IconGradient = Instance.new("UIGradient")
+	IconGradient.Parent = IconContainer
+	IconGradient.Color = ColorSequence.new{
+		ColorSequenceKeypoint.new(0, Color),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 180, 255))
+	}
+	IconGradient.Rotation = 135
+	IconGradient.Transparency = NumberSequence.new(1)
+
+	ImageLabel_1.Parent = IconContainer
+	ImageLabel_1.AnchorPoint = Vector2.new(0.5, 0.5)
 	ImageLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	ImageLabel_1.BackgroundTransparency = 1
-	ImageLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	ImageLabel_1.BorderSizePixel = 0
-	ImageLabel_1.Size = UDim2.new(0, 17,0, 17)
+	ImageLabel_1.Position = UDim2.new(0.5, 0, 0.5, 0)
+	ImageLabel_1.Size = UDim2.new(0.7, 0, 0.7, 0)
 	ImageLabel_1.Image = gl(Icon).Image
 	ImageLabel_1.ImageTransparency = 1
 
-	local UIGradient_Icon = Instance.new("UIGradient")
-	UIGradient_Icon.Parent = ImageLabel_1
-	UIGradient_Icon.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))}
-	UIGradient_Icon.Transparency = NumberSequence.new(1)
-	UIGradient_Icon.Rotation = 90
+	TitleContainer = Instance.new("Frame")
+	TitleContainer.Name = "TitleContainer"
+	TitleContainer.Parent = HeaderContent
+	TitleContainer.BackgroundTransparency = 1
+	TitleContainer.Size = UDim2.new(1, -65, 1, 0)
 
-	TextLabel_1.Parent = TItleIcon_1
-	TextLabel_1.AutomaticSize = Enum.AutomaticSize.X
-	TextLabel_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_1.BackgroundTransparency = 1
-	TextLabel_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_1.BorderSizePixel = 0
-	TextLabel_1.Size = UDim2.new(0, 0,0, 20)
-	TextLabel_1.Font = Enum.Font.Gotham
-	TextLabel_1.Text = "KEY SYSTEM"
-	TextLabel_1.TextColor3 = Color
-	TextLabel_1.TextSize = 11
-	TextLabel_1.TextTransparency = 1
-	TextLabel_1.TextXAlignment = Enum.TextXAlignment.Left
+	local TitleList = Instance.new("UIListLayout")
+	TitleList.Parent = TitleContainer
+	TitleList.Padding = UDim.new(0, 5)
+
+	TitleLabel = Instance.new("TextLabel")
+	TitleLabel.Name = "TitleLabel"
+	TitleLabel.Parent = TitleContainer
+	TitleLabel.BackgroundTransparency = 1
+	TitleLabel.Font = Enum.Font.GothamBold
+	TitleLabel.Text = HubName
+	TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TitleLabel.TextSize = 18
+	TitleLabel.TextTransparency = 1
+	TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+	SubtitleLabel = Instance.new("TextLabel")
+	SubtitleLabel.Name = "SubtitleLabel"
+	SubtitleLabel.Parent = TitleContainer
+	SubtitleLabel.BackgroundTransparency = 1
+	SubtitleLabel.Font = Enum.Font.Gotham
+	SubtitleLabel.Text = "KEY SYSTEM"
+	SubtitleLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+	SubtitleLabel.TextSize = 12
+	SubtitleLabel.TextTransparency = 1
+	SubtitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 	adsframe_1.Name = "adsframe"
 	adsframe_1.Parent = Left_1
 	adsframe_1.AutomaticSize = Enum.AutomaticSize.Y
 	adsframe_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	adsframe_1.BackgroundTransparency = 1
-	adsframe_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	adsframe_1.BorderSizePixel = 0
-	adsframe_1.LayoutOrder = 1
-	adsframe_1.Size = UDim2.new(1, 0,0, 0)
+	adsframe_1.Size = UDim2.new(1, 0, 0, 0)
 
 	ads_1.Name = "ads"
 	ads_1.Parent = adsframe_1
 	ads_1.AutomaticSize = Enum.AutomaticSize.Y
 	ads_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	ads_1.BackgroundTransparency = 1
-	ads_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	ads_1.BorderSizePixel = 0
-	ads_1.Size = UDim2.new(1, 0,1, 0)
-	ads_1.Font = Enum.Font.GothamBold
+	ads_1.Size = UDim2.new(1, 0, 1, 0)
+	ads_1.Font = Enum.Font.Gotham
 	ads_1.RichText = true
-	ads_1.Text = "WELCOME TO ,\n<font color='"..string.format("rgb(%d, %d, %d)", Color.r * 255, Color.g * 255, Color.b * 255).."'>"..HubName.." Key System</font>"
-	ads_1.TextColor3 = Color3.fromRGB(255,255,255)
-	ads_1.TextSize = 22
+	ads_1.Text = "Enter your license key to access premium features"
+	ads_1.TextColor3 = Color3.fromRGB(220, 220, 240)
+	ads_1.TextSize = 14
 	ads_1.TextTransparency = 1
 	ads_1.TextWrapped = true
 	ads_1.TextXAlignment = Enum.TextXAlignment.Left
@@ -510,383 +587,351 @@ function Library.Load(o)
 	KeyFrame_1.AutomaticSize = Enum.AutomaticSize.Y
 	KeyFrame_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	KeyFrame_1.BackgroundTransparency = 1
-	KeyFrame_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	KeyFrame_1.BorderSizePixel = 0
-	KeyFrame_1.LayoutOrder = 2
-	KeyFrame_1.Size = UDim2.new(1, 0,0, 0)
+	KeyFrame_1.Size = UDim2.new(1, 0, 0, 0)
 
 	UIListLayout_3.Parent = KeyFrame_1
-	UIListLayout_3.Padding = UDim.new(0,5)
-	UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_3.Padding = UDim.new(0, 8)
 
 	TextLabel_2.Parent = KeyFrame_1
 	TextLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	TextLabel_2.BackgroundTransparency = 1
-	TextLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_2.BorderSizePixel = 0
-	TextLabel_2.Size = UDim2.new(1, 0,0, 20)
-	TextLabel_2.Font = Enum.Font.Gotham
+	TextLabel_2.Font = Enum.Font.GothamMedium
 	TextLabel_2.Text = "License Key"
-	TextLabel_2.TextColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_2.TextSize = 12
+	TextLabel_2.TextColor3 = Color3.fromRGB(240, 240, 250)
+	TextLabel_2.TextSize = 13
 	TextLabel_2.TextTransparency = 1
 	TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
 
-	Frame_1.Parent = TextLabel_2
-	Frame_1.AnchorPoint = Vector2.new(1, 0.5)
-	Frame_1.BackgroundColor3 = Color
-	Frame_1.BackgroundTransparency = 1
-	Frame_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Frame_1.BorderSizePixel = 0
-	Frame_1.Position = UDim2.new(1, 0,0.5, 0)
-	Frame_1.Size = UDim2.new(0, 18,0, 18)
+	EyeButton = Instance.new("Frame")
+	EyeButton.Name = "EyeButton"
+	EyeButton.Parent = TextLabel_2
+	EyeButton.AnchorPoint = Vector2.new(1, 0.5)
+	EyeButton.BackgroundColor3 = Color3.fromRGB(40, 35, 60)
+	EyeButton.BackgroundTransparency = 1
+	EyeButton.Position = UDim2.new(1, 0, 0.5, 0)
+	EyeButton.Size = UDim2.new(0, 32, 0, 32)
 
-	UICorner_2.Parent = Frame_1
-	UICorner_2.CornerRadius = UDim.new(1,0)
+	UICorner_Eye.Parent = EyeButton
+	UICorner_Eye.CornerRadius = UDim.new(1, 0)
 
-	local UIStroke_Eye = Instance.new("UIStroke")
-	UIStroke_Eye.Parent = Frame_1
-	UIStroke_Eye.Color = Color
-	UIStroke_Eye.Thickness = 1
-	UIStroke_Eye.Transparency = 1
+	EyeStroke = Instance.new("UIStroke")
+	EyeStroke.Parent = EyeButton
+	EyeStroke.Color = Color
+	EyeStroke.Thickness = 1
+	EyeStroke.Transparency = 1
 
-	ImageLabel_2.Parent = Frame_1
-	ImageLabel_2.AnchorPoint = Vector2.new(0.5, 0.5)
-	ImageLabel_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ImageLabel_2.BackgroundTransparency = 1
-	ImageLabel_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	ImageLabel_2.BorderSizePixel = 0
-	ImageLabel_2.Position = UDim2.new(0.5, 0,0.5, 0)
-	ImageLabel_2.Size = UDim2.new(0, 12,0, 12)
-	ImageLabel_2.Image = "rbxassetid://13868333926"
-	ImageLabel_2.ImageTransparency = 1
+	EyeIcon = Instance.new("ImageLabel")
+	EyeIcon.Parent = EyeButton
+	EyeIcon.AnchorPoint = Vector2.new(0.5, 0.5)
+	EyeIcon.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	EyeIcon.BackgroundTransparency = 1
+	EyeIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
+	EyeIcon.Size = UDim2.new(0, 18, 0, 18)
+	EyeIcon.Image = "rbxassetid://13868333926"
+	EyeIcon.ImageTransparency = 1
 	
-	local HideShowKey = click(Frame_1)
+	local HideShowKey = click(EyeButton)
 
 	Keybox_1.Name = "Keybox"
 	Keybox_1.Parent = KeyFrame_1
-	Keybox_1.BackgroundColor3 = Color
-	Keybox_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Keybox_1.BorderSizePixel = 0
-	Keybox_1.LayoutOrder = 1
-	Keybox_1.Size = UDim2.new(1, 0,0, 30)
+	Keybox_1.BackgroundColor3 = Color3.fromRGB(35, 30, 50)
+	Keybox_1.Size = UDim2.new(1, 0, 0, 45)
 	Keybox_1.Transparency = 1
 
 	UICorner_3.Parent = Keybox_1
-	UICorner_3.CornerRadius = UDim.new(0,4)
+	UICorner_3.CornerRadius = UDim.new(0, 10)
 
-	UIStroke_1.Parent = Keybox_1
-	UIStroke_1.Color = Color
-	UIStroke_1.Thickness = 1.2
-	UIStroke_1.Transparency = 1
+	KeyboxStroke = Instance.new("UIStroke")
+	KeyboxStroke.Parent = Keybox_1
+	KeyboxStroke.Color = Color
+	KeyboxStroke.Thickness = 1.5
+	KeyboxStroke.Transparency = 1
 
-	local UIGradient_Keybox = Instance.new("UIGradient")
-	UIGradient_Keybox.Parent = Keybox_1
-	UIGradient_Keybox.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))}
-	UIGradient_Keybox.Transparency = NumberSequence.new(1)
-	UIGradient_Keybox.Rotation = 90
+	KeyboxGradient = Instance.new("UIGradient")
+	KeyboxGradient.Parent = Keybox_1
+	KeyboxGradient.Color = ColorSequence.new{
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 45, 70)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 35, 60))
+	}
+	KeyboxGradient.Transparency = NumberSequence.new(1)
 
-	local Shadow_Keybox = Instance.new("ImageLabel")
-	Shadow_Keybox.Name = "Shadow_Keybox"
-	Shadow_Keybox.Parent = Keybox_1
-	Shadow_Keybox.AnchorPoint = Vector2.new(0.5, 0.5)
-	Shadow_Keybox.BackgroundTransparency = 1
-	Shadow_Keybox.Position = UDim2.new(0.5, 0,0.5, 0)
-	Shadow_Keybox.Size = UDim2.new(1.05, 0,1.05, 0)
-	Shadow_Keybox.Image = "rbxassetid://1316045217"
-	Shadow_Keybox.ImageColor3 = Color
-	Shadow_Keybox.ImageTransparency = 1
-	Shadow_Keybox.ScaleType = Enum.ScaleType.Slice
-	Shadow_Keybox.SliceCenter = Rect.new(10, 10, 118, 118)
-	Shadow_Keybox.ZIndex = 0
+	KeyboxGlow = Instance.new("ImageLabel")
+	KeyboxGlow.Name = "KeyboxGlow"
+	KeyboxGlow.Parent = Keybox_1
+	KeyboxGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+	KeyboxGlow.BackgroundTransparency = 1
+	KeyboxGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+	KeyboxGlow.Size = UDim2.new(1.05, 0, 1.05, 0)
+	KeyboxGlow.Image = "rbxassetid://8992230671"
+	KeyboxGlow.ImageColor3 = Color
+	KeyboxGlow.ImageTransparency = 1
+	KeyboxGlow.ScaleType = Enum.ScaleType.Slice
+	KeyboxGlow.SliceCenter = Rect.new(100, 100, 100, 100)
+	KeyboxGlow.ZIndex = 0
 
 	UIPadding_2.Parent = Keybox_1
-	UIPadding_2.PaddingLeft = UDim.new(0,10)
-	UIPadding_2.PaddingRight = UDim.new(0,10)
+	UIPadding_2.PaddingLeft = UDim.new(0, 15)
+	UIPadding_2.PaddingRight = UDim.new(0, 15)
 
 	TextBox_1.Parent = Keybox_1
-	TextBox_1.Active = true
 	TextBox_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	TextBox_1.BackgroundTransparency = 1
-	TextBox_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextBox_1.BorderSizePixel = 0
-	TextBox_1.CursorPosition = -1
-	TextBox_1.Size = UDim2.new(1, 0,1, 0)
-	TextBox_1.Font = Enum.Font.Gotham
-	TextBox_1.PlaceholderColor3 = Color3.fromRGB(134,134,134)
+	TextBox_1.Size = UDim2.new(1, 0, 1, 0)
+	TextBox_1.Font = Enum.Font.GothamMedium
+	TextBox_1.PlaceholderColor3 = Color3.fromRGB(150, 150, 170)
 	TextBox_1.PlaceholderText = "XXXX-XXXX-XXXX-XXXX"
 	TextBox_1.Text = ""
-	TextBox_1.TextColor3 = Color3.fromRGB(255,255,255)
-	TextBox_1.TextSize = 12
+	TextBox_1.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox_1.TextSize = 14
 	TextBox_1.TextTransparency = 1
 	TextBox_1.TextXAlignment = Enum.TextXAlignment.Left
-	TextBox_1.ClearTextOnFocus = false
 
-	RedeemFrame_1.Name = "RedeemFrame"
-	RedeemFrame_1.Parent = Left_1
-	RedeemFrame_1.AutomaticSize = Enum.AutomaticSize.Y
-	RedeemFrame_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	RedeemFrame_1.BackgroundTransparency = 1
-	RedeemFrame_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	RedeemFrame_1.BorderSizePixel = 0
-	RedeemFrame_1.LayoutOrder = 3
-	RedeemFrame_1.Size = UDim2.new(1, 0,0, 0)
+	ButtonContainer = Instance.new("Frame")
+	ButtonContainer.Name = "ButtonContainer"
+	ButtonContainer.Parent = Left_1
+	ButtonContainer.BackgroundTransparency = 1
+	ButtonContainer.Size = UDim2.new(1, 0, 0, 40)
 
-	UIListLayout_4.Parent = RedeemFrame_1
-	UIListLayout_4.Padding = UDim.new(0,10)
+	UIListLayout_4.Parent = ButtonContainer
+	UIListLayout_4.FillDirection = Enum.FillDirection.Horizontal
+	UIListLayout_4.Padding = UDim.new(0, 12)
 	UIListLayout_4.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	UIListLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout_4.VerticalAlignment = Enum.VerticalAlignment.Center
 
-	Button_1.Name = "Button"
-	Button_1.Parent = RedeemFrame_1
-	Button_1.BackgroundColor3 = Color
-	Button_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Button_1.BorderSizePixel = 0
-	Button_1.Size = UDim2.new(1, 0,0, 30)
-	Button_1.BackgroundTransparency = 1
+	RedeemButton = Instance.new("Frame")
+	RedeemButton.Name = "RedeemButton"
+	RedeemButton.Parent = ButtonContainer
+	RedeemButton.BackgroundColor3 = Color
+	RedeemButton.Size = UDim2.new(0.5, -6, 1, 0)
+	RedeemButton.BackgroundTransparency = 1
 
-	UICorner_4.Parent = Button_1
-	UICorner_4.CornerRadius = UDim.new(0,6)
+	UICorner_4.Parent = RedeemButton
+	UICorner_4.CornerRadius = UDim.new(0, 10)
 
-	local UIGradient_Button = Instance.new("UIGradient")
-	UIGradient_Button.Parent = Button_1
-	UIGradient_Button.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))}
-	UIGradient_Button.Transparency = NumberSequence.new(1)
-	UIGradient_Button.Rotation = 90
+	ButtonGradient.Parent = RedeemButton
+	ButtonGradient.Color = ColorSequence.new{
+		ColorSequenceKeypoint.new(0, Color),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(180, 130, 255))
+	}
+	ButtonGradient.Rotation = 135
+	ButtonGradient.Transparency = NumberSequence.new(1)
 
-	Shadow_1.Name = "Shadow"
-	Shadow_1.Parent = Button_1
-	Shadow_1.AnchorPoint = Vector2.new(0.5, 0.5)
-	Shadow_1.BackgroundColor3 = Color3.fromRGB(163,162,165)
-	Shadow_1.BackgroundTransparency = 1
-	Shadow_1.Position = UDim2.new(0.5, 0,0.5, 0)
-	Shadow_1.Size = UDim2.new(1.05, 0,1.5, 0)
-	Shadow_1.Image = "rbxassetid://1316045217"
-	Shadow_1.ImageColor3 = Color
-	Shadow_1.ImageTransparency = 1
-	Shadow_1.ScaleType = Enum.ScaleType.Slice
-	Shadow_1.SliceCenter = Rect.new(10, 10, 118, 118)
+	ButtonGlow = Instance.new("ImageLabel")
+	ButtonGlow.Name = "ButtonGlow"
+	ButtonGlow.Parent = RedeemButton
+	ButtonGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+	ButtonGlow.BackgroundTransparency = 1
+	ButtonGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+	ButtonGlow.Size = UDim2.new(1.1, 0, 1.1, 0)
+	ButtonGlow.Image = "rbxassetid://8992230671"
+	ButtonGlow.ImageColor3 = Color
+	ButtonGlow.ImageTransparency = 1
+	ButtonGlow.ScaleType = Enum.ScaleType.Slice
+	ButtonGlow.SliceCenter = Rect.new(100, 100, 100, 100)
 
-	Text_1.Name = "Text"
-	Text_1.Parent = Button_1
-	Text_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Text_1.BackgroundTransparency = 1
-	Text_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Text_1.BorderSizePixel = 0
-	Text_1.Size = UDim2.new(1, 0,1, 0)
+	ButtonContent = Instance.new("Frame")
+	ButtonContent.Name = "ButtonContent"
+	ButtonContent.Parent = RedeemButton
+	ButtonContent.BackgroundTransparency = 1
+	ButtonContent.Size = UDim2.new(1, 0, 1, 0)
 
-	UIListLayout_5.Parent = Text_1
+	UIListLayout_5.Parent = ButtonContent
 	UIListLayout_5.FillDirection = Enum.FillDirection.Horizontal
+	UIListLayout_5.Padding = UDim.new(0, 8)
 	UIListLayout_5.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	UIListLayout_5.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_5.VerticalAlignment = Enum.VerticalAlignment.Center
 
-	TextLabel_3.Parent = Text_1
-	TextLabel_3.AutomaticSize = Enum.AutomaticSize.X
-	TextLabel_3.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_3.BackgroundTransparency = 1
-	TextLabel_3.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_3.BorderSizePixel = 0
-	TextLabel_3.Size = UDim2.new(0, 0,1, 0)
-	TextLabel_3.Font = Enum.Font.GothamBold
-	TextLabel_3.Text = "Redeem"
-	TextLabel_3.TextColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_3.TextSize = 12
-	TextLabel_3.TextTransparency = 1
+	ButtonLabel = Instance.new("TextLabel")
+	ButtonLabel.Name = "ButtonLabel"
+	ButtonLabel.Parent = ButtonContent
+	ButtonLabel.BackgroundTransparency = 1
+	ButtonLabel.Font = Enum.Font.GothamBold
+	ButtonLabel.Text = "REDEEM"
+	ButtonLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	ButtonLabel.TextSize = 13
+	ButtonLabel.TextTransparency = 1
 
-	ImageLabel_3.Parent = Text_1
-	ImageLabel_3.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ImageLabel_3.BackgroundTransparency = 1
-	ImageLabel_3.BorderColor3 = Color3.fromRGB(0,0,0)
-	ImageLabel_3.BorderSizePixel = 0
-	ImageLabel_3.LayoutOrder = 2
-	ImageLabel_3.Size = UDim2.new(0, 20,0, 20)
-	ImageLabel_3.Image = "rbxassetid://14938884688"
-	ImageLabel_3.ImageTransparency = 1
+	ButtonIcon = Instance.new("ImageLabel")
+	ButtonIcon.Name = "ButtonIcon"
+	ButtonIcon.Parent = ButtonContent
+	ButtonIcon.BackgroundTransparency = 1
+	ButtonIcon.Size = UDim2.new(0, 18, 0, 18)
+	ButtonIcon.Image = "rbxassetid://14938884688"
+	ButtonIcon.ImageTransparency = 1
 
-	Click_1.Name = "Click"
-	Click_1.Parent = Button_1
-	Click_1.Active = true
-	Click_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Click_1.BackgroundTransparency = 1
-	Click_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Click_1.BorderSizePixel = 0
-	Click_1.Size = UDim2.new(1, 0,1, 0)
-	Click_1.Font = Enum.Font.SourceSans
-	Click_1.Text = ""
-	Click_1.TextSize = 14
+	ButtonClick = Instance.new("TextButton")
+	ButtonClick.Name = "ButtonClick"
+	ButtonClick.Parent = RedeemButton
+	ButtonClick.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	ButtonClick.BackgroundTransparency = 1
+	ButtonClick.Size = UDim2.new(1, 0, 1, 0)
+	ButtonClick.Font = Enum.Font.SourceSans
+	ButtonClick.Text = ""
+	ButtonClick.TextSize = 14
 
-	local HoverButton1 = Instance.new("Frame")
+	HoverButton1 = Instance.new("Frame")
 	HoverButton1.Name = "HoverButton"
-	HoverButton1.Parent = Button_1
+	HoverButton1.Parent = RedeemButton
 	HoverButton1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	HoverButton1.BackgroundTransparency = 0.9
-	HoverButton1.BorderSizePixel = 0
 	HoverButton1.Size = UDim2.new(1,0,1,0)
 	HoverButton1.Visible = false
 
-	if Button_1 then
-		Button_1.MouseEnter:Connect(function()
-			HoverButton1.Visible = true
-			tw({v = HoverButton1, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.7}}):Play()
-		end)
+	local HoverCorner1 = Instance.new("UICorner")
+	HoverCorner1.Parent = HoverButton1
+	HoverCorner1.CornerRadius = UDim.new(0, 10)
 
-		Button_1.MouseLeave:Connect(function()
-			tw({v = HoverButton1, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
-			task.delay(0.15, function() HoverButton1.Visible = false end)
-		end)
-	end
+	RedeemButton.MouseEnter:Connect(function()
+		HoverButton1.Visible = true
+		tw({v = HoverButton1, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.7}}):Play()
+	end)
 
-	local Button_2 = Instance.new("Frame")
-	Button_2.Name = "Button"
-	Button_2.Parent = RedeemFrame_1
-	Button_2.BackgroundColor3 = Color
-	Button_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	Button_2.BorderSizePixel = 0
-	Button_2.Size = UDim2.new(1, 0,0, 30)
-	Button_2.BackgroundTransparency = 1
-	Button_2.LayoutOrder = 1
-	local UICorner_5 = Instance.new("UICorner")
-	UICorner_5.Parent = Button_2
-	UICorner_5.CornerRadius = UDim.new(0,6)
-	local UIGradient_Button2 = Instance.new("UIGradient")
-	UIGradient_Button2.Parent = Button_2
-	UIGradient_Button2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))}
-	UIGradient_Button2.Transparency = NumberSequence.new(1)
-	UIGradient_Button2.Rotation = 90
-	local Shadow_2 = Instance.new("ImageLabel")
-	Shadow_2.Name = "Shadow"
-	Shadow_2.Parent = Button_2
-	Shadow_2.AnchorPoint = Vector2.new(0.5, 0.5)
-	Shadow_2.BackgroundColor3 = Color3.fromRGB(163,162,165)
-	Shadow_2.BackgroundTransparency = 1
-	Shadow_2.Position = UDim2.new(0.5, 0,0.5, 0)
-	Shadow_2.Size = UDim2.new(1.05, 0,1.5, 0)
-	Shadow_2.Image = "rbxassetid://1316045217"
-	Shadow_2.ImageColor3 = Color
-	Shadow_2.ImageTransparency = 1
-	Shadow_2.ScaleType = Enum.ScaleType.Slice
-	Shadow_2.SliceCenter = Rect.new(10, 10, 118, 118)
-	local Text_2 = Instance.new("Frame")
-	Text_2.Name = "Text"
-	Text_2.Parent = Button_2
-	Text_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Text_2.BackgroundTransparency = 1
-	Text_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	Text_2.BorderSizePixel = 0
-	Text_2.Size = UDim2.new(1, 0,1, 0)
-	local UIListLayout_6 = Instance.new("UIListLayout")
-	UIListLayout_6.Parent = Text_2
+	RedeemButton.MouseLeave:Connect(function()
+		tw({v = HoverButton1, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
+		task.delay(0.15, function() HoverButton1.Visible = false end)
+	end)
+
+	GetKeyButton = Instance.new("Frame")
+	GetKeyButton.Name = "GetKeyButton"
+	GetKeyButton.Parent = ButtonContainer
+	GetKeyButton.BackgroundColor3 = Color3.fromRGB(50, 45, 70)
+	GetKeyButton.Size = UDim2.new(0.5, -6, 1, 0)
+	GetKeyButton.BackgroundTransparency = 1
+
+	UICorner_5.Parent = GetKeyButton
+	UICorner_5.CornerRadius = UDim.new(0, 10)
+
+	ButtonGradient2.Parent = GetKeyButton
+	ButtonGradient2.Color = ColorSequence.new{
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 55, 80)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 45, 70))
+	}
+	ButtonGradient2.Rotation = 135
+	ButtonGradient2.Transparency = NumberSequence.new(1)
+
+	ButtonGlow2 = Instance.new("ImageLabel")
+	ButtonGlow2.Name = "ButtonGlow2"
+	ButtonGlow2.Parent = GetKeyButton
+	ButtonGlow2.AnchorPoint = Vector2.new(0.5, 0.5)
+	ButtonGlow2.BackgroundTransparency = 1
+	ButtonGlow2.Position = UDim2.new(0.5, 0, 0.5, 0)
+	ButtonGlow2.Size = UDim2.new(1.1, 0, 1.1, 0)
+	ButtonGlow2.Image = "rbxassetid://8992230671"
+	ButtonGlow2.ImageColor3 = Color3.fromRGB(100, 100, 120)
+	ButtonGlow2.ImageTransparency = 1
+	ButtonGlow2.ScaleType = Enum.ScaleType.Slice
+	ButtonGlow2.SliceCenter = Rect.new(100, 100, 100, 100)
+
+	ButtonContent2 = Instance.new("Frame")
+	ButtonContent2.Name = "ButtonContent2"
+	ButtonContent2.Parent = GetKeyButton
+	ButtonContent2.BackgroundTransparency = 1
+	ButtonContent2.Size = UDim2.new(1, 0, 1, 0)
+
+	UIListLayout_6.Parent = ButtonContent2
 	UIListLayout_6.FillDirection = Enum.FillDirection.Horizontal
+	UIListLayout_6.Padding = UDim.new(0, 8)
 	UIListLayout_6.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	UIListLayout_6.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_6.VerticalAlignment = Enum.VerticalAlignment.Center
-	local TextLabel_6 = Instance.new("TextLabel")
-	TextLabel_6.Parent = Text_2
-	TextLabel_6.AutomaticSize = Enum.AutomaticSize.X
-	TextLabel_6.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_6.BackgroundTransparency = 1
-	TextLabel_6.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_6.BorderSizePixel = 0
-	TextLabel_6.Size = UDim2.new(0, 0,1, 0)
-	TextLabel_6.Font = Enum.Font.GothamBold
-	TextLabel_6.Text = "Get Key"
-	TextLabel_6.TextColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_6.TextSize = 12
-	TextLabel_6.TextTransparency = 1
-	local ImageLabel_4 = Instance.new("ImageLabel")
-	ImageLabel_4.Parent = Text_2
-	ImageLabel_4.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	ImageLabel_4.BackgroundTransparency = 1
-	ImageLabel_4.BorderColor3 = Color3.fromRGB(0,0,0)
-	ImageLabel_4.BorderSizePixel = 0
-	ImageLabel_4.LayoutOrder = 2
-	ImageLabel_4.Size = UDim2.new(0, 20,0, 20)
-	ImageLabel_4.Image = "rbxassetid://14938884688"
-	ImageLabel_4.ImageTransparency = 1
-	local Click_2 = Instance.new("TextButton")
-	Click_2.Name = "Click"
-	Click_2.Parent = Button_2
-	Click_2.Active = true
-	Click_2.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Click_2.BackgroundTransparency = 1
-	Click_2.BorderColor3 = Color3.fromRGB(0,0,0)
-	Click_2.BorderSizePixel = 0
-	Click_2.Size = UDim2.new(1, 0,1, 0)
-	Click_2.Font = Enum.Font.SourceSans
-	Click_2.Text = ""
-	Click_2.TextSize = 14
 
-	local HoverButton2 = Instance.new("Frame")
+	ButtonLabel2 = Instance.new("TextLabel")
+	ButtonLabel2.Name = "ButtonLabel2"
+	ButtonLabel2.Parent = ButtonContent2
+	ButtonLabel2.BackgroundTransparency = 1
+	ButtonLabel2.Font = Enum.Font.GothamBold
+	ButtonLabel2.Text = "GET KEY"
+	ButtonLabel2.TextColor3 = Color3.fromRGB(220, 220, 240)
+	ButtonLabel2.TextSize = 13
+	ButtonLabel2.TextTransparency = 1
+
+	ButtonIcon2 = Instance.new("ImageLabel")
+	ButtonIcon2.Name = "ButtonIcon2"
+	ButtonIcon2.Parent = ButtonContent2
+	ButtonIcon2.BackgroundTransparency = 1
+	ButtonIcon2.Size = UDim2.new(0, 18, 0, 18)
+	ButtonIcon2.Image = "rbxassetid://14924054039"
+	ButtonIcon2.ImageTransparency = 1
+
+	ButtonClick2 = Instance.new("TextButton")
+	ButtonClick2.Name = "ButtonClick2"
+	ButtonClick2.Parent = GetKeyButton
+	ButtonClick2.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	ButtonClick2.BackgroundTransparency = 1
+	ButtonClick2.Size = UDim2.new(1, 0, 1, 0)
+	ButtonClick2.Font = Enum.Font.SourceSans
+	ButtonClick2.Text = ""
+	ButtonClick2.TextSize = 14
+
+	HoverButton2 = Instance.new("Frame")
 	HoverButton2.Name = "HoverButton"
-	HoverButton2.Parent = Button_2
+	HoverButton2.Parent = GetKeyButton
 	HoverButton2.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	HoverButton2.BackgroundTransparency = 0.9
-	HoverButton2.BorderSizePixel = 0
 	HoverButton2.Size = UDim2.new(1,0,1,0)
 	HoverButton2.Visible = false
 
-	if Button_2 then
-		Button_2.MouseEnter:Connect(function()
-			HoverButton2.Visible = true
-			tw({v = HoverButton2, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.7}}):Play()
-		end)
+	local HoverCorner2 = Instance.new("UICorner")
+	HoverCorner2.Parent = HoverButton2
+	HoverCorner2.CornerRadius = UDim.new(0, 10)
 
-		Button_2.MouseLeave:Connect(function()
-			tw({v = HoverButton2, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
-			task.delay(0.15, function() HoverButton2.Visible = false end)
-		end)
-	end
+	GetKeyButton.MouseEnter:Connect(function()
+		HoverButton2.Visible = true
+		tw({v = HoverButton2, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.8}}):Play()
+	end)
 
-	TextLabel_4.Parent = RedeemFrame_1
-	TextLabel_4.AutomaticSize = Enum.AutomaticSize.XY
-	TextLabel_4.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_4.BackgroundTransparency = 1
-	TextLabel_4.BorderColor3 = Color3.fromRGB(0,0,0)
-	TextLabel_4.BorderSizePixel = 0
-	TextLabel_4.LayoutOrder = 2
-	TextLabel_4.Size = UDim2.new(0, 0,0, 0)
-	TextLabel_4.Font = Enum.Font.Gotham
-	TextLabel_4.RichText = true
-	TextLabel_4.Text = "Need support? <font color='"..string.format("rgb(%d, %d, %d)", Color.r * 255, Color.g * 255, Color.b * 255).."'>Join the Discord</font>"
-	TextLabel_4.TextColor3 = Color3.fromRGB(255,255,255)
-	TextLabel_4.TextSize = 12
-	TextLabel_4.TextTransparency = 1
-	
-	local ClickJoinDis = click(TextLabel_4)
+	GetKeyButton.MouseLeave:Connect(function()
+		tw({v = HoverButton2, t = 0.15, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
+		task.delay(0.15, function() HoverButton2.Visible = false end)
+	end)
 
-	Line_1.Name = "Line"
-	Line_1.Parent = RedeemFrame_1
-	Line_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	Line_1.BackgroundTransparency = 1
-	Line_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	Line_1.BorderSizePixel = 0
-	Line_1.LayoutOrder = 4
-	Line_1.Size = UDim2.new(1, 0,0, 1)
+	Footer = Instance.new("Frame")
+	Footer.Name = "Footer"
+	Footer.Parent = Left_1
+	Footer.BackgroundTransparency = 1
+	Footer.Size = UDim2.new(1, 0, 0, 40)
+
+	FooterText = Instance.new("TextLabel")
+	FooterText.Name = "FooterText"
+	FooterText.Parent = Footer
+	FooterText.BackgroundTransparency = 1
+	FooterText.Font = Enum.Font.Gotham
+	FooterText.Text = "Need support?"
+	FooterText.TextColor3 = Color3.fromRGB(180, 180, 200)
+	FooterText.TextSize = 12
+	FooterText.TextTransparency = 1
+
+	DiscordButton = Instance.new("TextButton")
+	DiscordButton.Name = "DiscordButton"
+	DiscordButton.Parent = Footer
+	DiscordButton.BackgroundTransparency = 1
+	DiscordButton.Font = Enum.Font.GothamBold
+	DiscordButton.Text = " Join Discord"
+	DiscordButton.TextColor3 = Color
+	DiscordButton.TextSize = 12
+	DiscordButton.TextTransparency = 1
+	DiscordButton.TextXAlignment = Enum.TextXAlignment.Left
+	DiscordButton.Position = UDim2.new(0, 80, 0, 0)
+	DiscordButton.Size = UDim2.new(0, 100, 1, 0)
+
+	Divider = Instance.new("Frame")
+	Divider.Name = "Divider"
+	Divider.Parent = Footer
+	Divider.BackgroundColor3 = Color3.fromRGB(60, 55, 80)
+	Divider.BackgroundTransparency = 1
+	Divider.Position = UDim2.new(0, 0, 1, 10)
+	Divider.Size = UDim2.new(1, 0, 0, 1)
 
 	TabList_1.Name = "TabList"
 	TabList_1.Parent = Left_1
 	TabList_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 	TabList_1.BackgroundTransparency = 1
-	TabList_1.BorderColor3 = Color3.fromRGB(0,0,0)
-	TabList_1.BorderSizePixel = 0
-	TabList_1.LayoutOrder = 4
-	TabList_1.Size = UDim2.new(1, 0,0, 20)
+	TabList_1.Size = UDim2.new(1, 0, 0, 20)
 
 	UIListLayout_7.Parent = TabList_1
-	UIListLayout_7.Padding = UDim.new(0,8)
+	UIListLayout_7.Padding = UDim.new(0, 8)
 	UIListLayout_7.FillDirection = Enum.FillDirection.Horizontal
 	UIListLayout_7.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	UIListLayout_7.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout_7.VerticalAlignment = Enum.VerticalAlignment.Center
-
-	UIListLayout_7:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-		if #TabList_1:GetChildren() > 1 then
-			TabList_1.Visible = true
-		else
-			TabList_1.Visible = false
-		end
-	end)
 
 	local NotifyContainer = Instance.new("Frame")
 	NotifyContainer.Name = "NotifyContainer"
@@ -903,56 +948,69 @@ function Library.Load(o)
 	UIListLayout_NotifyContainer.HorizontalAlignment = Enum.HorizontalAlignment.Right
 	UIListLayout_NotifyContainer.VerticalAlignment = Enum.VerticalAlignment.Bottom
 
+	-- Animation Sequence
 	task.spawn(function()
-		Background_1.Position = UDim2.new(0.5, 0,0.5, -100)
-		Background_1.BackgroundTransparency = 1
-		Shadow_BG.ImageTransparency = 1
+		MainContainer.Position = UDim2.new(0.5, 0, 0.5, -50)
+		MainContainer.Size = UDim2.new(0, 0, 0, 0)
 		
-		tw({v = Background_1, t = 0.7, s = Enum.EasingStyle.Back, d = "Out", g = {Position = UDim2.new(0.5, 0,0.5, 0)}}):Play()
-		tw({v = Background_1, t = 0.5, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.15}}):Play()
-		tw({v = Shadow_BG, t = 0.5, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0.7}}):Play()
+		tw({v = BackgroundBlur, t = 0.5, g = {Size = 10}}):Play()
+		
+		tw({v = MainContainer, t = 0.6, s = Enum.EasingStyle.Back, d = "Out", g = {
+			Size = UDim2.new(0, 400, 0, 500)
+		}}):Play()
 		
 		task.delay(0.1, function()
-			tw({v = Left_1, t = 0.4, s = Enum.EasingStyle.Quad, d = "Out", g = {GroupTransparency = 0}}):Play()
+			tw({v = Background_1, t = 0.4, g = {BackgroundTransparency = 0}}):Play()
+			tw({v = BorderGlow, t = 0.4, g = {Transparency = 0.3}}):Play()
+			tw({v = OuterGlow, t = 0.4, g = {ImageTransparency = 0.8}}):Play()
 			
 			task.delay(0.1, function()
-				tw({v = ImageLabel_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0.8}}):Play()
-				tw({v = UIGradient_Icon, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {Transparency = NumberSequence.new(0.2)}}):Play()
-				tw({v = TextLabel_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {TextTransparency = 0.8}}):Play()
+				tw({v = Left_1, t = 0.3, g = {GroupTransparency = 0}}):Play()
 				
 				task.delay(0.05, function()
-					tw({v = ads_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {TextTransparency = 0}}):Play()
+					-- Icon animation
+					tw({v = IconContainer, t = 0.3, g = {BackgroundTransparency = 0}}):Play()
+					tw({v = IconGradient, t = 0.3, g = {Transparency = NumberSequence.new(0)}}):Play()
+					tw({v = ImageLabel_1, t = 0.3, g = {ImageTransparency = 0}}):Play()
+					
+					-- Title animation
+					tw({v = TitleLabel, t = 0.3, g = {TextTransparency = 0}}):Play()
+					tw({v = SubtitleLabel, t = 0.3, g = {TextTransparency = 0.2}}):Play()
 					
 					task.delay(0.05, function()
-						tw({v = TextLabel_2, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {TextTransparency = 0.2}}):Play()
-						tw({v = Frame_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.56}}):Play()
-						tw({v = UIStroke_Eye, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {Transparency = 0.5}}):Play()
-						tw({v = ImageLabel_2, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0}}):Play()
+						tw({v = ads_1, t = 0.3, g = {TextTransparency = 0.2}}):Play()
 						
 						task.delay(0.05, function()
-							tw({v = Keybox_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {Transparency = 0.76}}):Play()
-							tw({v = UIStroke_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {Transparency = 0.64}}):Play()
-							tw({v = UIGradient_Keybox, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {Transparency = NumberSequence.new(0.76)}}):Play()
-							tw({v = Shadow_Keybox, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0.8}}):Play()
-							tw({v = TextBox_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {TextTransparency = 0}}):Play()
+							tw({v = TextLabel_2, t = 0.3, g = {TextTransparency = 0}}):Play()
+							tw({v = EyeButton, t = 0.3, g = {BackgroundTransparency = 0.8}}):Play()
+							tw({v = EyeStroke, t = 0.3, g = {Transparency = 0.5}}):Play()
+							tw({v = EyeIcon, t = 0.3, g = {ImageTransparency = 0}}):Play()
 							
 							task.delay(0.05, function()
-								tw({v = Button_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0}}):Play()
-								tw({v = UIGradient_Button, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {Transparency = NumberSequence.new(0.1)}}):Play()
-								tw({v = Shadow_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0.8}}):Play()
-								tw({v = TextLabel_3, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {TextTransparency = 0.1}}):Play()
-								tw({v = ImageLabel_3, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0.1}}):Play()
+								tw({v = Keybox_1, t = 0.3, g = {Transparency = 0}}):Play()
+								tw({v = KeyboxStroke, t = 0.3, g = {Transparency = 0.4}}):Play()
+								tw({v = KeyboxGradient, t = 0.3, g = {Transparency = NumberSequence.new(0)}}):Play()
+								tw({v = KeyboxGlow, t = 0.3, g = {ImageTransparency = 0.9}}):Play()
+								tw({v = TextBox_1, t = 0.3, g = {TextTransparency = 0}}):Play()
 								
 								task.delay(0.05, function()
-									tw({v = Button_2, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0}}):Play()
-									tw({v = UIGradient_Button2, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {Transparency = NumberSequence.new(0.1)}}):Play()
-									tw({v = Shadow_2, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0.8}}):Play()
-									tw({v = TextLabel_6, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {TextTransparency = 0.1}}):Play()
-									tw({v = ImageLabel_4, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 0.1}}):Play()
+									-- Buttons animation
+									tw({v = RedeemButton, t = 0.3, g = {BackgroundTransparency = 0}}):Play()
+									tw({v = ButtonGradient, t = 0.3, g = {Transparency = NumberSequence.new(0)}}):Play()
+									tw({v = ButtonGlow, t = 0.3, g = {ImageTransparency = 0.9}}):Play()
+									tw({v = ButtonLabel, t = 0.3, g = {TextTransparency = 0}}):Play()
+									tw({v = ButtonIcon, t = 0.3, g = {ImageTransparency = 0}}):Play()
+									
+									tw({v = GetKeyButton, t = 0.3, g = {BackgroundTransparency = 0}}):Play()
+									tw({v = ButtonGradient2, t = 0.3, g = {Transparency = NumberSequence.new(0)}}):Play()
+									tw({v = ButtonGlow2, t = 0.3, g = {ImageTransparency = 0.9}}):Play()
+									tw({v = ButtonLabel2, t = 0.3, g = {TextTransparency = 0}}):Play()
+									tw({v = ButtonIcon2, t = 0.3, g = {ImageTransparency = 0}}):Play()
 									
 									task.delay(0.05, function()
-										tw({v = TextLabel_4, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {TextTransparency = 0.5}}):Play()
-										tw({v = Line_1, t = 0.3, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 0.9}}):Play()
+										tw({v = FooterText, t = 0.3, g = {TextTransparency = 0.3}}):Play()
+										tw({v = DiscordButton, t = 0.3, g = {TextTransparency = 0}}):Play()
+										tw({v = Divider, t = 0.3, g = {BackgroundTransparency = 0.7}}):Play()
 									end)
 								end)
 							end)
@@ -1238,20 +1296,20 @@ function Library.Load(o)
 
 			if hidden then
 				TextBox_1.Text = string.rep(te, #realText)
-				ImageLabel_2.Image = "rbxassetid://13868333926"
+				EyeIcon.Image = "rbxassetid://13868333926"
 			else
 				TextBox_1.Text = realText
-				ImageLabel_2.Image = "rbxassetid://13868333927"
+				EyeIcon.Image = "rbxassetid://13868333927"
 			end
 
 			lastLength = #realText
 		end)
 	end
 
-	if ClickJoinDis then
-		ClickJoinDis.MouseButton1Click:Connect(function()
+	if DiscordButton then
+		DiscordButton.MouseButton1Click:Connect(function()
 			if KeyGUI then 
-				pcall(setclipboard, o.DiscordLink or "discord.gg") 
+				pcall(setclipboard, DiscordLink) 
 			end
 			tab.Notify({
 				Title = 'Discord link copied!',
@@ -1264,11 +1322,11 @@ function Library.Load(o)
 	
 	local checkingKey = false
 	
-	if Click_2 then
-		Click_2.MouseButton1Click:Connect(function()
-			tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 28), BackgroundColor3 = Color3.fromRGB(100, 220, 100)}}):Play()
+	if ButtonClick2 then
+		ButtonClick2.MouseButton1Click:Connect(function()
+			tw({v = GetKeyButton, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(0.5, -10, 0.95, 0), BackgroundColor3 = Color3.fromRGB(100, 220, 100)}}):Play()
 			task.delay(0.1, function()
-				tw({v = Button_2, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 30), BackgroundColor3 = Color}}):Play()
+				tw({v = GetKeyButton, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(0.5, -6, 1, 0), BackgroundColor3 = Color3.fromRGB(50, 45, 70)}}):Play()
 			end)
 			if o.KeyLink then
 				if KeyGUI then 
@@ -1291,12 +1349,12 @@ function Library.Load(o)
 		end)
 	end
 	
-	if Click_1 then
-		Click_1.MouseButton1Click:Connect(function()
+	if ButtonClick then
+		ButtonClick.MouseButton1Click:Connect(function()
 			if checkingKey then return end
 			checkingKey = true
 			
-			tw({v = Button_1, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(1, 0,0, 28), BackgroundColor3 = Color3.fromRGB(255, 193, 7)}}):Play()
+			tw({v = RedeemButton, t = 0.1, s = Enum.EasingStyle.Quad, d = "InOut", g = {Size = UDim2.new(0.5, -10, 0.95, 0), BackgroundColor3 = Color3.fromRGB(255, 193, 7)}}):Play()
 			
 			local checkNotify = tab.Notify({
 				Title = 'Checking Key...',
@@ -1331,13 +1389,15 @@ function Library.Load(o)
 						})
 					end)
 					
-					tw({v = Button_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(76, 175, 80)}}):Play()
+					tw({v = RedeemButton, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(76, 175, 80)}}):Play()
 					
 					task.delay(1.5, function()
 						tw({v = Left_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {GroupTransparency = 1}}):Play()
 						task.delay(0.25, function()
 							tw({v = Background_1, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {BackgroundTransparency = 1}}):Play()
-							tw({v = Shadow_BG, t = 0.25, s = Enum.EasingStyle.Quad, d = "Out", g = {ImageTransparency = 1}}):Play()
+							tw({v = BorderGlow, t = 0.25, g = {Transparency = 1}}):Play()
+							tw({v = OuterGlow, t = 0.25, g = {ImageTransparency = 1}}):Play()
+							tw({v = BackgroundBlur, t = 0.25, g = {Size = 0}}):Play()
 							task.delay(0.3, function()
 								ScreenGui:Destroy()
 								if o.Callback then
@@ -1349,7 +1409,7 @@ function Library.Load(o)
 				else
 					tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(244, 67, 54)}}):Play()
 					task.delay(0.2, function()
-						tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color}}):Play()
+						tw({v = Keybox_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(35, 30, 50)}}):Play()
 					end)
 					
 					checkNotify:Set('Invalid Key!')
@@ -1361,10 +1421,10 @@ function Library.Load(o)
 						Color = Color3.fromRGB(244, 67, 54)
 					})
 					
-					tw({v = Button_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(244, 67, 54)}}):Play()
+					tw({v = RedeemButton, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color3.fromRGB(244, 67, 54)}}):Play()
 					
 					task.delay(0.5, function()
-						tw({v = Button_1, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color, Size = UDim2.new(1, 0,0, 30)}}):Play()
+						tw({v = RedeemButton, t = 0.2, s = Enum.EasingStyle.Quad, d = "InOut", g = {BackgroundColor3 = Color, Size = UDim2.new(0.5, -6, 1, 0)}}):Play()
 						checkingKey = false
 					end)
 				end
@@ -1376,3 +1436,4 @@ function Library.Load(o)
 end
 
 return Library
+[file content end]
