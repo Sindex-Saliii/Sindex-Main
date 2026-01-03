@@ -1,5 +1,4 @@
-[file name]: KeyUI (2).lua
-[file content begin]
+
 local Library = {}
 local U, Tw = game:GetService("UserInputService"), game:GetService("TweenService")
 local KeyGUI = pcall(function() return makefolder and readfile and writefile and setclipboard end)
