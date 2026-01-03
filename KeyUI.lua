@@ -472,7 +472,7 @@ function Library.Load(o)
 	TextLabel_1.BorderSizePixel = 0
 	TextLabel_1.Size = UDim2.new(0, 0,0, 20)
 	TextLabel_1.Font = Enum.Font.Gotham
-	TextLabel_1.Text = "Sindex KEY SYSTEM"
+	TextLabel_1.Text = "KEY SYSTEM"
 	TextLabel_1.TextColor3 = Color
 	TextLabel_1.TextSize = 11
 	TextLabel_1.TextTransparency = 1
