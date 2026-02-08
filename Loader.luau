@@ -261,6 +261,7 @@ local function checkKey(key)
     if ok then
         if not isfolder("TrigonEvo") then makefolder("TrigonEvo") end
         writefile("TrigonEvo/key.txt", key)
+        print("Key Valid!")
         animateStatus("ACCESS GRANTED!", Color3.fromRGB(120, 255, 120))
         task.wait(1.5)
         finish()
