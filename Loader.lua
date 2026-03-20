@@ -1981,7 +1981,7 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Flowe
 
 local Window = Library:Window({
     Title = "Clover  Hub | Sailor Piece",
-    Desc = "Best Free Script",
+    Desc = "Made with Luv by x.saliii",
     Icon = "swords",
     Theme = "Galaxy",
     Config = {
