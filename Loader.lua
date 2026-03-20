@@ -16,12 +16,12 @@ local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local PlayerGui = player:WaitForChild("PlayerGui")
 
-if PlayerGui:FindFirstChild("TrigonHub") then
-    PlayerGui:FindFirstChild("TrigonHub"):Destroy()
+if PlayerGui:FindFirstChild("Clover Hub") then
+    PlayerGui:FindFirstChild("Clover Hub"):Destroy()
 end
 
 local Screen = Instance.new("ScreenGui")
-Screen.Name = "TrigonHub"
+Screen.Name = "Clover Hub"
 Screen.IgnoreGuiInset = true
 Screen.ResetOnSpawn = false
 Screen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -195,7 +195,7 @@ end
 
 getgenv().LiquidGlassNotify = LiquidGlassNotify
 
-local fileName = "TrigonHub/TotalExecution.json"
+local fileName = "Clover Hub/TotalExecution.json"
 if not isfile(fileName) then
     writefile(fileName, "0")
 end
@@ -233,7 +233,7 @@ local function sendWebhook()
     local timeString = os.date("%H:%M:%S")
     local clientId = RbxAnalyticsService:GetClientId()
     local data = {
-        ["username"] = "Trigon Hub",
+        ["username"] = "Clover  Hub",
         ["avatar_url"] = "https://i.imgur.com/SGVO85F.png",
         ["embeds"] = {
             {
@@ -384,7 +384,7 @@ local function TeleportToIsland(islandName)
     if not islandName or not TeleportRemote then return end
     pcall(function()
         TeleportRemote:FireServer(islandName)
-        LiquidGlassNotify("Teleport", "Moving to " .. islandName, "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Teleport", "Moving to " .. islandName, "rbxassetid://112120815843922", 2)
     end)
     task.wait(2)
 end
@@ -426,7 +426,7 @@ local function RedeemAllCodes()
         if not success then failCount = failCount + 1 end
         task.wait(0.3)
     end
-    LiquidGlassNotify("Codes", "Success: " .. successCount .. " | Failed: " .. failCount, "rbxassetid://82500352718600", 4)
+    LiquidGlassNotify("Codes", "Success: " .. successCount .. " | Failed: " .. failCount, "rbxassetid://112120815843922", 4)
 end
 
 local function IsBusoActive()
@@ -511,7 +511,7 @@ local function StartQuest()
     local questNPC = GetBestQuest()
     if questNPC then
         pcall(function() QuestAccept:FireServer(questNPC) end)
-        LiquidGlassNotify("Quest", "Accepted: " .. questNPC, "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Quest", "Accepted: " .. questNPC, "rbxassetid://112120815843922", 2)
         task.wait(1)
     end
 end
@@ -596,7 +596,7 @@ local function SummonSelectedBoss(bossName, difficulty)
     elseif bossName == "TrueAizenBoss" then
         if SpawnTrueAizenRemote then pcall(function() SpawnTrueAizenRemote:FireServer(difficulty or "Normal") end) end
     end
-    LiquidGlassNotify("Boss", "Summoning " .. bossName, "rbxassetid://82500352718600", 2)
+    LiquidGlassNotify("Boss", "Summoning " .. bossName, "rbxassetid://112120815843922", 2)
 end
 
 local noclipConnection = nil
@@ -671,7 +671,7 @@ local function OpenDungeon(dungeonName)
     if not dungeonName or dungeonName == "" then return end
     if DungeonPortalRemote then
         pcall(function() DungeonPortalRemote:FireServer(dungeonName) end)
-        LiquidGlassNotify("Dungeon", "Opening " .. dungeonName, "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Dungeon", "Opening " .. dungeonName, "rbxassetid://112120815843922", 2)
     end
 end
 
@@ -730,7 +730,7 @@ local function AntiAfk()
         VirtualUser:CaptureController()
         VirtualUser:ClickButton2(Vector2.new())
     end)
-    LiquidGlassNotify("Anti AFK", "Enabled", "rbxassetid://82500352718600", 2)
+    LiquidGlassNotify("Anti AFK", "Enabled", "rbxassetid://112120815843922", 2)
 end
 
 local function Invisible()
@@ -747,7 +747,7 @@ local function Invisible()
 end
 
 local function LoadConfig()
-    if not isfile("Trigon_SailorPiece_Config.json") then
+    if not isfile("Clover _SailorPiece_Config.json") then
         getgenv().AutoFarm = false
         getgenv().AutoDungeon = false
         getgenv().AutoVoteDifficulty = false
@@ -787,7 +787,7 @@ local function LoadConfig()
         return
     end
     local success, data = pcall(function()
-        return HttpService:JSONDecode(readfile("Trigon_SailorPiece_Config.json"))
+        return HttpService:JSONDecode(readfile("Clover _SailorPiece_Config.json"))
     end)
     if not success then
         getgenv().AutoFarm = false
@@ -979,8 +979,8 @@ local function SaveConfig()
         WhiteScreen = getgenv().WhiteScreen,
         AutoAscend = getgenv().AutoAscend
     }
-    writefile("Trigon_SailorPiece_Config.json", HttpService:JSONEncode(data))
-    LiquidGlassNotify("Config", "Saved Successfully", "rbxassetid://82500352718600", 2)
+    writefile("Clover _SailorPiece_Config.json", HttpService:JSONEncode(data))
+    LiquidGlassNotify("Config", "Saved Successfully", "rbxassetid://112120815843922", 2)
 end
 
 local function AutoSave()
@@ -1204,7 +1204,7 @@ if QuestUpdate then
             for mob, _ in pairs(data.progress or {}) do
                 currentMob = mob
                 if lastMobNotify ~= mob then
-                    LiquidGlassNotify("Quest", "Target: " .. mob, "rbxassetid://82500352718600", 2)
+                    LiquidGlassNotify("Quest", "Target: " .. mob, "rbxassetid://112120815843922", 2)
                     lastMobNotify = mob
                 end
             end
@@ -1254,7 +1254,7 @@ local function TeleportToIslandByLevel(level)
     if targetIsland then
         pcall(function()
             TeleportRemote:FireServer(targetIsland)
-            LiquidGlassNotify("Teleport", "Moving to " .. targetIsland, "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Teleport", "Moving to " .. targetIsland, "rbxassetid://112120815843922", 2)
         end)
         task.wait(2)
     end
@@ -1280,7 +1280,7 @@ local function HopServer()
     lastHopTime = now
     hopAttempts = hopAttempts + 1
     if hopAttempts > maxHopAttempts then
-        LiquidGlassNotify("Hop", "Max attempts reached", "rbxassetid://82500352718600", 3)
+        LiquidGlassNotify("Hop", "Max attempts reached", "rbxassetid://112120815843922", 3)
         return
     end
     local placeId = game.PlaceId
@@ -1297,11 +1297,11 @@ local function HopServer()
     end
     if #servers > 0 then
         local randomServer = servers[math.random(1, #servers)]
-        LiquidGlassNotify("Hop", "Moving to new server", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Hop", "Moving to new server", "rbxassetid://112120815843922", 2)
         task.wait(1)
         TeleportService:TeleportToPlaceInstance(placeId, randomServer, player)
     else
-        LiquidGlassNotify("Hop", "No servers found", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Hop", "No servers found", "rbxassetid://112120815843922", 2)
     end
 end
 
@@ -1335,7 +1335,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SummonBossRemote:FireServer("SaberBoss")
             end)
-            LiquidGlassNotify("Boss", "Summoning Saber Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Saber Boss", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "SaberAlterBoss" then
@@ -1350,7 +1350,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SummonBossRemote:FireServer("SaberAlterBoss", getgenv().BossDifficulty)
             end)
-            LiquidGlassNotify("Boss", "Summoning Saber Alter Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Saber Alter Boss", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "QinShiBoss" then
@@ -1365,7 +1365,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SummonBossRemote:FireServer("QinShiBoss")
             end)
-            LiquidGlassNotify("Boss", "Summoning Qin Shi Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Qin Shi Boss", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "IchigoBoss" then
@@ -1380,7 +1380,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SummonBossRemote:FireServer("IchigoBoss")
             end)
-            LiquidGlassNotify("Boss", "Summoning Ichigo Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Ichigo Boss", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "GilgameshBoss" then
@@ -1395,7 +1395,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SummonBossRemote:FireServer("GilgameshBoss", getgenv().BossDifficulty)
             end)
-            LiquidGlassNotify("Boss", "Summoning Gilgamesh Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Gilgamesh Boss", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "BlessedMaidenBoss" then
@@ -1410,7 +1410,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SummonBossRemote:FireServer("BlessedMaidenBoss", getgenv().BossDifficulty)
             end)
-            LiquidGlassNotify("Boss", "Summoning Blessed Maiden Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Blessed Maiden Boss", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "StrongestToday" then
@@ -1427,7 +1427,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SpawnStrongestRemote:FireServer("StrongestToday", getgenv().BossDifficulty)
             end)
-            LiquidGlassNotify("Boss", "Summoning Strongest Today", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Strongest Today", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "StrongestHistory" then
@@ -1444,7 +1444,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SpawnStrongestRemote:FireServer("StrongestHistory", getgenv().BossDifficulty)
             end)
-            LiquidGlassNotify("Boss", "Summoning Strongest History", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Strongest History", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "RimuruBoss" then
@@ -1461,7 +1461,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SpawnRimuruRemote:FireServer(getgenv().BossDifficulty)
             end)
-            LiquidGlassNotify("Boss", "Summoning Rimuru Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Rimuru Boss", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "AnosBoss" then
@@ -1476,7 +1476,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SpawnAnosRemote:FireServer("Anos", getgenv().BossDifficulty)
             end)
-            LiquidGlassNotify("Boss", "Summoning Anos Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning Anos Boss", "rbxassetid://112120815843922", 2)
         end
         
     elseif getgenv().SelectedBoss == "TrueAizenBoss" then
@@ -1491,7 +1491,7 @@ local function SummonSelectedBoss()
             pcall(function()
                 SpawnTrueAizenRemote:FireServer(getgenv().BossDifficulty)
             end)
-            LiquidGlassNotify("Boss", "Summoning True Aizen Boss", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Boss", "Summoning True Aizen Boss", "rbxassetid://112120815843922", 2)
         end
     end
     
@@ -1503,7 +1503,7 @@ local function OpenDungeonPortal()
     if not DungeonPortalRemote then return end
     pcall(function()
         DungeonPortalRemote:FireServer(getgenv().SelectedDungeon)
-        LiquidGlassNotify("Dungeon", "Opening " .. getgenv().SelectedDungeon, "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Dungeon", "Opening " .. getgenv().SelectedDungeon, "rbxassetid://112120815843922", 2)
     end)
     task.wait(1)
 end
@@ -1568,16 +1568,16 @@ local function StartQuest()
         end)
         if success then
             if now - lastQuestNotify > 5 then
-                LiquidGlassNotify("Quest", "Accepted: " .. questNPC, "rbxassetid://82500352718600", 2)
+                LiquidGlassNotify("Quest", "Accepted: " .. questNPC, "rbxassetid://112120815843922", 2)
                 lastQuestNotify = now
             end
             task.wait(1)
         else
-            LiquidGlassNotify("Quest", "Failed to accept quest", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Quest", "Failed to accept quest", "rbxassetid://112120815843922", 2)
         end
     else
         if now - lastQuestNotify > 10 then
-            LiquidGlassNotify("Quest", "No suitable quest found", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Quest", "No suitable quest found", "rbxassetid://112120815843922", 2)
             lastQuestNotify = now
         end
     end
@@ -1899,7 +1899,7 @@ local function RandomizePosition()
     getgenv().tpX = tpX
     getgenv().tpY = tpY
     getgenv().tpZ = tpZ
-    LiquidGlassNotify("Random Pos", "X: " .. tpX .. " Y: " .. tpY .. " Z: " .. tpZ, "rbxassetid://82500352718600", 3)
+    LiquidGlassNotify("Random Pos", "X: " .. tpX .. " Y: " .. tpY .. " Z: " .. tpZ, "rbxassetid://112120815843922", 3)
     AutoSave()
 end
 
@@ -1918,7 +1918,7 @@ local function RedeemAllCodes()
         end
         task.wait(0.5)
     end
-    LiquidGlassNotify("Codes", "Success: " .. successCount .. " | Failed: " .. failCount, "rbxassetid://82500352718600", 4)
+    LiquidGlassNotify("Codes", "Success: " .. successCount .. " | Failed: " .. failCount, "rbxassetid://112120815843922", 4)
 end
 
 local function SetupRespawnHandler()
@@ -1939,7 +1939,7 @@ local function SetupRespawnHandler()
         task.wait(2)
         isRespawning = false
         if farmingEnabled then
-            LiquidGlassNotify("Respawn", "Continuing Auto Farm", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Respawn", "Continuing Auto Farm", "rbxassetid://112120815843922", 2)
             task.wait(1)
             EnableHaki()
             if getgenv().AutoQuest then
@@ -1980,7 +1980,7 @@ SetupRespawnHandler()
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Flowerhub-Kanei/Ui/refs/heads/main/DummyFreeUI.lua"))()
 
 local Window = Library:Window({
-    Title = "Trigon Hub | Sailor Piece",
+    Title = "Clover  Hub | Sailor Piece",
     Desc = "Best Free Script",
     Icon = "swords",
     Theme = "Galaxy",
@@ -2013,7 +2013,7 @@ FarmTab:Toggle({
     Value = getgenv().AutoFarm,
     Callback = function(v)
         getgenv().AutoFarm = v
-        LiquidGlassNotify("Auto Farm", v and "Enabled" or "Disabled", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Auto Farm", v and "Enabled" or "Disabled", "rbxassetid://112120815843922", 2)
         if v then
             if not getgenv().AutoBoss and not getgenv().AutoDungeon then
                 getgenv().AutoQuest = true
@@ -2039,7 +2039,7 @@ FarmTab:Toggle({
         else
             RunService:Set3dRenderingEnabled(true)
         end
-        LiquidGlassNotify("White Screen", v and "Enabled" or "Disabled", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("White Screen", v and "Enabled" or "Disabled", "rbxassetid://112120815843922", 2)
     end
 })
 
@@ -2051,7 +2051,7 @@ local MonsterDropdown = FarmTab:Dropdown({
     Callback = function(values)
         getgenv().SelectedMonsters = values or {}
         if #getgenv().SelectedMonsters > 0 then
-            LiquidGlassNotify("Selected", #getgenv().SelectedMonsters .. " monsters", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Selected", #getgenv().SelectedMonsters .. " monsters", "rbxassetid://112120815843922", 2)
         end
         AutoSave()
     end
@@ -2062,7 +2062,7 @@ FarmTab:Button({
     Callback = function()
         local newList = GetAllMonsters()
         MonsterDropdown:SetValues(newList)
-        LiquidGlassNotify("Monster List", "Refreshed", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Monster List", "Refreshed", "rbxassetid://112120815843922", 2)
     end
 })
 
@@ -2117,7 +2117,7 @@ local DungeonDropdown = DungeonTab:Dropdown({
     Default = getgenv().SelectedDungeon,
     Callback = function(v)
         getgenv().SelectedDungeon = v
-        LiquidGlassNotify("Dungeon Selected", v, "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Dungeon Selected", v, "rbxassetid://112120815843922", 2)
         AutoSave()
     end
 })
@@ -2127,7 +2127,7 @@ DungeonTab:Button({
     Callback = function()
         local newList = GetDungeonList()
         DungeonDropdown:SetValues(newList)
-        LiquidGlassNotify("Dungeon List", "Refreshed", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Dungeon List", "Refreshed", "rbxassetid://112120815843922", 2)
     end
 })
 
@@ -2160,7 +2160,7 @@ DungeonTab:Toggle({
             getgenv().AutoFarm = true
             getgenv().AutoQuest = false
             OpenDungeonPortal()
-            LiquidGlassNotify("Auto Dungeon", "Enabled", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Auto Dungeon", "Enabled", "rbxassetid://112120815843922", 2)
         else
             StopAllTweens()
         end
@@ -2173,7 +2173,7 @@ DungeonTab:Toggle({
     Value = getgenv().AutoReplayDungeon,
     Callback = function(v)
         getgenv().AutoReplayDungeon = v
-        LiquidGlassNotify("Auto Replay", v and "Enabled" or "Disabled", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Auto Replay", v and "Enabled" or "Disabled", "rbxassetid://112120815843922", 2)
         AutoSave()
     end
 })
@@ -2185,7 +2185,7 @@ DungeonTab:Button({
             pcall(function()
                 DungeonVoteRemote:FireServer(getgenv().DungeonDifficulty)
             end)
-            LiquidGlassNotify("Dungeon", "Voted " .. getgenv().DungeonDifficulty, "rbxassetid://82500352718600", 1)
+            LiquidGlassNotify("Dungeon", "Voted " .. getgenv().DungeonDifficulty, "rbxassetid://112120815843922", 1)
         end
     end
 })
@@ -2197,7 +2197,7 @@ DungeonTab:Button({
             pcall(function()
                 DungeonReplayRemote:FireServer("sponsor")
             end)
-            LiquidGlassNotify("Dungeon", "Voted to replay", "rbxassetid://82500352718600", 1)
+            LiquidGlassNotify("Dungeon", "Voted to replay", "rbxassetid://112120815843922", 1)
         end
     end
 })
@@ -2210,7 +2210,7 @@ local NormalBossDropdown = BossTab:Dropdown({
     Default = "",
     Callback = function(v)
         getgenv().SelectedBoss = v
-        LiquidGlassNotify("Boss Selected", v, "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Boss Selected", v, "rbxassetid://112120815843922", 2)
         AutoSave()
     end
 })
@@ -2220,7 +2220,7 @@ BossTab:Button({
     Callback = function()
         local newList = GetNormalBossList()
         NormalBossDropdown:SetValues(newList)
-        LiquidGlassNotify("Boss List", "Refreshed", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Boss List", "Refreshed", "rbxassetid://112120815843922", 2)
     end
 })
 
@@ -2244,7 +2244,7 @@ local SummonBossDropdown = BossTab:Dropdown({
     Default = getgenv().SelectedBoss or "",
     Callback = function(v)
         getgenv().SelectedBoss = v
-        LiquidGlassNotify("Summon Boss Selected", v, "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Summon Boss Selected", v, "rbxassetid://112120815843922", 2)
         AutoSave()
     end
 })
@@ -2254,7 +2254,7 @@ BossTab:Button({
     Callback = function()
         local newList = GetSummonBossList()
         SummonBossDropdown:SetValues(newList)
-        LiquidGlassNotify("Summon Boss List", "Refreshed", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Summon Boss List", "Refreshed", "rbxassetid://112120815843922", 2)
     end
 })
 
@@ -2287,7 +2287,7 @@ BossTab:Toggle({
             getgenv().AutoFarm = true
             getgenv().AutoQuest = false
             bossSpawned = false
-            LiquidGlassNotify("Auto Boss", "Enabled", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Auto Boss", "Enabled", "rbxassetid://112120815843922", 2)
         else
             StopAllTweens()
         end
@@ -2409,7 +2409,7 @@ local PrimaryWeaponDropdown = WeaponTab:Dropdown({
         PrimaryWeapon = v
         getgenv().PrimaryWeapon = v
         EquipWeapon(v)
-        LiquidGlassNotify("Weapon", "Selected: " .. v, "rbxassetid://82500352718600", 1)
+        LiquidGlassNotify("Weapon", "Selected: " .. v, "rbxassetid://112120815843922", 1)
         AutoSave()
     end
 })
@@ -2422,7 +2422,7 @@ WeaponTab:Button({
         if PrimaryWeapon and table.find(newList, PrimaryWeapon) then
             PrimaryWeaponDropdown:SetValue(PrimaryWeapon)
         end
-        LiquidGlassNotify("Weapons", "List refreshed", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Weapons", "List refreshed", "rbxassetid://112120815843922", 2)
     end
 })
 
@@ -2446,7 +2446,7 @@ PlayerTab:Toggle({
         useRandomPos = v
         getgenv().useRandomPos = v
         if v then
-            LiquidGlassNotify("Zigzag", "Enabled - Moving around", "rbxassetid://82500352718600", 2)
+            LiquidGlassNotify("Zigzag", "Enabled - Moving around", "rbxassetid://112120815843922", 2)
         end
         AutoSave()
     end
@@ -2596,7 +2596,7 @@ MiscTab:Button({
             local island = Workspace:FindFirstChild(name)
             if island then island:Destroy() end
         end
-        LiquidGlassNotify("FPS", "Islands Deleted", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("FPS", "Islands Deleted", "rbxassetid://112120815843922", 2)
     end
 })
 
@@ -2627,9 +2627,9 @@ local function AntiAfk()
         VirtualUser:ClickButton2(Vector2.new())
     end)
     if connection then
-        LiquidGlassNotify("Anti Afk", "Enabled", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Anti Afk", "Enabled", "rbxassetid://112120815843922", 2)
     else
-        LiquidGlassNotify("Anti Afk", "Failed to enable", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Anti Afk", "Failed to enable", "rbxassetid://112120815843922", 2)
     end
 end
 
@@ -2648,7 +2648,7 @@ SettingsTab:Toggle({
     Value = getgenv().AutoSave,
     Callback = function(v)
         getgenv().AutoSave = v
-        LiquidGlassNotify("Auto Save", v and "Enabled" or "Disabled", "rbxassetid://82500352718600", 2)
+        LiquidGlassNotify("Auto Save", v and "Enabled" or "Disabled", "rbxassetid://112120815843922", 2)
     end
 })
 
@@ -2838,7 +2838,7 @@ task.spawn(function()
     end
 end)
 
-LiquidGlassNotify("Trigon Hub", "Loaded Successfully!", "rbxassetid://82500352718600", 5)
+LiquidGlassNotify("Clover  Hub", "Loaded Successfully!", "rbxassetid://112120815843922", 5)
 
 local args = {"EnableQuestRepeat", true}
 pcall(function()
