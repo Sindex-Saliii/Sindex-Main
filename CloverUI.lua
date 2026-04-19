@@ -483,7 +483,71 @@ local function _drag(trigger, target)
 	end)
 end
 
-local function _mkItemBg(parent, title, desc, icon, funcType)
+local function _resize(trigger, target, minSize, maxSize)
+	local resizing = false
+	local startPos, startSize = nil, nil
+	local resizeBorder = Instance.new("Frame")
+	resizeBorder.BackgroundTransparency = 1
+	resizeBorder.BorderSizePixel = 0
+	resizeBorder.Size = UDim2.new(1,0,1,0)
+	resizeBorder.Parent = target
+	local resizeHandle = Instance.new("Frame")
+	resizeHandle.BackgroundTransparency = 1
+	resizeHandle.BorderSizePixel = 0
+	resizeHandle.Size = UDim2.new(1,0,1,0)
+	resizeHandle.Parent = target
+	local function updateHandle()
+		local absSize = target.AbsoluteSize
+		resizeHandle.Size = UDim2.new(1,0,1,0)
+		resizeHandle.Position = UDim2.new(0,0,0,0)
+	end
+	updateHandle()
+	target:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateHandle)
+	trigger.InputBegan:Connect(function(i)
+		if i.UserInputType == Enum.UserInputType.MouseButton1 then
+			local mousePos = UIS:GetMouseLocation()
+			local absPos = target.AbsolutePosition
+			local absSize = target.AbsoluteSize
+			if mousePos.X >= absPos.X + absSize.X - 10 and mousePos.X <= absPos.X + absSize.X and
+			   mousePos.Y >= absPos.Y + absSize.Y - 10 and mousePos.Y <= absPos.Y + absSize.Y then
+				resizing = true
+				startPos = i.Position
+				startSize = target.Size
+				i.Changed:Connect(function()
+					if i.UserInputState == Enum.UserInputState.End then resizing = false end
+				end)
+			end
+		end
+	end)
+	trigger.InputChanged:Connect(function(i)
+		if i.UserInputType == Enum.UserInputType.MouseMovement then
+			local mousePos = UIS:GetMouseLocation()
+			local absPos = target.AbsolutePosition
+			local absSize = target.AbsoluteSize
+			if mousePos.X >= absPos.X + absSize.X - 10 and mousePos.X <= absPos.X + absSize.X and
+			   mousePos.Y >= absPos.Y + absSize.Y - 10 and mousePos.Y <= absPos.Y + absSize.Y then
+				UIS.MouseIcon = "rbxasset://SystemCursors/SizeNWSE"
+			else
+				UIS.MouseIcon = ""
+			end
+			if resizing then
+				local d = i.Position - startPos
+				local newWidth = math.clamp(startSize.X.Offset + d.X, minSize.X.Offset, maxSize.X.Offset)
+				local newHeight = math.clamp(startSize.Y.Offset + d.Y, minSize.Y.Offset, maxSize.Y.Offset)
+				target.Size = UDim2.new(0, newWidth, 0, newHeight)
+			end
+		end
+	end)
+	UIS.InputEnded:Connect(function(i)
+		if i.UserInputType == Enum.UserInputType.MouseButton1 then
+			UIS.MouseIcon = ""
+		end
+	end)
+end
+
+local _allElements = {}
+
+local function _mkItemBg(parent, title, desc, icon, funcType, elementData)
 	local wrap = Instance.new("Frame")
 	wrap.BackgroundTransparency = 1
 	wrap.BorderSizePixel = 0
@@ -557,15 +621,17 @@ local function _mkItemBg(parent, title, desc, icon, funcType)
 	descLbl.Parent = inner
 	_addTheme('Text & Icon', descLbl)
 
+	local iconWrap = nil
+	local ico = nil
 	if icon and icon ~= "" then
 		pad.PaddingLeft = UDim.new(0,46)
-		local iconWrap = Instance.new("Frame")
+		iconWrap = Instance.new("Frame")
 		iconWrap.BackgroundTransparency = 1
 		iconWrap.BorderSizePixel = 0
 		iconWrap.Size = UDim2.new(0,38,1,0)
 		iconWrap.Parent = bg
 
-		local ico = Instance.new("ImageLabel")
+		ico = Instance.new("ImageLabel")
 		ico.AnchorPoint = Vector2.new(0.5,0.5)
 		ico.BackgroundTransparency = 1
 		ico.BorderSizePixel = 0
@@ -599,16 +665,34 @@ local function _mkItemBg(parent, title, desc, icon, funcType)
 	task.delay(0.1, updateHeight)
 	ll:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateHeight)
 
+	if elementData then
+		table.insert(_allElements, {
+			wrap = wrap,
+			title = tostring(title),
+			desc = tostring(desc),
+			type = funcType,
+			data = elementData
+		})
+	end
+
 	local api = {}
-	function api:SetTitle(v) titleLbl.Text = tostring(v) end
+	function api:SetTitle(v)
+		titleLbl.Text = tostring(v)
+		if elementData then
+			elementData.title = tostring(v)
+		end
+	end
 	function api:SetDesc(v)
 		descLbl.Text = tostring(v)
 		descLbl.Visible = v and v ~= ""
+		if elementData then
+			elementData.desc = tostring(v)
+		end
 	end
 	function api:SetTextTransparencyTitle(v)
 		_tw(titleLbl, 0.12, Enum.EasingStyle.Quart, "Out", {TextTransparency=v}):Play()
-		if icon and icon ~= "" and bg:FindFirstChild('Frame') then
-			_tw(bg.Frame.Icon, 0.12, Enum.EasingStyle.Quart, "Out", {ImageTransparency=v}):Play()
+		if ico then
+			_tw(ico, 0.12, Enum.EasingStyle.Quart, "Out", {ImageTransparency=v}):Play()
 		end
 	end
 	function api:SetRightPad(v) pad.PaddingRight = UDim.new(0, v) end
@@ -865,6 +949,8 @@ function CloverUI:Window(p)
 	local Theme = p.Theme or 'Clover'
 	local Keybind = (p.Config and p.Config.Keybind) or Enum.KeyCode.LeftControl
 	local Size = (p.Config and p.Config.Size) or UDim2.new(0,550,0,420)
+	local MinSize = (p.Config and p.Config.MinSize) or UDim2.new(0,400,0,300)
+	local MaxSize = (p.Config and p.Config.MaxSize) or UDim2.new(0,800,0,600)
 
 	local IsTheme = Theme
 	local firstOpen = true
@@ -979,7 +1065,7 @@ function CloverUI:Window(p)
 	searchBox.Size = UDim2.new(1,-24,1,0)
 	searchBox.Position = UDim2.new(0,22,0,0)
 	searchBox.Font = Enum.Font.BuilderSans
-	searchBox.PlaceholderText = "Search tabs..."
+	searchBox.PlaceholderText = "Search elements..."
 	searchBox.PlaceholderColor3 = Color3.fromRGB(100,100,100)
 	searchBox.Text = ""
 	searchBox.TextColor3 = Color3.fromRGB(200,200,200)
@@ -1375,7 +1461,25 @@ function CloverUI:Window(p)
 
 		searchBox:GetPropertyChangedSignal("Text"):Connect(function()
 			local q = searchBox.Text:lower()
-			tabBtn.Visible = q == "" or tabTitle:lower():find(q, 1, true) ~= nil
+			local tabMatches = q == "" or tabTitle:lower():find(q, 1, true) ~= nil
+			local anyElementMatches = false
+			for _, elem in ipairs(_allElements) do
+				if elem.data and elem.data.tabIdx == myIdx then
+					local titleMatch = elem.title:lower():find(q, 1, true) ~= nil
+					local descMatch = elem.desc:lower():find(q, 1, true) ~= nil
+					local typeMatch = elem.type:lower():find(q, 1, true) ~= nil
+					elem.wrap.Visible = (titleMatch or descMatch or typeMatch) and (q ~= "")
+					if elem.wrap.Visible then anyElementMatches = true end
+				end
+			end
+			if q == "" then
+				for _, elem in ipairs(_allElements) do
+					if elem.data and elem.data.tabIdx == myIdx then
+						elem.wrap.Visible = true
+					end
+				end
+			end
+			tabBtn.Visible = tabMatches or anyElementMatches
 		end)
 
 		local function selectThis()
@@ -1450,7 +1554,8 @@ function CloverUI:Window(p)
 			local lDesc = p.Desc or ''
 			local lImage = p.Image or ''
 
-			local bg, cfg = _mkItemBg(sf, lTitle, lDesc, lImage, 'Label')
+			local elementData = {tabIdx = myIdx, title = lTitle, desc = lDesc, type = "Label"}
+			local bg, cfg = _mkItemBg(sf, lTitle, lDesc, lImage, 'Label', elementData)
 			cfg:SetTextTransparencyTitle(0)
 			cfg:SetRightPad(8)
 
@@ -1468,7 +1573,8 @@ function CloverUI:Window(p)
 			local tImage = p.Image or ''
 			local tCallback = p.Callback or function() end
 
-			local bg, cfg = _mkItemBg(sf, tTitle, tDesc, tImage, 'Toggle')
+			local elementData = {tabIdx = myIdx, title = tTitle, desc = tDesc, type = "Toggle"}
+			local bg, cfg = _mkItemBg(sf, tTitle, tDesc, tImage, 'Toggle', elementData)
 			cfg:SetTextTransparencyTitle(tVal and 0 or 0.65)
 			cfg:SetRightPad(70)
 
@@ -1539,7 +1645,8 @@ function CloverUI:Window(p)
 			local bImage = p.Image or ''
 			local bCallback = p.Callback or function() end
 
-			local bg, cfg = _mkItemBg(sf, bTitle, bDesc, bImage, 'Button')
+			local elementData = {tabIdx = myIdx, title = bTitle, desc = bDesc, type = "Button"}
+			local bg, cfg = _mkItemBg(sf, bTitle, bDesc, bImage, 'Button', elementData)
 			cfg:SetTextTransparencyTitle(0)
 			cfg:SetRightPad(40)
 			bg.ClipsDescendants = true
@@ -1585,7 +1692,8 @@ function CloverUI:Window(p)
 			local sRound = p.Rounding or 2
 			local sCallback = p.Callback or function() end
 
-			local bg, cfg = _mkItemBg(sf, sTitle, sDesc, sImage, 'Slider')
+			local elementData = {tabIdx = myIdx, title = sTitle, desc = sDesc, type = "Slider"}
+			local bg, cfg = _mkItemBg(sf, sTitle, sDesc, sImage, 'Slider', elementData)
 			cfg:SetTextTransparencyTitle(0)
 			cfg:SetRightPad(190)
 
@@ -1707,7 +1815,8 @@ function CloverUI:Window(p)
 			local tbClear = p.ClearTextOnFocus ~= nil and p.ClearTextOnFocus or false
 			local tbCallback = p.Callback or function() end
 
-			local bg, cfg = _mkItemBg(sf, tbTitle, tbDesc, tbImage, 'Textbox')
+			local elementData = {tabIdx = myIdx, title = tbTitle, desc = tbDesc, type = "Textbox"}
+			local bg, cfg = _mkItemBg(sf, tbTitle, tbDesc, tbImage, 'Textbox', elementData)
 			cfg:SetTextTransparencyTitle(0)
 			cfg:SetRightPad(130)
 
@@ -1754,6 +1863,7 @@ function CloverUI:Window(p)
 			local cTitle = p.Title or ''
 			local cCode = p.Code or '-- code'
 
+			local elementData = {tabIdx = myIdx, title = cTitle, desc = "", type = "Code"}
 			local wrap = Instance.new("Frame")
 			wrap.BackgroundTransparency = 1
 			wrap.BorderSizePixel = 0
@@ -1884,7 +1994,8 @@ function CloverUI:Window(p)
 			local dMulti = p.Multi or false
 			local dCallback = p.Callback or function() end
 
-			local bg, cfg = _mkItemBg(sf, dTitle, dDesc, dImage, 'Dropdown')
+			local elementData = {tabIdx = myIdx, title = dTitle, desc = dDesc, type = "Dropdown"}
+			local bg, cfg = _mkItemBg(sf, dTitle, dDesc, dImage, 'Dropdown', elementData)
 			cfg:SetTextTransparencyTitle(0)
 			cfg:SetRightPad(125)
 
@@ -1926,7 +2037,8 @@ function CloverUI:Window(p)
 			local kbVal = p.Value or false
 			local kbCallback = p.Callback or function() end
 
-			local bg, cfg = _mkItemBg(sf, kbTitle, kbDesc, kbImage, 'Keybind')
+			local elementData = {tabIdx = myIdx, title = kbTitle, desc = kbDesc, type = "Keybind"}
+			local bg, cfg = _mkItemBg(sf, kbTitle, kbDesc, kbImage, 'Keybind', elementData)
 			cfg:SetTextTransparencyTitle(kbVal and 0 or 0.65)
 			cfg:SetRightPad(110)
 
@@ -2056,7 +2168,8 @@ function CloverUI:Window(p)
 			local cpVal = p.Value or Color3.fromRGB(255,255,255)
 			local cpCallback = p.Callback or function() end
 
-			local bg, cfg = _mkItemBg(sf, cpTitle, cpDesc, cpImage, 'Color Picker')
+			local elementData = {tabIdx = myIdx, title = cpTitle, desc = cpDesc, type = "ColorPicker"}
+			local bg, cfg = _mkItemBg(sf, cpTitle, cpDesc, cpImage, 'Color Picker', elementData)
 			cfg:SetTextTransparencyTitle(0)
 			cfg:SetRightPad(50)
 
@@ -2303,6 +2416,7 @@ function CloverUI:Window(p)
 
 	local _drag_click = _mkClick(sideTopbar)
 	_drag(sideTopbar, shadow)
+	_resize(sideTopbar, shadow, MinSize, MaxSize)
 
 	local callTheme = function(tn)
 		IsTheme = tn
